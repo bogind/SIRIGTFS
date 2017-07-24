@@ -43,6 +43,7 @@ Imports:
     reshape2,
     sp,
     rgdal
+URL:https://github.com/bogind/SIRItoGTFS
 
 
 

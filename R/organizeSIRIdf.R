@@ -1,5 +1,4 @@
 
-
 organizeSIRIdf <- function(SIRIdf, noduplicates = FALSE, round = FALSE){
 
   if(noduplicates == FALSE){
@@ -40,7 +39,7 @@ organizeSIRIdf <- function(SIRIdf, noduplicates = FALSE, round = FALSE){
       if(cal$start_date[1] <= as.Date(SIRIdf$RecordedAtTime[1]) & as.Date(SIRIdf$RecordedAtTime[1]) <= cal$end_date[1] & NROW(cal) >=1){
         c1 <- cal[,weekdays(SIRIdf$RecordedAtTime[1]) == colnames(cal)[2:8]]
         if(class(c1) == "data.frame"){
-          t1 <- t[t$service_id %in% c1$service_id,]
+          t1 <- trips[trips$service_id %in% c1$service_id,]
         }else{
           c2 <- cal[c1 == 1,]
           t1 <- trips[trips$service_id %in% c2$service_id,]
@@ -74,7 +73,7 @@ organizeSIRIdf <- function(SIRIdf, noduplicates = FALSE, round = FALSE){
       if(cal$start_date[1] <= as.Date(SIRIdf$RecordedAtTime[1]) & as.Date(SIRIdf$RecordedAtTime[1]) <= cal$end_date[1] & NROW(cal) >=1){
         c1 <- cal[,weekdays(SIRIdf$RecordedAtTime[1]) == colnames(cal)[2:8]]
         if(class(c1) == "data.frame"){
-          t1 <- t[t$service_id %in% c1$service_id,]
+          t1 <- trips[trips$service_id %in% c1$service_id,]
         }else{
           c2 <- cal[c1 == 1,]
           t1 <- trips[trips$service_id %in% c2$service_id,]
@@ -130,7 +129,7 @@ organizeSIRIdf <- function(SIRIdf, noduplicates = FALSE, round = FALSE){
       if(cal$start_date[1] <= as.Date(SIRIdf$RecordedAtTime[1]) & as.Date(SIRIdf$RecordedAtTime[1]) <= cal$end_date[1] & NROW(cal) >=1 ){
         c1 <- cal[,weekdays(SIRIdf$RecordedAtTime[1]) == colnames(cal)[2:8]]
         if(class(c1) == "data.frame"){
-          t1 <- t[t$service_id %in% c1$service_id,]
+          t1 <- trips[trips$service_id %in% c1$service_id,]
         }else{
           c2 <- cal[c1 == 1,]
           t1 <- trips[trips$service_id %in% c2$service_id,]
@@ -167,7 +166,7 @@ organizeSIRIdf <- function(SIRIdf, noduplicates = FALSE, round = FALSE){
       if(cal$start_date[1] <= as.Date(SIRIdf$RecordedAtTime[1]) & as.Date(SIRIdf$RecordedAtTime[1]) <= cal$end_date[1] & NROW(cal) >=1){
         c1 <- cal[,weekdays(SIRIdf$RecordedAtTime[1]) == colnames(cal)[2:8]]
         if(class(c1) == "data.frame"){
-          t1 <- t[t$service_id %in% c1$service_id,]
+          t1 <- trips[trips$service_id %in% c1$service_id,]
         }else{
           c2 <- cal[c1 == 1,]
           t1 <- trips[trips$service_id %in% c2$service_id,]
@@ -186,4 +185,5 @@ organizeSIRIdf <- function(SIRIdf, noduplicates = FALSE, round = FALSE){
     }
   }
 }
+
 

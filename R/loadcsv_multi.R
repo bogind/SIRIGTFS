@@ -1,4 +1,4 @@
-loadcsv_multi <- function(directory, txt = FALSE, encoding = NULL){
+loadcsv_multi <- function(directory = choose.dir(), txt = FALSE, encoding = NULL){
   if(is.null(directory)){
     directory <- choose.dir()
   }

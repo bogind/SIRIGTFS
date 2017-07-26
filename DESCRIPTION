@@ -44,7 +44,5 @@ Imports:
     sp,
     rgdal,
     rgeos
-URL:https://github.com/bogind/SIRItoGTFS
-
-
-
+URL: https://github.com/bogind/SIRItoGTFS
+RoxygenNote: 6.0.1

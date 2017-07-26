@@ -12,7 +12,7 @@ loadcsvfromZIP <- function(filezip = file.choose(), txt = FALSE, encoding = NULL
                                         header = TRUE,
                                         quote = ""),
                         nm = make.names(paste0("",
-                                               substr(gsub("*.txt$", "", fns),3, 20 )))), globalenv())
+                                               substr(gsub("*.txt$", "", filezip),3, 20 )))), globalenv())
 
     }else{
       list2env(setNames(object = lapply(filezip,
@@ -22,7 +22,7 @@ loadcsvfromZIP <- function(filezip = file.choose(), txt = FALSE, encoding = NULL
                                         quote = "",
                                         encoding = encoding),
                         nm = make.names(paste0("",
-                                               substr(gsub("*.txt$", "", fns),3, 20 )))), globalenv())
+                                               substr(gsub("*.txt$", "", filezip),3, 20 )))), globalenv())
     }
   }
   else{
@@ -33,7 +33,7 @@ loadcsvfromZIP <- function(filezip = file.choose(), txt = FALSE, encoding = NULL
                                         header = TRUE,
                                         quote = ""),
                         nm = make.names(paste0("",
-                                               substr(gsub("*.csv$", "", fns),3, 20 )))), globalenv())
+                                               substr(gsub("*.csv$", "", filezip),3, 20 )))), globalenv())
 
     }else{
       list2env(setNames(object = lapply(filezip,
@@ -43,7 +43,7 @@ loadcsvfromZIP <- function(filezip = file.choose(), txt = FALSE, encoding = NULL
                                         quote = "",
                                         encoding = encoding),
                         nm = make.names(paste0("",
-                                               substr(gsub("*.csv$", "", fns),3, 20 )))), globalenv())
+                                               substr(gsub("*.csv$", "", filezip),3, 20 )))), globalenv())
     }
   }
 

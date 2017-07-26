@@ -9,7 +9,7 @@ load GTFS tables directly from a zipped file in a URL
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-loadGTFSfromURL(urladdress)
+loadGTFSfromURL(urladdress, encoding)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -17,6 +17,9 @@ loadGTFSfromURL(urladdress)
 %%     ~~Describe \code{x} here~~
 URL address of the zipped file, if NULL then Israeli GTFS will be downloaded and added to env.
 }
+  \item{encoding}{
+  charcter. if null files will be loaded without encoding.
+  }
 }
 \details{
 %%  ~~ If necessary, more details than the description above ~~
@@ -45,7 +48,7 @@ URL address of the zipped file, if NULL then Israeli GTFS will be downloaded and
 }
 \examples{
 urladdress <- "ftp://gtfs.mot.gov.il/israel-public-transportation.zip"
-loadGTFSfromURL(urladdress)
+loadGTFSfromURL(urladdress, encoding = "UTF-8")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

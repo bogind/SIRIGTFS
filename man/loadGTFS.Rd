@@ -9,14 +9,17 @@ load GTFS files from folder
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-loadGTFS()
+loadGTFS(directory, encoding)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{directory}{
 %%     ~~Describe \code{x} here~~
-a directory to load the files from
+  a directory to load the files from, if null a pop up screen will allow manual choice
 }
+  \item{encoding}{
+  charcter. if null files will be loaded without encoding.
+  }
 }
 \details{
 %%  ~~ If necessary, more details than the description above ~~
@@ -45,6 +48,8 @@ a directory to load the files from
 }
 \examples{
 loadGTFS()
+#or:
+loadGTFS(directory, encoding = 'UTF-8')
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

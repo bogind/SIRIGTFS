@@ -1,32 +1,27 @@
-loadGTFSfromZIP <- function(fns){
-  fns <- unzip(zipfile = file.choose())
-  list2env(setNames(object = lapply(fns, read.csv, encoding = 'UTF-8'),nm = make.names(paste0("GTFS",substr(gsub("*.txt$", "", fns),3, 20 )))), globalenv())
-  GTFSagency$agency_nameENG[GTFSagency$agency_id == 2] <- "Rail"
-  GTFSagency$agency_nameENG[GTFSagency$agency_id == 3] <- "Egged"
-  GTFSagency$agency_nameENG[GTFSagency$agency_id == 4] <- "Egged_Taavura"
-  GTFSagency$agency_nameENG[GTFSagency$agency_id == 5] <- "Dan"
-  GTFSagency$agency_nameENG[GTFSagency$agency_id == 6] <- "Nazareth-unbs"
-  GTFSagency$agency_nameENG[GTFSagency$agency_id == 7] <- "NTT"
-  GTFSagency$agency_nameENG[GTFSagency$agency_id == 8] <- "GB-Tours"
-  GTFSagency$agency_nameENG[GTFSagency$agency_id == 10] <- "Mo'atza Ezorit Eilot"
-  GTFSagency$agency_nameENG[GTFSagency$agency_id == 14] <- "Netiv Expres"
-  GTFSagency$agency_nameENG[GTFSagency$agency_id == 15] <- "Metropoline"
-  GTFSagency$agency_nameENG[GTFSagency$agency_id == 16] <- "Superbus"
-  GTFSagency$agency_nameENG[GTFSagency$agency_id == 18] <- "Kavim"
-  GTFSagency$agency_nameENG[GTFSagency$agency_id == 19] <- "Metrodan"
-  GTFSagency$agency_nameENG[GTFSagency$agency_id == 20] <- "Karmelit"
-  GTFSagency$agency_nameENG[GTFSagency$agency_id == 21] <- "CityPass"
-  GTFSagency$agency_nameENG[GTFSagency$agency_id == 23] <- "Galim"
-  GTFSagency$agency_nameENG[GTFSagency$agency_id == 24] <- "Mo'atza Ezorit Golan"
-  GTFSagency$agency_nameENG[GTFSagency$agency_id == 25] <- "Afikim"
-  GTFSagency$agency_nameENG[GTFSagency$agency_id == 30] <- "Dan Tzafon"
-  GTFSagency$agency_nameENG[GTFSagency$agency_id == 31] <- "Dan BaDarom"
-  GTFSagency$agency_nameENG[GTFSagency$agency_id == 32] <- "Dan Be'er Sheva"
-  GTFSagency$agency_nameENG[GTFSagency$agency_id == 42] <- "Jerusalem-Ramllah Ihud"
-  GTFSagency$agency_nameENG[GTFSagency$agency_id == 44] <- "Jerusalem-AbuTur-Anta Ihud"
-  GTFSagency$agency_nameENG[GTFSagency$agency_id == 45] <- "Jerusalem-Alawast Ihud"
-  GTFSagency$agency_nameENG[GTFSagency$agency_id == 47] <- "Jerusalem-Har Hazeitim"
-  GTFSagency$agency_nameENG[GTFSagency$agency_id == 49] <- "Jerusalem-Issawia'a-Shuaafat Ihud"
-  GTFSagency$agency_nameENG[GTFSagency$agency_id == 50] <- "Jerusalem Darom Ihud"
-  GTFSagency$agency_nameENG[GTFSagency$agency_id == 51] <- "Jerusalem Tzur Baer Ihud"
+loadGTFSfromZIP <- function(filezip, encoding = NULL){
+  if(is.null(filezip)){
+    filezip <- unzip(zipfile = file.choose())
+  }else{
+    filezip <- unzip(zipfile = filezip)
+  }
+    if(is.null(encoding)){
+      list2env(setNames(object = lapply(filezip,
+                                        read.csv,
+                                        stringsAsFactors = FALSE,
+                                        header = TRUE,
+                                        quote = ""),
+                        nm = make.names(paste0("GTFS",
+                                               substr(gsub("*.txt$", "", fns),3, 20 )))), globalenv())
+
+    }else{
+      list2env(setNames(object = lapply(filezip,
+                                        read.csv,
+                                        stringsAsFactors = FALSE,
+                                        header = TRUE,
+                                        quote = "",
+                                        encoding = encoding),
+                        nm = make.names(paste0("GTFS",
+                                               substr(gsub("*.txt$", "", fns),3, 20 )))), globalenv())
+    }
+
 }

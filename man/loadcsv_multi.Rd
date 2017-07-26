@@ -9,7 +9,7 @@ load multiple csv files to the environment
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-loadcsv_multi(directory)
+loadcsv_multi(directory, txt = FALSE, encoding = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -17,6 +17,12 @@ loadcsv_multi(directory)
 %%     ~~Describe \code{x} here~~
 a directory to load the files from, if NULL then a manual choice is provided
 }
+  \item{txt}{
+  logical. if TRUE .txt files will be loaded as tables instead of .csv
+  }
+  \item{encoding}{
+  character. files encoding. can be NULL
+  }
 }
 \details{
 %%  ~~ If necessary, more details than the description above ~~
@@ -47,6 +53,8 @@ a directory to load the files from, if NULL then a manual choice is provided
 loadcsv_multi(directory)
 #or:
 loadcsv_multi()
+#or:
+lodacsv_multi(directory,txt = TRUE)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

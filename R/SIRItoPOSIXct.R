@@ -1,11 +1,11 @@
 
 SIRItoPOSIXct <- function(column, round = FALSE){
-  require(reshape2)
+  requireNamespace(reshape2, quietly = TRUE)
 
   if(round == TRUE){
-    X <- colsplit(column, "T", c("date","time"))
+    X <- reshape2::colsplit(column, "T", c("date","time"))
     X$time <- as.character(X$time)
-    Y <- colsplit(X$time, "000", c("time","uselss"))
+    Y <- reshape2::colsplit(X$time, "000", c("time","uselss"))
     Y$time <- as.character(Y$time)
     Y$time <- substr(Y$time,1,nchar(Y$time)-1)
     X$time <- Y$time
@@ -14,9 +14,9 @@ SIRItoPOSIXct <- function(column, round = FALSE){
 
     column <- X$col}
   else {
-    X <- colsplit(column, "T", c("date","time"))
+    X <- reshape2::colsplit(column, "T", c("date","time"))
     X$time <- as.character(X$time)
-    Y <- colsplit(X$time, "000", c("time","uselss"))
+    Y <- reshape2::colsplit(X$time, "000", c("time","uselss"))
     Y$time <- as.character(Y$time)
     Y$time <- substr(Y$time,1,nchar(Y$time)-1)
     X$time <- Y$time

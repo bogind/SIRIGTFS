@@ -1,8 +1,8 @@
 Package: SIRItoGTFS
 Type: Package
 Title: Compare SIRI datasets to GTFS tables
-Version: 0.1.0
-Date: 2017-07-23
+Version: 0.1.1
+Date: 2017-07-26
 Author: Dror Bogin <dror.bogin@gmail.com>
 Maintainer: Dror Bogin <dror.bogin@gmail.com>
 Description: Allows the user to compare SIRI data sets to their GTFS counterparts
@@ -42,7 +42,8 @@ Imports:
     dplyr,
     reshape2,
     sp,
-    rgdal
+    rgdal,
+    rgeos
 URL:https://github.com/bogind/SIRItoGTFS
 
 

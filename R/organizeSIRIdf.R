@@ -1,7 +1,7 @@
 
 organizeSIRIdf <- function(SIRIdf, noduplicates = FALSE, round = FALSE){
-  requireNamespace(reshape2, quietly = TRUE)
-  requireNamespace(dplyr, quietly = TRUE)
+  require(reshape2)
+  require(dplyr)
 
   if(noduplicates == FALSE){
 

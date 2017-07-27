@@ -1,7 +1,7 @@
 NearestStop <- function(SIRIspdf , Stopsspdf){
-  requireNamespace("sp", quietly = TRUE)
-  requireNamespace("rgdal", quietly = TRUE)
-  requireNamespace("dplyr", quietly = TRUE)
+  require("sp", quietly = TRUE)
+  require("rgdal", quietly = TRUE)
+  require("dplyr", quietly = TRUE)
   if(class(SIRIspdf) != "SpatialPointsDataFrame" | class(Stopsspdf) != "SpatialPointsDataFrame" ){
     print("ERROR: Both SIRIspdf and Stopsspdf must be  S4 'SpatialPointsDataFrame' type objects")
   } else {

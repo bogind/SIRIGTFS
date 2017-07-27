@@ -1,6 +1,6 @@
 stopstoILTM <- function(GTFSstops, useSIRI = FALSE, SIRI = NULL){
-  requireNamespace(sp, quietly = TRUE)
-  requireNamespace(rgdal, quietly = TRUE)
+  require(sp, quietly = TRUE)
+  require(rgdal, quietly = TRUE)
   if(useSIRI == FALSE & is.null(SIRI)){
     GTFSstops <- GTFSstops[!is.na(GTFSstops$stop_lon),]
     proj = rgdal::make_EPSG()

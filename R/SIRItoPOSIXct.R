@@ -1,6 +1,6 @@
 
 SIRItoPOSIXct <- function(column, round = FALSE){
-  requireNamespace(reshape2, quietly = TRUE)
+  require(reshape2, quietly = TRUE)
 
   if(round == TRUE){
     X <- reshape2::colsplit(column, "T", c("date","time"))

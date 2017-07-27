@@ -1,6 +1,6 @@
 SIRItoSP <- function(SIRIdf, epsg){
-  requireNamespace(sp, quietly = TRUE)
-  requireNamespace(rgdal, quietly = TRUE)
+  require(sp, quietly = TRUE)
+  require(rgdal, quietly = TRUE)
 
     SIRIdf <- SIRIdf[!is.na(SIRIdf$Longitude),]
   proj = rgdal::make_EPSG()

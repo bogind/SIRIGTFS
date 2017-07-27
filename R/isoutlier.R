@@ -1,5 +1,5 @@
 is.outlier <- function(spSIRI, trip){
-  requireNamespace("rgeos", quietly = TRUE)
+  require("rgeos", quietly = TRUE)
   siridfch <- rgeos::gConvexHull(spSIRI[spSIRI@data$trip_id == trip,])
   if(!is.null(siridfch)){
     cent1 <- rgeos::gCentroid(siridfch)

@@ -1,4 +1,4 @@
-loadGTFSfromZIP <- function(filezip, encoding = NULL){
+loadGTFSfromZIP <- function(filezip = NULL, encoding = NULL){
   if(is.null(filezip)){
     filezip <- unzip(zipfile = file.choose())
   }else{
@@ -11,7 +11,7 @@ loadGTFSfromZIP <- function(filezip, encoding = NULL){
                                         header = TRUE,
                                         quote = ""),
                         nm = make.names(paste0("GTFS",
-                                               substr(gsub("*.txt$", "", fns),3, 20 )))), globalenv())
+                                               substr(gsub("*.txt$", "", filezip),3, 20 )))), globalenv())
 
     }else{
       list2env(setNames(object = lapply(filezip,
@@ -21,7 +21,7 @@ loadGTFSfromZIP <- function(filezip, encoding = NULL){
                                         quote = "",
                                         encoding = encoding),
                         nm = make.names(paste0("GTFS",
-                                               substr(gsub("*.txt$", "", fns),3, 20 )))), globalenv())
+                                               substr(gsub("*.txt$", "", filezip),3, 20 )))), globalenv())
     }
 
 }

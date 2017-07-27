@@ -1,4 +1,4 @@
-loadGTFS <- function(directory, encoding = NULL){
+loadGTFS <- function(directory = NULL, encoding = NULL){
   if(is.null(directory)){
     directory <- choose.dir()
   }

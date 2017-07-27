@@ -6,7 +6,7 @@ substoptimes <- function(SIRIdf,
 
   trips <- GTFStrips[GTFStrips$route_id %in% SIRIdf$LineRef,]
 
-  cal <- GTFScalendar[GTFScalendar$service_id %in% t$service_id,]
+  cal <- GTFScalendar[GTFScalendar$service_id %in% trips$service_id,]
 
   week <- c("Sunday","Monday","Tuesday","Wednesday", "Thursday","Friday", "Saturday" )
   colnames(cal)[2:8] <- week

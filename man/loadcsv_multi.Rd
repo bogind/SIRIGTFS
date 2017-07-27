@@ -10,6 +10,8 @@ load multiple csv files to the environment
 }
 \usage{
 loadcsv_multi(directory, txt = FALSE, encoding = NULL)
+
+loadcsvfromZIP(filezip, txt = FALSE, encoding = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -17,6 +19,9 @@ loadcsv_multi(directory, txt = FALSE, encoding = NULL)
 %%     ~~Describe \code{x} here~~
 a directory to load the files from, if NULL then a manual choice is provided
 }
+  \item{filezip}{
+  a '.zip' file to load the files from, if NULL then a manual choice is provided
+  }
   \item{txt}{
   logical. if TRUE .txt files will be loaded as tables instead of .csv
   }
@@ -26,6 +31,8 @@ a directory to load the files from, if NULL then a manual choice is provided
 }
 \details{
 %%  ~~ If necessary, more details than the description above ~~
+loadcsv_multi is used for uncompressed files in a single folder.
+loadcsvfromZIP is used for comma seperated tables inside of a .zip file.
 }
 \value{
 %%  ~Describe the value returned
@@ -50,11 +57,18 @@ a directory to load the files from, if NULL then a manual choice is provided
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
+directory = "D:/Data/tables"
 loadcsv_multi(directory)
 #or:
 loadcsv_multi()
-#or:
+#or if your tables are in .txt files with comma seperation:
 lodacsv_multi(directory,txt = TRUE)
+
+for tables compressed in a single .zip file:
+
+filezip = "D:/Data/tables.zip"
+loadcsvfromZIP(filezip)
+
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

@@ -1,8 +1,8 @@
 substoptimes <- function(SIRIdf,
-                         GTFSstop_times = GTFSstop_times,
-                         GTFSroutes = GTFSroutes,
-                         GTFStrips = GTFStrips,
-                         GTFScalendar = GTFScalendar){
+                         GTFSstop_times,
+                         GTFSroutes,
+                         GTFStrips,
+                         GTFScalendar){
 
   trips <- GTFStrips[GTFStrips$route_id %in% SIRIdf$LineRef,]
 

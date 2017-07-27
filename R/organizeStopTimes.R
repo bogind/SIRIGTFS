@@ -1,4 +1,4 @@
-organizeStopTimes <- function(Stimes = StimesforSIRI, SIRIdf3 = SIRIdf3){
+organizeStopTimes <- function(Stimes, SIRIdf3){
   s2 <- Stimes
   x <- unique(s2$trip_id)
   y <- s2$arrival_time[s2$stop_sequence == 1]

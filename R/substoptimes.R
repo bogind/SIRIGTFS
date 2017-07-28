@@ -17,7 +17,7 @@ substoptimes <- function(SIRIdf,
   cal <- cal[cal$start_date <= as.Date(SIRIdf$RecordedAtTime[1])& as.Date(SIRIdf$RecordedAtTime[1]) <= cal$end_date,]
   if(cal$start_date[1] <= as.Date(SIRIdf$RecordedAtTime[1]) & as.Date(SIRIdf$RecordedAtTime[1]) <= cal$end_date[1] & NROW(cal) >= 1){
 
-    c1 <- cal[weekdays(SIRIdf$RecordedAtTime[1]) == colnames(cal)[2:8],]
+    c1 <- cal[any(weekdays(SIRIdf$RecordedAtTime[1]) == colnames(cal)[2:8]),]
 
     if(class(c1) == "data.frame"){
       t1 <- trips[trips$service_id %in% c1$service_id,]

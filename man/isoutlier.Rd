@@ -3,19 +3,27 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 %%  ~~function to do ... ~~
-identify outliers
+identify spatial outliers
 }
 \description{
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
+used to find trip that did not leave the station
 }
 \usage{
-is.outlier(x)
+is.outlier(spSIRI, trip, outliers = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{
+  \item{spSIRI}{
 %%     ~~Describe \code{x} here~~
+  A SIRI SpatialPointsDataFrame
 }
+  \item{trip}{
+  A unique trip id to check
+  }
+  \item{outliers}{
+  A vector to write outliers into. if not defined will be created with the same name.
+  }
 }
 \details{
 %%  ~~ If necessary, more details than the description above ~~
@@ -43,14 +51,28 @@ is.outlier(x)
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
 
-## The function is currently defined as
-function (x)
-{
+if(NROW(spSIRI[!is.na(spSIRI@data$trip_id),]) > 1){
+
+  spSIRI <- spSIRI[!is.na(spSIRI@data$trip_id),]
+
+
+  for(trip in unique(spSIRI@data$trip_id)){
+
+    is.outlier(spSIRI, trip, outliers = NULL)
+
+
   }
+
+}else{
+  spSIRI <- spSIRI[!is.na(spSIRI@data$OriginAimedDepartureTime),]
+
+  is.outlier(spSIRI, trip, outliers = NULL)
+
+
+  }
+
+
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

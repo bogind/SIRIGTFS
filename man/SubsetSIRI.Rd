@@ -17,7 +17,7 @@ SubsetSIRI(SIRIdf, lineref)
 %%     ~~Describe \code{x} here~~
 original SIRIdf
 }
-  \lineref{lineref}{
+  \item{lineref}{
   the lineref to subset to.
   }
 }

@@ -47,7 +47,7 @@ SIRI spatialPointsDataFrame
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
-spSIRI <- NearestStop(spSIRI,spstops)
+  spSIRI <- NearestStop(spSIRI,spstops)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

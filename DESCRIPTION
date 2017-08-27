@@ -1,7 +1,7 @@
 Package: SIRItoGTFS
 Type: Package
 Title: Compare SIRI datasets to GTFS tables
-Version: 0.1.2
+Version: 0.1.2.1
 Date: 2017-07-26
 Authors@R: person("Dror", "Bogin", email = "dror.bogin@gmail.com",role = c("aut", "cre"))
 Description: Allows the user to compare SIRI data sets to their GTFS counterparts
@@ -44,6 +44,7 @@ Imports:
     sp (>= 1.2.5),
     rgdal (>= 1.2.8),
     rgeos (>= 0.3.23)
+Remotes: git::https://github.com/bogind/easycsv.git
 URL: https://github.com/bogind/SIRItoGTFS
 BugReports:https://github.com/bogind/SIRItoGTFS/issues
 RoxygenNote: 6.0.1

@@ -1,3 +1,4 @@
+#' @export loadGTFSfromZIP
 loadGTFSfromZIP <- function(filezip = NULL, encoding = NULL){
   if(is.null(filezip)){
     filezip <- unzip(zipfile = file.choose())

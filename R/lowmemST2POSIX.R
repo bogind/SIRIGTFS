@@ -1,3 +1,4 @@
+#' @export lowmemST2POSIX
 lowmemST2POSIX <- function(column, SIRIref){
   s1 <- column
   s2 <- as.Date(as.POSIXct(SIRIref$RecordedAtTime[1:length(column)]))

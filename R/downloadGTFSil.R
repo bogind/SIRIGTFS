@@ -1,3 +1,4 @@
+#' @export downloadGTFSil
 downloadGTFSil <- function(directory){
   directory <- choose.dir()
   date <- Sys.Date()

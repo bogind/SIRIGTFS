@@ -1,3 +1,5 @@
+#' @export SIRItoPOSIXct
+
 
 SIRItoPOSIXct <- function(column, round = FALSE){
   require(reshape2, quietly = TRUE)

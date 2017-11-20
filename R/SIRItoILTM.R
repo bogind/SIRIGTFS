@@ -1,3 +1,6 @@
+#' @export SIRItoILTM
+
+
 SIRItoILTM <- function(SIRIdf, epsg = NULL){
   require(sp, quietly = TRUE)
   require(rgdal, quietly = TRUE)

@@ -1,3 +1,5 @@
+#' @export Stops4SIRI
+
 Stops4SIRI <- function(SIRI, stops , routes , trips , stoptimes){
 
   SIRIroutes <- routes[routes$agency_id %in% SIRI$OperatorRef & routes$route_short_name %in% SIRI$PublishedLineName & routes$route_type %in% SIRI$DirectionRef,]

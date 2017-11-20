@@ -1,3 +1,4 @@
+#' @export NearestStop
 NearestStop <- function(SIRIspdf , Stopsspdf){
   require("sp", quietly = TRUE)
   require("rgdal", quietly = TRUE)

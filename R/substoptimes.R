@@ -1,3 +1,5 @@
+#' @export substoptimes
+
 substoptimes <- function(SIRIdf,
                          GTFSstop_times,
                          GTFSroutes,

@@ -1,3 +1,5 @@
+#' @export stopstoSP
+
 stopstoSP <- function(GTFSstops,epsg ,useSIRI = FALSE, SIRI = NULL){
   require(sp, quietly = TRUE)
   require(rgdal, quietly = TRUE)

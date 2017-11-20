@@ -1,3 +1,4 @@
+#' @export check_outlier2
 check_outlier2 <- function(fullans){
   for(trip in unique(fullans$trip_id)){
     testdf <- fullans[fullans$trip_id == trip,]

@@ -1,3 +1,4 @@
+#' @export is.outlier
 is.outlier <- function(spSIRI, trip, outliers){
   require("rgeos", quietly = TRUE)
   siridfch <- rgeos::gConvexHull(spSIRI[spSIRI@data$trip_id == trip,])

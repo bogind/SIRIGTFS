@@ -1,3 +1,5 @@
+#' @export SIRItoSP
+
 SIRItoSP <- function(SIRIdf, epsg){
   require(sp, quietly = TRUE)
   require(rgdal, quietly = TRUE)

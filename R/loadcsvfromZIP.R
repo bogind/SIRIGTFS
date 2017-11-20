@@ -1,3 +1,4 @@
+#' @export loadcsvfromZIP
 loadcsvfromZIP <- function(filezip = file.choose(), txt = FALSE, encoding = NULL){
   if(is.null(filezip)){
     filezip <- unzip(zipfile = file.choose())

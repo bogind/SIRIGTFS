@@ -1,3 +1,4 @@
+#' @export GTFSbyshp
 GTFSbyshp <- function(geom = NULL,
                       proj4string = NULL,
                       stops = GTFSstops,

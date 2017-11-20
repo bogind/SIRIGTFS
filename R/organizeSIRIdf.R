@@ -1,4 +1,4 @@
-
+#' @export organizeSIRIdf
 organizeSIRIdf <- function(SIRIdf, noduplicates = FALSE, round = FALSE){
   require(reshape2)
   require(dplyr)

@@ -1,3 +1,4 @@
+#' @export loadGTFSfromURL
 loadGTFSfromURL <- function(urladdress = NULL, encoding = NULL){
   temp <- tempfile()
   if(is.null(urladdress)){

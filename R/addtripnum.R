@@ -1,3 +1,5 @@
+#' @export addtripnum
+
 addtripnum <- function(ans2){
 
   tripnum <- 1

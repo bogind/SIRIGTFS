@@ -1,3 +1,4 @@
+#' @export loadGTFS
 loadGTFS <- function(directory = NULL, encoding = NULL){
   if(is.null(directory)){
     directory <- choose.dir()

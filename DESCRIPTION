@@ -45,7 +45,7 @@ Depends:
     sp (>= 1.2.5),
     rgdal (>= 1.2.8),
     rgeos (>= 0.3.23),
-    tcltk (>= 3.4.2)
+    tcltk (>= 3.4.0)
 Remotes: git::https://github.com/bogind/easycsv.git
 URL: https://github.com/bogind/SIRItoGTFS
 BugReports:https://github.com/bogind/SIRItoGTFS/issues

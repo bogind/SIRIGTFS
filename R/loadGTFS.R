@@ -27,4 +27,5 @@ loadGTFS <- function(directory = NULL, encoding = NULL){
       envir = .GlobalEnv)
   }
   setwd(origwd)
+  print("Finished reading all GTFS tables into Global environment")
 }

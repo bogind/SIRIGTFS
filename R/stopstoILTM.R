@@ -10,6 +10,7 @@ stopstoILTM <- function(GTFSstops, useSIRI = FALSE, SIRI = NULL){
     crs1 <- sp::CRS("+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0")
     s <- sp::SpatialPointsDataFrame(coords = data.frame(GTFSstops$stop_lon,GTFSstops$stop_lat),data = GTFSstops,proj4string = crs1)
     s <- sp::spTransform(s, israelTM)
+    return(s)
   } else{
     GTFSstops <- GTFSstops[!is.na(GTFSstops$stop_lon),]
     GTFSstops <- SIRItoGTFS::StopsForSIRI(SIRI = SIRI, stops = GTFSstops)
@@ -18,5 +19,6 @@ stopstoILTM <- function(GTFSstops, useSIRI = FALSE, SIRI = NULL){
     crs1 <- sp::CRS("+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0")
     s <- sp::SpatialPointsDataFrame(coords = data.frame(GTFSstops$stop_lon,GTFSstops$stop_lat),data = GTFSstops,proj4string = crs1)
     s <- sp::spTransform(s, israelTM)
+    return(s)
   }
 }

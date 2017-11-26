@@ -1,7 +1,7 @@
 #' @export StG
 
 
-StG = function(SIRIfile,GTFSfolder,GTFSencoding, dfname = "busesStG"){
+StG = function(SIRIfile,SIRIencoding,GTFSfolder,GTFSencoding,readGTFS =TRUE, dfname = "busesStG", linerefs = NULL){
     require(tcltk,quietly = TRUE)
     require(data.table,quietly = TRUE)
     require(easycsv,quietly = TRUE)
@@ -14,16 +14,31 @@ StG = function(SIRIfile,GTFSfolder,GTFSencoding, dfname = "busesStG"){
   if(exists(as.character(SIRIfile),envir = .GlobalEnv)&& is.data.frame(get(SIRIfile))){
     SIRIdf = SIRIfile
   }else{
-    SIRIdf = data.table::fread(SIRIfile)
+    SIRIdf = data.table::fread(SIRIfile,encoding = SIRIencoding)
   }
 
-  loadGTFS(GTFSfolder,encoding = GTFSencoding)
+  reqGTFSnames = c("GTFSstops","GTFSagency","GTFSroutes","GTFSstop_times","GTFStrips")
 
+  if(readGTFS == FALSE && exists(as.character(reqGTFSnames),envir = .GlobalEnv)&& is.data.frame(get(reqGTFSnames)) ){
+    print("GTFS in environment, proceeding.")
+  }
+    if(readGTFS == FALSE && !exists(as.character(reqGTFSnames),envir = .GlobalEnv)){
+    stop("GTFS tables not in envir, pleas change 'readGTFS' to TRUE")
+  }
+    else{
+    loadGTFS(GTFSfolder,encoding = GTFSencoding)
+  }
+
+
+  if(is.null(linerefs)){
   allroutes = GTFSroutes[GTFSroutes$route_id %in% SIRIdf$LineRef,]
   allroutes = dplyr::left_join(allroutes,GTFSagency,by = "agency_id")
   route_names = paste("Operator: ", allroutes$agency_name, " Line: ", allroutes$route_short_name, " Reference: ", allroutes$route_id)
   selected_routes = tcltk::tk_select.list(route_names, preselect = NULL, multiple = TRUE,title = "Select a Line")
   linerefs = as.integer(sapply(strsplit(selected_routes, "Reference:"), "[", 2))
+  }else{
+    linerefs = linerefs
+  }
 
   w <- 1
   o <- 1

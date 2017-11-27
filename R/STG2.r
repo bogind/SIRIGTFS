@@ -32,7 +32,7 @@ STG2 = function(SIRIDf,
   for(lineref in linerefs){
     # SIRIdf
     looptime <- Sys.time()
-    pb <- tkProgressBar(title = paste("Progress on Line number ",w," out of ", length(linerefs)), min = 0,
+    pb <- tkProgressBar(title = paste("Line number ",w," out of ", length(linerefs)), min = 0,
                         max = total, width = 300)
     pbi = 0
 
@@ -180,7 +180,7 @@ STG2 = function(SIRIDf,
       print(paste("Finished All Bus lines in: ", end-start))}
     buses <- rbindlist(listallbuses, fill = TRUE)
     buses <- buses[!is.na(buses$timediff),]
-    assign(dfname,buses)
+    assign(dfname,buses, envir = .GlobalEnv)
 
   }
 

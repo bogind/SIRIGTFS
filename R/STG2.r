@@ -32,8 +32,12 @@ STG2 = function(SIRIDf,
   for(lineref in linerefs){
     # SIRIdf
     looptime <- Sys.time()
-    pb <- tkProgressBar(title = paste("Line number ",w," out of ", length(linerefs)), min = 0,
-                        max = total, width = 300)
+    pb <- SiriPB(title = paste("Line number ",w," out of ", length(linerefs)),
+                        min = 0,
+                        max = total,
+                        initial=0,
+                        width=400)
+
     pbi = 0
 
     SIRIdf2 <- SubsetSIRI(SIRIdf, lineref)

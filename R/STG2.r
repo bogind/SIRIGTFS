@@ -32,7 +32,7 @@ STG2 = function(SIRIDf,
   for(lineref in linerefs){
     # SIRIdf
     looptime <- Sys.time()
-    pb <- SiriPB(title = paste("Line number ",w," out of ", length(linerefs)),
+    pb <- tkProgressBar(title = paste("Line number ",w," out of ", length(linerefs)),
                         min = 0,
                         max = total,
                         initial=0,

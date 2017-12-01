@@ -39,14 +39,13 @@ Encoding: UTF-8
 LazyData: true
 Depends: 
     R (>= 3.4.0),
-    easycsv (>= 1.0.0),
     dplyr (>= 0.7.2),
     reshape2 (>= 1.4.2),
     sp (>= 1.2.5),
     rgdal (>= 1.2.8),
     rgeos (>= 0.3.23),
     tcltk (>= 3.4.0)
-Remotes: git::https://github.com/bogind/easycsv.git
+Remotes: github::bogind/easycsv
 URL: https://github.com/bogind/SIRItoGTFS
 BugReports:https://github.com/bogind/SIRItoGTFS/issues
 RoxygenNote: 6.0.1

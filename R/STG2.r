@@ -1,9 +1,12 @@
-#' @export STG2
+#' @importFrom tcltk tkProgressBar setTkProgressBar
+#' @importFrom dplyr right_join
+#' @export
 
 
 STG2 = function(SIRIDf,
                 GTFSstops = GTFSstops,
                 GTFSagency = GTFSagency,
+                GTFScalendar = GTFScalendar,
                 GTFSroutes = GTFSroutes,
                 GTFSstop_times = GTFSstop_times,
                 GTFStrips = GTFStrips,

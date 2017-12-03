@@ -33,7 +33,7 @@ readGTFS = function(directory = NULL,
                         prefix="GTFS",
                         minimal=FALSE,
                         showProgress=getOption("datatable.showProgress"),
-                        data.table=getOption("datatable.fread.datatable")
+                        data.table=FALSE
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -114,7 +114,7 @@ readGTFS = function(directory = NULL,
   TRUE displays progress on the console using \verb{\r}. It is produced in fread's C code where the very nice (but R level) txtProgressBar and tkProgressBar are not easily available.
   }
   \item{data.table}{
-  logical. TRUE returns a data.table. FALSE returns a data.frame.
+  logical. TRUE returns a data.table. FALSE returns a data.frame. default for SIRItoGTFS is FALSE, should be kept that way.
   }
 }
 \details{

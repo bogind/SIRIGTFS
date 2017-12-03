@@ -26,7 +26,7 @@ readGTFS = function(directory = NULL,
                         prefix="GTFS",
                         minimal=FALSE,
                         showProgress=getOption("datatable.showProgress"),
-                        data.table=getOption("datatable.fread.datatable")
+                        data.table=FALSE
 ){
   if ("data.table" %in% rownames(installed.packages()) == FALSE) {
     stop("data.table needed for this function to work. Please install it.",
@@ -134,7 +134,7 @@ readGTFS = function(directory = NULL,
                                     blank.lines.skip=blank.lines.skip,
                                     key=key,
                                     showProgress=getOption("datatable.showProgress"),
-                                    data.table=getOption("datatable.fread.datatable")
+                                    data.table=data.table
         )
         assign_to_global <- function(pos=1){
           assign(x = DTname4,value = DTable, envir=as.environment(pos) )

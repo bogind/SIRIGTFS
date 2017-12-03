@@ -1,14 +1,14 @@
 #' @export substoptimes
 
 substoptimes <- function(SIRIdf,
-                         GTFSstop_times,
-                         GTFSroutes,
-                         GTFStrips,
-                         GTFScalendar){
+                         GTFSstop_times.,
+                         GTFSroutes.,
+                         GTFStrips.,
+                         GTFScalendar.){
 
-  trips <- GTFStrips[GTFStrips$route_id %in% SIRIdf$LineRef,]
+  trips <- GTFStrips.[GTFStrips.$route_id %in% SIRIdf$LineRef,]
 
-  cal <- GTFScalendar[GTFScalendar$service_id %in% trips$service_id,]
+  cal <- GTFScalendar.[GTFScalendar.$service_id %in% trips$service_id,]
 
   week <- c("Sunday","Monday","Tuesday","Wednesday", "Thursday","Friday", "Saturday" )
   colnames(cal)[2:8] <- week
@@ -23,12 +23,12 @@ substoptimes <- function(SIRIdf,
 
     if(class(c1) == "data.frame"){
       t1 <- trips[trips$service_id %in% c1$service_id,]
-      st <- GTFSstop_times[GTFSstop_times$trip_id %in% t1$trip_id,]
+      st <- GTFSstop_times.[GTFSstop_times.$trip_id %in% t1$trip_id,]
       st
     }else{
       c2 <- cal[c1 == 1,]
       t1 <- trips[trips$service_id %in% c2$service_id,]
-      st <- GTFSstop_times[GTFSstop_times$trip_id %in% t1$trip_id,]
+      st <- GTFSstop_times.[GTFSstop_times.$trip_id %in% t1$trip_id,]
       st
     }
   }

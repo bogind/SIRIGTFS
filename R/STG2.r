@@ -4,12 +4,12 @@
 
 
 STG2 = function(SIRIDf,
-                GTFSstops = GTFSstops,
-                GTFSagency = GTFSagency,
-                GTFScalendar = GTFScalendar,
-                GTFSroutes = GTFSroutes,
-                GTFSstop_times = GTFSstop_times,
-                GTFStrips = GTFStrips,
+                GTFSstops. = GTFSstops,
+                GTFSagency. = GTFSagency,
+                GTFScalendar. = GTFScalendar,
+                GTFSroutes. = GTFSroutes,
+                GTFSstop_times. = GTFSstop_times,
+                GTFStrips. = GTFStrips,
                 dfname = "busesStG",
                 linerefs = NULL){
 
@@ -57,7 +57,7 @@ STG2 = function(SIRIDf,
     setTkProgressBar(pb, pbi, label=paste( round(pbi/total*100, 0),
                                            "% done"))
 
-    StimesforSIRI <- substoptimes(SIRIdf3, GTFSstop_times = GTFSstop_times, GTFSroutes = GTFSroutes, GTFStrips = GTFStrips,GTFScalendar = GTFScalendar)
+    StimesforSIRI <- substoptimes(SIRIdf3, GTFSstop_times. = GTFSstop_times, GTFSroutes. = GTFSroutes, GTFStrips. = GTFStrips,GTFScalendar. = GTFScalendar)
     pbi = pbi+1
     setTkProgressBar(pb, pbi, label=paste( round(pbi/total*100, 0),
                                            "% done"))

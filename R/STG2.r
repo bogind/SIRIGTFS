@@ -3,7 +3,7 @@
 #' @export
 
 
-STG2 = function(SIRIDf,
+STG2 = function(SIRIDF,
                 GTFSstops. = GTFSstops,
                 GTFSagency. = GTFSagency,
                 GTFScalendar. = GTFScalendar,
@@ -43,7 +43,7 @@ STG2 = function(SIRIDf,
 
     pbi = 0
 
-    SIRIdf2 <- SubsetSIRI(SIRIdf, lineref)
+    SIRIdf2 <- SubsetSIRI(SIRIDF, lineref)
     print("created SIRIdf2")
     pbi = pbi+1
     setTkProgressBar(pb, pbi, label=paste( round(pbi/total*100, 0),

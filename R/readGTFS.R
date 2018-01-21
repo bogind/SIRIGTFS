@@ -34,11 +34,11 @@ readGTFS = function(directory = NULL,
   }
 
   if(is.null(directory)){
-    os = Identify.OS()
+    os = easycsv::Identify.OS()
     if(tolower(os) == "windows"){
       directory <- utils::choose.dir()
       if(tolower(os) == "linux" | tolower(os) == "macosx"){
-        directory <- choose_dir()
+        directory <- easycsv::choose_dir()
       }
     }else{
       stop("Please supply a valid local directory")

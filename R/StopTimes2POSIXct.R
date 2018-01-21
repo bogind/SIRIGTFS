@@ -1,4 +1,4 @@
-#' @export StopTimes2POSIXct
+#' @export
 
 StopTimes2POSIXct <- function(column, SIRIref){
   d <- column

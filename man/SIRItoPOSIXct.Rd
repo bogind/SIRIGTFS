@@ -3,10 +3,10 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 %%  ~~function to do ... ~~
-convert SIRI time column to POSIXct
+convert SIRI date time columns to POSIXct
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+For internal use in organizeSIRIdf, requires one column from a subset of the entire SIRI dataframe
 }
 \usage{
 SIRItoPOSIXct(column, round)
@@ -21,36 +21,14 @@ the column to reshape
   logical. round to nearest minute?
   }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
-\value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
-}
 \references{
-%% ~put references to the literature/web site here ~
+Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Using Big Data and open source tools for public transport reliability estimation}
 }
-\author{
-%%  ~~who you are~~
+\section{Warning}{
+Do Not use this function on it's own, it is meant to be used inside organizeSIRIdf only as part of the STG process
 }
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\link[SIRItoGTFS]{STG}
+\link[SIRItoGTFS]{organizeSIRIdf}
 }
-\examples{
- SIRIdf$RecordedAtTime <- SIRItoPOSIXct(SIRIdf$RecordedAtTime, round = FALSE)
- SIRIdf$OriginAimedDepartureTime <- SIRItoPOSIXct(SIRIdf$OriginAimedDepartureTime)
-}
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{ ~misc }

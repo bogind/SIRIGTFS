@@ -1,11 +1,12 @@
 Package: SIRItoGTFS
 Type: Package
 Title: Compare SIRI datasets to GTFS tables
-Version: 0.1.2.1
-Date: 2017-07-26
+Version: 0.2.0.1
+Date: 2018-01-21
 Authors@R: person("Dror", "Bogin", email = "dror.bogin@gmail.com",role = c("aut", "cre"))
 Description: Allows the user to compare SIRI data sets to their GTFS counterparts
-    a "Request_id" column us needed for the SIRI data frame in order to subset parts of it for use.
+    a "Request_id" column us needed for the SIRI data frame in order to subset parts of it for use.   
+    Users unfamiliar with the data or writing code in R should use STG, those wishing to use each function on it's own,    
     the order of functions use is this:
     read the SIRI data into a dataframe object 
     SIRIdf2 <- SubsetSIRI(SIRIdf, i) #i is the lineref you want to check, it is reccomended to perform all actions in a for loop over each line ref
@@ -47,7 +48,6 @@ Depends:
     tcltk (>= 3.4.0),
     data.table (>= 1.10),
     easycsv (>= 1.0.5)
-Remotes: github::bogind/easycsv
 URL: https://github.com/bogind/SIRItoGTFS
 BugReports:https://github.com/bogind/SIRItoGTFS/issues
 RoxygenNote: 6.0.1

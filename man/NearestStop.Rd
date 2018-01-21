@@ -3,10 +3,11 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 %%  ~~function to do ... ~~
-find the nearest stop
+Find the nearest stop to each SIRI SpatialPoint
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Finds the nearest stop to each SIRI SpatialPoint in the SIRI SpatialPointsDataFrame.
+Requires both the SIRI SpatialPointsDataFrame and the GTFS stops SpatialPointsDataFrame.
 }
 \usage{
 NearestStop(SIRIspdf, Stopsspdf)
@@ -22,34 +23,19 @@ SIRI spatialPointsDataFrame
   }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+Returns the SIRI \link[sp]{SpatialPointsDataFrame} with an extra column stating which GTFS stops is closest to each observation.
+The function is a part of STG and should not be used on it's own.
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+\link[sp]{SpatialPointsDataFrame}
 }
 \references{
-%% ~put references to the literature/web site here ~
+Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Using Big Data and open source tools for public transport reliability estimation}
 }
-\author{
-%%  ~~who you are~~
+\section{Warning}{
+Do Not use this function on it's own, it is meant to be used only as part of the STG2 process
 }
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\link[SIRItoGTFS]{STG}
 }
-\examples{
-  spSIRI <- NearestStop(spSIRI,spstops)
-}
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{ ~misc }

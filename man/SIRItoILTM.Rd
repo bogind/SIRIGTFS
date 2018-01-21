@@ -3,10 +3,10 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 %%  ~~function to do ... ~~
-converts SIRIspdf to a TM grid
+Converts a SIRI data frame to Israel's TM grid
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Converts a subset of the SIRI data frame to a \link[sp]{SpatialPointsDataFrame} With Israel's TM projection (epsg 2039).
 }
 \usage{
 SIRItoILTM(SIRIdf, epsg)
@@ -18,38 +18,28 @@ SIRItoILTM(SIRIdf, epsg)
 A SIRI df after organizeSIRIdf (SIRIdf3)
 }
   \item{epsg}{
-  a coordinate system code ( can be extracted using "make_EPSG" and searching the table )
+  a coordinate system code ( can be extracted using "make_EPSG" and searching the table ),
+  defualt is NULL with Israel's TM Grid (epsg 2039)
   }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+Requires the product of \link[SIRItoGTFS]{organizeSIRIdf},
+is interchangeable with \link[SIRItoGTFS]{SIRItoSP}.
+the function is a part of STG and should not be used on it's own.
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+A \link[sp]{SpatialPointsDataFrame} with SIRI's real-time data
 }
 \references{
-%% ~put references to the literature/web site here ~
+Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Using Big Data and open source tools for public transport reliability estimation}
 }
-\author{
-%%  ~~who you are~~
+\section{Warning}{
+Do Not use this function on it's own, it is meant to be used only as part of the STG process
 }
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\link[SIRItoGTFS]{STG}
+\link[SIRItoGTFS]{SIRItoSP}
+\link[SIRItoGTFS]{organizeSIRIdf}
 }
-\examples{
-spSIRI <- SIRItoILTM(SIRIdf3)
-}
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{ ~misc }
+\keyword{ ~spatial }

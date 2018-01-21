@@ -1,8 +1,9 @@
-#' @export NearestStop
+#' @import sp
+#' @importFrom dplyr left_join
+#' @export
+
 NearestStop <- function(SIRIspdf , Stopsspdf){
-  require("sp", quietly = TRUE)
-  require("rgdal", quietly = TRUE)
-  require("dplyr", quietly = TRUE)
+
   if(class(SIRIspdf) != "SpatialPointsDataFrame" | class(Stopsspdf) != "SpatialPointsDataFrame" ){
     print("ERROR: Both SIRIspdf and Stopsspdf must be  S4 'SpatialPointsDataFrame' type objects")
   } else {
@@ -15,6 +16,6 @@ NearestStop <- function(SIRIspdf , Stopsspdf){
     colnames(s1) <- c("index","stop_lon", "stop_lat", "stop_code", "stop_id_s" )
     nn <- dplyr::left_join(x = nn,y = s1, by =c ("nearest:index" = "index"))
     SIRIspdf@data <- cbind(SIRIspdf@data, nn)
-    SIRIspdf
+    return(SIRIspdf)
   }
 }

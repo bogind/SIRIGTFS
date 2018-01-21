@@ -3,10 +3,12 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 %%  ~~function to do ... ~~
-convert SIRI columns to POSIXct on low memory machines
+convert Stop_times columns to POSIXct on low memory machines
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+A possible replacement function for StopTimes2POSIXct.
+Is not used by default.
+used to convert Date and Time columns in the GTFS Stop_times table to a conformable POSIXct.
 }
 \usage{
 lowmemST2POSIX(column, SIRIref)
@@ -15,41 +17,27 @@ lowmemST2POSIX(column, SIRIref)
 \arguments{
   \item{column}{
 %%     ~~Describe \code{x} here~~
-  the column to reshape
+  A \link[base]{vector} to convert, should be a column in the GTFS Stop_Times table.
 }
   \item{SIRIref}{
   a SIRI refrence table from which to get the date
   }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+\link[base]{vector}
 }
 \references{
-%% ~put references to the literature/web site here ~
+Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Using Big Data and open source tools for public transport reliability estimation}
 }
-\author{
-%%  ~~who you are~~
+\section{Warning}{
+This function is not included in the STG process natively.
+those who whish to use it need to redefine \link[SIRItoGTFS]{organizeStopTimes} to use it instead of StopTimes2POSIXct.
 }
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\link[SIRItoGTFS]{StopTimes2POSIXct}
+\link[SIRItoGTFS]{STG}
 }
 \examples{
 column <- lowmemST2POSIX(column, SIRIref)
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{ ~misc }

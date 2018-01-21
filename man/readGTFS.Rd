@@ -117,18 +117,13 @@ readGTFS = function(directory = NULL,
   logical. TRUE returns a data.table. FALSE returns a data.frame. default for SIRItoGTFS is FALSE, should be kept that way.
   }
 }
-\details{
 
-}
 \value{
 Multiple \link[base]{data.frame} containing a representation of the data in the file with the "GTFS" prefix.
 }
 
 \seealso{
 %% ~~objects to See Also as \code{\link{help}}, ~~~
-\link[SIRItoGTFS]{loadGTFS}
-\link[SIRItoGTFS]{loadGTFSfromURL}
-\link[SIRItoGTFS]{loadGTFSfromZIP}
 \link[data.table]{fread}
 \link[easycsv]{fread_folder}
 }
@@ -143,3 +138,4 @@ readGTFS(minimal=TRUE)
 % R documentation directory.
 \keyword{ ~file }% use one of  RShowDoc("KEYWORDS")
 \keyword{ ~utilities }% __ONLY ONE__ keyword per line
+\keyword{ ~iteration }

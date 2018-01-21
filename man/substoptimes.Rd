@@ -3,56 +3,51 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 %%  ~~function to do ... ~~
-Subset the stoptimes table to refrence SIRIdf
+Subset the stop_times table
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Creates a simple subset of the GTFS to refrence the SIRI data frame
 }
 \usage{
-substoptimes(SIRIdf, GTFSstop_times,GTFSroutes)
+substoptimes(SIRIdf,
+                GTFSstop_times. = GTFSstop_times,
+                GTFSroutes. = GTFSroutes,
+                GTFScalendar. = GTFScalendar)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{SIRIdf}{
 %%     ~~Describe \code{x} here~~
-A SIRIdf to use as refrence
+A SIRI data frame to use as refrence
 }
-  \item{GTFSstop_times}{
-  the Stop times table from the GTFS, default name is GTFSstop_times
+  \item{GTFSstop_times.}{
+  The Stop times table from the GTFS, default name is GTFSstop_times
   }
-  \item{GTFSroutes}{
-  the Routes table from the GTFS, default name is GTFSroutes
+  \item{GTFSroutes.}{
+  The Routes table from the GTFS, default name is GTFSroutes
+  }
+    \item{GTFScalendar.}{
+  The Calendar table from the GTFS, default name is TFScalendar
   }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+creates a smaller subset of the GTFS stop_times table to use in further analysis of the SIRI data.
+the function is a part of STG and should not be used on it's own.
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+A \link[base]{data.frame} with the exact same columns as the GTFSstop_times table, with only the rows relevant to the SIRI data present
+}
+\value{
+A \link[base]{data.frame} containing the final result of \link[SIRItoGTFS]{STG} with a trip number column added.
 }
 \references{
-%% ~put references to the literature/web site here ~
+Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Using Big Data and open source tools for public transport reliability estimation}
 }
-\author{
-%%  ~~who you are~~
+\section{Warning}{
+Do Not use this function on it's own, it is meant to be used only as part of the STG process
 }
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\link[SIRItoGTFS]{STG}
 }
-\examples{
-StimesforSIRI <- substoptimes(SIRIdf3, GTFSstop_times = GTFSstop_times, GTFSroutes = GTFSroutes)
-}
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{ ~misc }
+

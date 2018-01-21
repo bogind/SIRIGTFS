@@ -1,8 +1,9 @@
+#' @importFrom sp CRS SpatialPointsDataFrame spTransform
+#' @importFrom rgdal make_EPSG
 #' @export stopstoSP
 
 stopstoSP <- function(GTFSstops,epsg ,useSIRI = FALSE, SIRI = NULL){
-  require(sp, quietly = TRUE)
-  require(rgdal, quietly = TRUE)
+
   if(useSIRI == FALSE & is.null(SIRI)){
     GTFSstops <- GTFSstops[!is.na(GTFSstops$stop_lon),]
     proj = rgdal::make_EPSG()

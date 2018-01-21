@@ -1,8 +1,8 @@
+#' @importFrom sp CRS SpatialPointsDataFrame spTransform
+#' @importFrom rgdal make_EPSG
 #' @export SIRItoSP
 
 SIRItoSP <- function(SIRIdf, epsg){
-  require(sp, quietly = TRUE)
-  require(rgdal, quietly = TRUE)
 
     SIRIdf <- SIRIdf[!is.na(SIRIdf$Longitude),]
   proj = rgdal::make_EPSG()

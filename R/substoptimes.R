@@ -1,10 +1,10 @@
-#' @export substoptimes
+#' @export
 
 substoptimes <- function(SIRIdf,
-                         GTFSstop_times.,
-                         GTFSroutes.,
-                         GTFStrips.,
-                         GTFScalendar.){
+                         GTFSstop_times. = GTFSstop_times,
+                         GTFSroutes. = GTFSroutes,
+                         GTFStrips. = GTFStrips,
+                         GTFScalendar. = GTFScalendar){
 
   trips <- GTFStrips.[GTFStrips.$route_id %in% SIRIdf$LineRef,]
 

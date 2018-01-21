@@ -1,7 +1,27 @@
+#' @name organizeSIRIdf
+#' @title Organize the subset of the SIRI DataFrame
+#' @importFrom reshape2 colsplit
+#' @importFrom dplyr left_join
+#' @param SIRIdf A SIRI \code{\link[base]{data.frame}}
+#' @param noduplicates logical, default is FALSE
+#' @param round logical, should POSIXct column be rounded to nearest minute. default is FALSE.
+#' @param GTFStrips. The GTFS trips table to be used
+#' @param GTFScalendar. The GTFS calendar table to be used
+#' @param GTFSstop_times. The GTFS stop_times table to be used
+#' @details
+#' Prepares the subset of the SIRI data.frame for comparison to the GTFS schedule
+#' the function is a part of STG and should not be used on it's own.
+#' @seealso \code{\link[SIRItoGTFS]{STG}}
+#' @references Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Using Big Data and open source tools for public transport reliability estimation}
+#' @section Warning:
+#' Do Not use this function on it's own, it is meant to be used only as part of the STG process
+#' @examples
+#' SIRIdf3 <- organizeSIRIdf(SIRIdf2, noduplicates = TRUE, round = FALSE)
+#' @keywords ~misc
 #' @export organizeSIRIdf
-organizeSIRIdf <- function(SIRIdf, noduplicates = FALSE, round = FALSE){
-  require(reshape2)
-  require(dplyr)
+organizeSIRIdf <- function(SIRIdf, noduplicates = FALSE, round = FALSE,
+                           GTFStrips. = GTFStrips, GTFScalendar. = GTFScalendar,
+                           GTFSstop_times. = GTFSstop_times){
 
   if(noduplicates == FALSE){
 
@@ -22,15 +42,15 @@ organizeSIRIdf <- function(SIRIdf, noduplicates = FALSE, round = FALSE){
       datet <- data.frame(table(SIRIdf$date))
       SIRIdf <- SIRIdf[SIRIdf$date == datet$Var1[which.max(datet$Freq)],]
 
-      SIRIdf$RecordedAtTime <- SIRItoPOSIXct(SIRIdf$RecordedAtTime, round = FALSE)
-      SIRIdf$OriginAimedDepartureTime <- SIRItoPOSIXct(SIRIdf$OriginAimedDepartureTime)
-      SIRIdf$ExpectedArrivalTime <- SIRItoPOSIXct(SIRIdf$ExpectedArrivalTime)
-      SIRIdf$AimedArrivalTime <- SIRItoPOSIXct(SIRIdf$AimedArrivalTime)
+      SIRIdf$RecordedAtTime <- SIRItoGTFS::SIRItoPOSIXct(SIRIdf$RecordedAtTime, round = FALSE)
+      SIRIdf$OriginAimedDepartureTime <- SIRItoGTFS::SIRItoPOSIXct(SIRIdf$OriginAimedDepartureTime)
+      SIRIdf$ExpectedArrivalTime <- SIRItoGTFS::SIRItoPOSIXct(SIRIdf$ExpectedArrivalTime)
+      SIRIdf$AimedArrivalTime <- SIRItoGTFS::SIRItoPOSIXct(SIRIdf$AimedArrivalTime)
       SIRIdf$key <-paste(SIRIdf$request_id,SIRIdf$OriginAimedDepartureTime, SIRIdf$VehicleRef, sep = " ; ")
       SIRIdf$BUS_XY <- ifelse(is.na(SIRIdf$Longitude) | is.na(SIRIdf$Latitude), NA,  paste(SIRIdf$Longitude, SIRIdf$Latitude, sep = " , "))
 
-      trips <- GTFStrips[GTFStrips$route_id %in% SIRIdf$LineRef,]
-      cal <- GTFScalendar[GTFScalendar$service_id %in% trips$service_id,]
+      trips <- GTFStrips.[GTFStrips.$route_id %in% SIRIdf$LineRef,]
+      cal <- GTFScalendar.[GTFScalendar.$service_id %in% trips$service_id,]
       week <- c("Sunday","Monday","Tuesday","Wednesday", "Thursday","Friday", "Saturday" )
       colnames(cal)[2:8] <- week
       cal[,9:10] <- sapply(cal[,9:10], as.character)
@@ -45,7 +65,7 @@ organizeSIRIdf <- function(SIRIdf, noduplicates = FALSE, round = FALSE){
           c2 <- cal[c1 == 1,]
           t1 <- trips[trips$service_id %in% c2$service_id,]
         }
-        st <- GTFSstop_times[GTFSstop_times$trip_id %in% t1$trip_id & GTFSstop_times$stop_sequence == 1,]
+        st <- GTFSstop_times.[GTFSstop_times.$trip_id %in% t1$trip_id & GTFSstop_times.$stop_sequence == 1,]
         ch <- unique(as.character(strftime(SIRIdf$OriginAimedDepartureTime, "%H:%M:%S")))
         SIRIdf <- dplyr::left_join(SIRIdf, st, by = c("time" = "arrival_time"))
         SIRIdf <- SIRIdf[,-which(names(SIRIdf) %in% c("weekday", "time", "date", "stop_id", "stop_sequence", "pickup_type", "drop_off_type", "shape_dist_traveled"))]
@@ -56,15 +76,15 @@ organizeSIRIdf <- function(SIRIdf, noduplicates = FALSE, round = FALSE){
 
 
     }else{
-      SIRIdf$RecordedAtTime <- SIRItoPOSIXct(SIRIdf$RecordedAtTime, round = FALSE)
-      SIRIdf$OriginAimedDepartureTime <- SIRItoPOSIXct(SIRIdf$OriginAimedDepartureTime)
-      SIRIdf$ExpectedArrivalTime <- SIRItoPOSIXct(SIRIdf$ExpectedArrivalTime)
-      SIRIdf$AimedArrivalTime <- SIRItoPOSIXct(SIRIdf$AimedArrivalTime)
+      SIRIdf$RecordedAtTime <- SIRItoGTFS::SIRItoPOSIXct(SIRIdf$RecordedAtTime, round = FALSE)
+      SIRIdf$OriginAimedDepartureTime <- SIRItoGTFS::SIRItoPOSIXct(SIRIdf$OriginAimedDepartureTime)
+      SIRIdf$ExpectedArrivalTime <- SIRItoGTFS::SIRItoPOSIXct(SIRIdf$ExpectedArrivalTime)
+      SIRIdf$AimedArrivalTime <- SIRItoGTFS::SIRItoPOSIXct(SIRIdf$AimedArrivalTime)
       SIRIdf$key <-paste(SIRIdf$request_id,SIRIdf$OriginAimedDepartureTime, SIRIdf$VehicleRef, sep = " ; ")
       SIRIdf$BUS_XY <- ifelse(is.na(SIRIdf$Longitude) | is.na(SIRIdf$Latitude), NA,  paste(SIRIdf$Longitude, SIRIdf$Latitude, sep = " , "))
 
-      trips <- GTFStrips[GTFStrips$route_id %in% SIRIdf$LineRef,]
-      cal <- GTFScalendar[GTFScalendar$service_id %in% trips$service_id,]
+      trips <- GTFStrips.[GTFStrips.$route_id %in% SIRIdf$LineRef,]
+      cal <- GTFScalendar.[GTFScalendar.$service_id %in% trips$service_id,]
       week <- c("Sunday","Monday","Tuesday","Wednesday", "Thursday","Friday", "Saturday" )
       colnames(cal)[2:8] <- week
       cal[,9:10] <- sapply(cal[,9:10], as.character)
@@ -79,7 +99,7 @@ organizeSIRIdf <- function(SIRIdf, noduplicates = FALSE, round = FALSE){
           c2 <- cal[c1 == 1,]
           t1 <- trips[trips$service_id %in% c2$service_id,]
         }
-        st <- GTFSstop_times[GTFSstop_times$trip_id %in% t1$trip_id & GTFSstop_times$stop_sequence == 1,]
+        st <- GTFSstop_times.[GTFSstop_times.$trip_id %in% t1$trip_id & GTFSstop_times.$stop_sequence == 1,]
         ch <- unique(as.character(strftime(SIRIdf$OriginAimedDepartureTime, "%H:%M:%S")))
         SIRIdf <- dplyr::left_join(SIRIdf, st, by = c("time" = "arrival_time"))
         SIRIdf <- SIRIdf[,-which(names(SIRIdf) %in% c("weekday", "time", "date", "stop_id", "stop_sequence", "pickup_type", "drop_off_type", "shape_dist_traveled"))]
@@ -110,15 +130,15 @@ organizeSIRIdf <- function(SIRIdf, noduplicates = FALSE, round = FALSE){
       SIRIdf <- SIRIdf[SIRIdf$date == datet$Var1[which.max(datet$Freq)],]
 
 
-      SIRIdf$RecordedAtTime <- SIRItoPOSIXct(SIRIdf$RecordedAtTime, round = FALSE)
-      SIRIdf$OriginAimedDepartureTime <- SIRItoPOSIXct(SIRIdf$OriginAimedDepartureTime)
-      SIRIdf$ExpectedArrivalTime <- SIRItoPOSIXct(SIRIdf$ExpectedArrivalTime)
-      SIRIdf$AimedArrivalTime <- SIRItoPOSIXct(SIRIdf$AimedArrivalTime)
+      SIRIdf$RecordedAtTime <- SIRItoGTFS::SIRItoPOSIXct(SIRIdf$RecordedAtTime, round = FALSE)
+      SIRIdf$OriginAimedDepartureTime <- SIRItoGTFS::SIRItoPOSIXct(SIRIdf$OriginAimedDepartureTime)
+      SIRIdf$ExpectedArrivalTime <- SIRItoGTFS::SIRItoPOSIXct(SIRIdf$ExpectedArrivalTime)
+      SIRIdf$AimedArrivalTime <- SIRItoGTFS::SIRItoPOSIXct(SIRIdf$AimedArrivalTime)
       SIRIdf$key <-paste(SIRIdf$request_id,SIRIdf$OriginAimedDepartureTime, SIRIdf$VehicleRef, sep = " ; ")
       SIRIdf$BUS_XY <- ifelse(is.na(SIRIdf$Longitude) | is.na(SIRIdf$Latitude), NA,  paste(SIRIdf$Longitude, SIRIdf$Latitude, sep = " , "))
 
-      trips <- GTFStrips[GTFStrips$route_id %in% SIRIdf$LineRef,]
-      cal <- GTFScalendar[GTFScalendar$service_id %in% trips$service_id,]
+      trips <- GTFStrips.[GTFStrips.$route_id %in% SIRIdf$LineRef,]
+      cal <- GTFScalendar.[GTFScalendar.$service_id %in% trips$service_id,]
       week <- c("Sunday","Monday","Tuesday","Wednesday", "Thursday","Friday", "Saturday" )
       colnames(cal)[2:8] <- week
       cal[,9:10] <- sapply(cal[,9:10], as.character)
@@ -133,7 +153,7 @@ organizeSIRIdf <- function(SIRIdf, noduplicates = FALSE, round = FALSE){
           c2 <- cal[c1 == 1,]
           t1 <- trips[trips$service_id %in% c2$service_id,]
         }
-        st <- GTFSstop_times[GTFSstop_times$trip_id %in% t1$trip_id & GTFSstop_times$stop_sequence == 1,]
+        st <- GTFSstop_times.[GTFSstop_times.$trip_id %in% t1$trip_id & GTFSstop_times.$stop_sequence == 1,]
         ch <- unique(as.character(strftime(SIRIdf$OriginAimedDepartureTime, "%H:%M:%S")))
         SIRIdf <- dplyr::left_join(SIRIdf, st, by = c("time" = "arrival_time"))
 
@@ -146,15 +166,15 @@ organizeSIRIdf <- function(SIRIdf, noduplicates = FALSE, round = FALSE){
 
 
     }else{
-      SIRIdf$RecordedAtTime <- SIRItoPOSIXct(SIRIdf$RecordedAtTime, round = FALSE)
-      SIRIdf$OriginAimedDepartureTime <- SIRItoPOSIXct(SIRIdf$OriginAimedDepartureTime)
-      SIRIdf$ExpectedArrivalTime <- SIRItoPOSIXct(SIRIdf$ExpectedArrivalTime)
-      SIRIdf$AimedArrivalTime <- SIRItoPOSIXct(SIRIdf$AimedArrivalTime)
+      SIRIdf$RecordedAtTime <- SIRItoGTFS::SIRItoPOSIXct(SIRIdf$RecordedAtTime, round = FALSE)
+      SIRIdf$OriginAimedDepartureTime <- SIRItoGTFS::SIRItoPOSIXct(SIRIdf$OriginAimedDepartureTime)
+      SIRIdf$ExpectedArrivalTime <- SIRItoGTFS::SIRItoPOSIXct(SIRIdf$ExpectedArrivalTime)
+      SIRIdf$AimedArrivalTime <- SIRItoGTFS::SIRItoPOSIXct(SIRIdf$AimedArrivalTime)
       SIRIdf$key <-paste(SIRIdf$request_id,SIRIdf$OriginAimedDepartureTime, SIRIdf$VehicleRef, sep = " ; ")
       SIRIdf$BUS_XY <- ifelse(is.na(SIRIdf$Longitude) | is.na(SIRIdf$Latitude), NA,  paste(SIRIdf$Longitude, SIRIdf$Latitude, sep = " , "))
 
-      trips <- GTFStrips[GTFStrips$route_id %in% SIRIdf$LineRef,]
-      cal <- GTFScalendar[GTFScalendar$service_id %in% trips$service_id,]
+      trips <- GTFStrips.[GTFStrips.$route_id %in% SIRIdf$LineRef,]
+      cal <- GTFScalendar.[GTFScalendar.$service_id %in% trips$service_id,]
       week <- c("Sunday","Monday","Tuesday","Wednesday", "Thursday","Friday", "Saturday" )
       colnames(cal)[2:8] <- week
       cal[,9:10] <- sapply(cal[,9:10], as.character)
@@ -170,7 +190,7 @@ organizeSIRIdf <- function(SIRIdf, noduplicates = FALSE, round = FALSE){
           c2 <- cal[c1 == 1,]
           t1 <- trips[trips$service_id %in% c2$service_id,]
         }
-        st <- GTFSstop_times[GTFSstop_times$trip_id %in% t1$trip_id & GTFSstop_times$stop_sequence == 1,]
+        st <- GTFSstop_times.[GTFSstop_times.$trip_id %in% t1$trip_id & GTFSstop_times.$stop_sequence == 1,]
         ch <- unique(as.character(strftime(SIRIdf$OriginAimedDepartureTime, "%H:%M:%S")))
         SIRIdf <- dplyr::left_join(SIRIdf, st, by = c("time" = "arrival_time"))
         SIRIdf <- SIRIdf[,-which(names(SIRIdf) %in% c("weekday", "time", "date", "stop_id", "stop_sequence", "pickup_type", "drop_off_type", "shape_dist_traveled"))]

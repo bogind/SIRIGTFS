@@ -3,10 +3,11 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 %%  ~~function to do ... ~~
-Keep only the closest stop
+Keep only the closest stop to each SIRI observation
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Removes duplicates from the SIRI data frame, and keep only the closest stop to each SIRI observation.
+requires the data.frame from the product of \link[SIRItoGTFS]{NearestStop}.
 }
 \usage{
 SIRIKeepClosestStop(SIRIdf)
@@ -18,35 +19,16 @@ SIRIKeepClosestStop(SIRIdf)
 A SIRI df with a distance field (SIRIdf4)
 }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+A SIRI \link[base]{data.frame} with removed duplicates.
 }
 \references{
-%% ~put references to the literature/web site here ~
+Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Using Big Data and open source tools for public transport reliability estimation}
 }
-\author{
-%%  ~~who you are~~
+\section{Warning}{
+Do Not use this function on it's own, it is meant to be used only as part of the STG process
 }
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\link[SIRItoGTFS]{STG}
 }
-\examples{
-SIRIdf5 <- SIRIKeepClosestStop(SIRIdf4)
-}
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{ ~misc }

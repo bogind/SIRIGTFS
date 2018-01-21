@@ -1,4 +1,5 @@
 #' @export organizeStopTimes
+
 organizeStopTimes <- function(Stimes, SIRIdf3.){
   s2 <- Stimes
   x <- unique(s2$trip_id)

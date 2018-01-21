@@ -6,47 +6,39 @@
 download the israeli GTFS .zip file
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+downloads the Israeli GTFS .zip file into the selected directory with a date added to the files name.
 }
 \usage{
-downloadGTFSil(directory)
+downloadGTFSil(directory = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{}{
+  \item{directory}{
 %%     ~~Describe \code{x} here~~
-no arguments are rquired, the function allows you to choose a directory manually
+If directory remains NULL the function allows you to choose a directory manually via \link[easycsv]{choose_dir}
 }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
+
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
-}
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-%%  ~~who you are~~
+A .zip file in the selected directory, not read into the environment
 }
 \note{
-%%  ~~further notes~~
+Only useful for Israeli users, other users should seek their local GTFS repository
 }
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\link[easycsv]{choose_dir}
+\url{https://developers.google.com/transit/gtfs/}
+\link[utils]{download.file}
 }
 \examples{
+\dontrun{
 downloadGTFSil()
+}
+
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{ ~utilities }% use one of  RShowDoc("KEYWORDS")

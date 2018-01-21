@@ -3,10 +3,10 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 %%  ~~function to do ... ~~
-converts SIRIstops(spdf) to a TM grid
+Converts the GTFS stops table to a SpatialPointsDataFrame
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Converts a subset of the GTFS stops table to a \link[sp]{SpatialPointsDataFrame} with the selected projection.
 }
 \usage{
 stopstoSP(GTFSstops, epsg, useSIRI, SIRI)
@@ -15,47 +15,41 @@ stopstoSP(GTFSstops, epsg, useSIRI, SIRI)
 \arguments{
   \item{GTFSstops}{
 %%     ~~Describe \code{x} here~~
-use a SIRIstops object
+A subset of the GTFS stops table, should be the product of \link[SIRItoGTFS]{StopsForSIRI}
 }
   \item{epsg}{
   a coordinate system code ( can be extracted using "make_EPSG" and searching the table )
   }
   \item{useSIRI}{
-  logical. use a SIRIdf as refrence?
+  logical. use a SIRI data frame as refrence?
   }
   \item{SIRI}{
-  if useSIRI is TRUE, which SIRIdf to use?
+  if useSIRI is TRUE, which SIRI data frame to use?
   }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+Requires the product of \link[SIRItoGTFS]{StopsForSIRI},
+is interchangeable with \link[SIRItoGTFS]{stopstoILTM} for Israel's TM grid.
+the function is a part of STG and should not be used on it's own.
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+A \link[sp]{SpatialPointsDataFrame} with stops relevant to SIRI's real-time data
 }
 \references{
-%% ~put references to the literature/web site here ~
+Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Using Big Data and open source tools for public transport reliability estimation}
 }
-\author{
-%%  ~~who you are~~
+\section{Warning}{
+Do Not use this function on it's own, it is meant to be used only as part of the STG process
 }
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\link[SIRItoGTFS]{STG}
+\link[SIRItoGTFS]{stopstoILTM}
+\link[SIRItoGTFS]{StopsForSIRI}
 }
 \examples{
-stopstoSP(SIRIstops, 4326, useSIRI = FALSE)
+\dontrun{
+spstops <- stopstoSP(SIRIstops, 4326, useSIRI = FALSE)
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+}
+\keyword{ ~misc }
+\keyword{ ~spatial }

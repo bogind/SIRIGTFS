@@ -3,11 +3,11 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 %%  ~~function to do ... ~~
-add a trip number
+Add a trip number
 }
 \description{
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
-requires the final product (ans2)
+Requires the final product (ans2)
 adds a unique trip number
 }
 \usage{
@@ -17,38 +17,23 @@ addtripnum(ans2)
 \arguments{
   \item{ans}{
 %%     ~~Describe \code{x} here~~
-a finished SIRI to GTFS table
+A \link[base]{data.frame}. should be a finished SIRI to GTFS table, after \link[SIRItoGTFS]{check_outlier2}
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+Adds a unique trip number during the day for each trip recorded in SIRI,
+the function is a part of STG and should not be used on it's own.
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+A \link[base]{data.frame} containing the final result of \link[SIRItoGTFS]{STG} with a trip number column added.
 }
 \references{
-%% ~put references to the literature/web site here ~
+Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Using Big Data and open source tools for public transport reliability estimation}
 }
-\author{
-%%  ~~who you are~~
+\section{Warning}{
+Do Not use this function on it's own, it is meant to be used only as part of the STG process
 }
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\link[SIRItoGTFS]{STG}
 }
-\examples{
-ans2 <- addtripnum(ans2)
-}
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{ ~misc }

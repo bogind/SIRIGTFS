@@ -6,7 +6,7 @@
 converts a Stoptimes column to POSIXct
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Convert a date time column from the GTFS stop_times table to POSIXct for comparison with SIRI data.
 used inside of organizeStoptimes
 }
 \usage{
@@ -23,34 +23,22 @@ StopTimes2POSIXct(column,SIRIref)
   }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+The function is intended to work with a SIRI reference table containing only date.
+the function is a part of \link[SIRItoGTFS]{organizeStoptimes} inside \link[SIRItoGTFS]{STG} and should not be used on it's own.
+it is also interchangable with \link[SIRItoGTFS]{lowmemST2POSIX} for advanced user with machines low on memory.
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+a \link[base]{vector} of POSIXct values in "\%Y-\%m-\%d \%H:\%M:\%S" format
 }
 \references{
-%% ~put references to the literature/web site here ~
+Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Using Big Data and open source tools for public transport reliability estimation}
 }
-\author{
-%%  ~~who you are~~
+\section{Warning}{
+Do Not use this function on it's own, it is meant to be used only as part of the STG process
 }
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\link[SIRItoGTFS]{STG}
+\link[SIRItoGTFS]{organizeStoptimes}
+\link[SIRItoGTFS]{lowmemST2POSIX}
 }
-\examples{
- s3$depart_first <- StopTimes2POSIXct(s3$depart_firststr,SIRIdf3)
-}
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{ ~misc }

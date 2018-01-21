@@ -1,4 +1,6 @@
-#' @export check_outlier
+#' @export
+
+
 check_outlier <- function(spSIRI){
   require("rgeos", quietly = TRUE)
   testsp <- spSIRI

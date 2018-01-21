@@ -1,4 +1,5 @@
-#' @export SIRItoPOSIXct
+#' @importFrom reshape2 colsplit
+#' @export
 
 
 SIRItoPOSIXct <- function(column, round = FALSE){

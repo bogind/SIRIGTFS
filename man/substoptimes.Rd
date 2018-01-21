@@ -37,9 +37,6 @@ the function is a part of STG and should not be used on it's own.
 \value{
 A \link[base]{data.frame} with the exact same columns as the GTFSstop_times table, with only the rows relevant to the SIRI data present
 }
-\value{
-A \link[base]{data.frame} containing the final result of \link[SIRItoGTFS]{STG} with a trip number column added.
-}
 \references{
 Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Using Big Data and open source tools for public transport reliability estimation}
 }

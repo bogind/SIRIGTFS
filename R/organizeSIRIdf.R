@@ -2,6 +2,9 @@
 #' @title Organize the subset of the SIRI DataFrame
 #' @importFrom reshape2 colsplit
 #' @importFrom dplyr left_join
+#' @description
+#' Requires the product of \code{\link{SubsetSIRI}}.
+#' Prepares the subset of the SIRI data for comparison with the GTFS tables.
 #' @param SIRIdf A SIRI \code{\link[base]{data.frame}}
 #' @param noduplicates logical, default is FALSE
 #' @param round logical, should POSIXct column be rounded to nearest minute. default is FALSE.
@@ -15,8 +18,6 @@
 #' @references Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Using Big Data and open source tools for public transport reliability estimation}
 #' @section Warning:
 #' Do Not use this function on it's own, it is meant to be used only as part of the STG process
-#' @examples
-#' SIRIdf3 <- organizeSIRIdf(SIRIdf2, noduplicates = TRUE, round = FALSE)
 #' @keywords ~misc
 #' @export organizeSIRIdf
 organizeSIRIdf <- function(SIRIdf, noduplicates = FALSE, round = FALSE,

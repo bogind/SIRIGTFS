@@ -66,7 +66,7 @@ STG = function(SIRIDF,
       # organizeStopTimes takes the output of substoptimes and makes it ready for
       # comparison against the SIRI data frame
 
-      Stimes2 <- organizeStopTimes(Stimes = StimesforSIRI, SIRIdf3 = SIRIdf3)
+      Stimes2 <- organizeStopTimes(Stimes = StimesforSIRI, SIRIdf3. = SIRIdf3)
       pbi = pbi+1
       setTkProgressBar(pb, pbi, label=paste( round(pbi/total*100, 0),
                                              "% done"))

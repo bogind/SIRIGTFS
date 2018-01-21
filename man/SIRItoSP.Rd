@@ -40,10 +40,4 @@ Do Not use this function on it's own, it is meant to be used only as part of the
 \link[SIRItoGTFS]{SIRItoILTM}
 \link[SIRItoGTFS]{organizeSIRIdf}
 }
-\examples{
-#use WGS84
-spSIRI <- SIRItoILTM(SIRIdf3, 4326)
-}
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
 \keyword{ ~misc }

@@ -1,0 +1,36 @@
+\name{GTFSstops}
+\alias{GTFSstops}
+\docType{data}
+\title{
+GTFS stops table relevant to SIRI sample
+}
+\description{
+Subset of the GTFS stops table for Israel for the SIRIsample data.
+}
+\usage{data("GTFSstops")}
+\format{
+  A data frame with 551 observations on the following 9 variables.
+  \describe{
+    \item{\code{stop_id}}{An ID that uniquely identifies a stop, station, or station entrance.}
+    \item{\code{stop_code}}{A short text or a number that uniquely identifies the stop for passengers.}
+    \item{\code{stop_name}}{The name of a stop, station, or station entrance, set to NA due it being in UTF-8 hebrew.}
+    \item{\code{stop_desc}}{The description of a stop, set to NA due it being in UTF-8 hebrew.}
+    \item{\code{stop_lat}}{The latitude of a stop, station, or station entrance. The field value must be a valid WGS 84 latitude.}
+    \item{\code{stop_lon}}{The longitude of a stop, station, or station entrance. The field value must be a valid WGS 84 longitude value from -180 to 180.}
+    \item{\code{location_type}}{Identifies whether this stop ID represents a stop, station, or station entrance. If no location type is specified, or the location_type is blank, stop IDs are treated as stops.}
+    \item{\code{parent_station}}{For stops that are physically located inside stations, the field identifies the station associated with the stop.}
+    \item{\code{zone_id}}{Defines the fare zone for a stop ID.}
+  }
+}
+\details{
+This is only a small subset of the Israeli GTFS stop_times table, extracted to be used with the SIRIsample data.
+it shows the stops data for the SIRIsample data, all within the city of Be'er Sheva, Israel.
+note that GTFS is a global standard and not all operators fill all of the columns.
+}
+\source{
+\url{https://developers.google.com/transit/gtfs/reference/#stopstxt}
+}
+\examples{
+\dontrun{data(GTFSstops)}
+}
+\keyword{datasets}

@@ -10,7 +10,7 @@ Requires the product of \link[SIRItoGTFS]{substoptimes}.
 Prepares the subset of the GTFS stop_times table for comparison with SIRI's real-time data.
 }
 \usage{
-organizeStopTimes(Stimes, SIRIdf3)
+organizeStopTimes(Stimes, SIRIdf3.)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -18,7 +18,7 @@ organizeStopTimes(Stimes, SIRIdf3)
 %%     ~~Describe \code{x} here~~
 the product of \link[SIRItoGTFS]{substoptimes}, a GTFS stop_times \link[base]{data.frame} subset.
 }
-  \item{SIRIdf3}{
+  \item{SIRIdf3.}{
   A SIRI \link[base]{data.frame} after \link[SIRItoGTFS]{organizeSIRIdf}.
   }
 }

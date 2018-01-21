@@ -77,22 +77,22 @@ Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Using Big Data and open source 
 require(SIRItoGTFS)
 require(data.table)
 # use the sample SIRI data included with the package
-SIRIDF = data(sirisample)
+SIRIDF = data("sirisample")
 # load your own GTFS data
 readGTFS()
 # or use the subset of GTFS data conformable to the SIRI sample, also included in the package
-data(GTFSstops)
-data(GTFSstop_times)
-data(GTFScalendar)
-data(GTFStrips)
-data(GTFSagency)
-data(GTFSroutes)
+data("GTFSstops")
+data("GTFSstop_times")
+data("GTFScalendar")
+data("GTFStrips")
+data("GTFSagency")
+data("GTFSroutes")
 
 
 STG(SIRIDF,
   dfname = "busesStG",
   linerefs = unique(SIRIDF$lineref[1]))
-}
+  }
 }
 
 \keyword{ ~package }

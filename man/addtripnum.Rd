@@ -15,7 +15,7 @@ addtripnum(ans2)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{ans}{
+  \item{ans2}{
 %%     ~~Describe \code{x} here~~
 A \link[base]{data.frame}. should be a finished SIRI to GTFS table, after \link[SIRItoGTFS]{check_outlier2}
 }

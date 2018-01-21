@@ -1,6 +1,4 @@
-#' base::duplicated added since duplicated exists in data.table as well
-#'
-#'  @export
+#' @export
 
 SIRIKeepClosestStop <- function(SIRIdf){
   a <- SIRIdf[order(SIRIdf$OriginAimedDepartureTime ,SIRIdf$stop_code, SIRIdf$distance),]

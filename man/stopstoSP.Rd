@@ -46,10 +46,5 @@ Do Not use this function on it's own, it is meant to be used only as part of the
 \link[SIRItoGTFS]{stopstoILTM}
 \link[SIRItoGTFS]{StopsForSIRI}
 }
-\examples{
-\dontrun{
-spstops <- stopstoSP(SIRIstops, 4326, useSIRI = FALSE)
-}
-}
 \keyword{ ~misc }
 \keyword{ ~spatial }

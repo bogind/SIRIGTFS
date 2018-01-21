@@ -2,6 +2,8 @@
 #' @importFrom data.table fread
 #' @importFrom easycsv Identify.OS choose_dir
 #' @export
+
+
 readGTFS = function(directory = NULL,
                         extension = "BOTH",
                         sep="auto",

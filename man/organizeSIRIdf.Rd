@@ -21,6 +21,10 @@ organizeSIRIdf(SIRIdf, noduplicates = FALSE, round = FALSE,
 
 \item{GTFSstop_times.}{The GTFS stop_times table to be used}
 }
+\description{
+Requires the product of \code{\link{SubsetSIRI}}.
+Prepares the subset of the SIRI data for comparison with the GTFS tables.
+}
 \details{
 Prepares the subset of the SIRI data.frame for comparison to the GTFS schedule
 the function is a part of STG and should not be used on it's own.
@@ -30,9 +34,6 @@ the function is a part of STG and should not be used on it's own.
 Do Not use this function on it's own, it is meant to be used only as part of the STG process
 }
 
-\examples{
-SIRIdf3 <- organizeSIRIdf(SIRIdf2, noduplicates = TRUE, round = FALSE)
-}
 \references{
 Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Using Big Data and open source tools for public transport reliability estimation}
 }

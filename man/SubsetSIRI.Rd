@@ -33,7 +33,4 @@ Do Not use this function on it's own, it is meant to be used only as part of the
 \seealso{
 \link[SIRItoGTFS]{STG}
 }
-\examples{
-SIRIdf2 <- SubsetSIRI(SIRIdf, 3315)
-}
 \keyword{ ~misc }

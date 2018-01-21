@@ -4,37 +4,7 @@ Title: Compare SIRI datasets to GTFS tables
 Version: 0.2.0.1
 Date: 2018-01-21
 Authors@R: person("Dror", "Bogin", email = "dror.bogin@gmail.com",role = c("aut", "cre"))
-Description: Allows the user to compare SIRI data sets to their GTFS counterparts
-    a "Request_id" column us needed for the SIRI data frame in order to subset parts of it for use.   
-    Users unfamiliar with the data or writing code in R should use STG, those wishing to use each function on it's own,    
-    the order of functions use is this:
-    read the SIRI data into a dataframe object 
-    SIRIdf2 <- SubsetSIRI(SIRIdf, i) #i is the lineref you want to check, it is reccomended to perform all actions in a for loop over each line ref
-    SIRIdf3 <- organizeSIRIdf(SIRIdf2, noduplicates = TRUE, round = FALSE)
-    StimesforSIRI <- substoptimes(SIRIdf3, GTFSstop_times = GTFSstop_times, GTFSroutes = GTFSroutes)
-    # organizeStopTimes takes the output of substoptimes and makes it ready for 
-    # comparison against the SIRI data frame
-    Stimes2 <- organizeStopTimes(Stimes = StimesforSIRI, SIRIdf3 = SIRIdf3)
-    # and this part will remove duplicates
-    # to check this does not need to chagne the DF
-    # SIRIdf <- SIRIdf[!duplicated(SIRIdf$key),]
-    #Only for one line... this will not work for multiple lines
-    SIRIstops <- StopsForSIRI(SIRI = SIRIdf3,stops = GTFSstops) # DF of staions per line
-    # for a generic version you can use SIRItoSP with use of an EPSG code, if you do not provide an EPSG you will get your points on the israel TM grid
-    spSIRI <- SIRItoILTM(SIRIdf3) 
-    spstops <- stopstoILTM(SIRIstops) # change pointsDF to point with ITM
-    # nearest stop returns a SpatialPointsDataFrame object
-    # if you want it to save to dataframe use the last row (SIRIdf2 <- spSIRI@data)
-    spSIRI <- NearestStop(spSIRI,spstops)
-    SIRIdf4 <- spSIRI@data
-    # subsets the data frame further, leaving only the colsest call, per stop, per trip
-    SIRIdf5 <- SIRIKeepClosestStop(SIRIdf4)
-    # both these actions did not require specific functions, they join the SIRI
-    # data to it's rellevant GTFSstop_times data and creates a time difference column
-    # which is used to check the amount of time the bus was early/late per stop. 
-    fullans <- right_join(SIRIdf5,Stimes2, by = c("key3" = "key"))
-    fullans$timediff <- as.numeric(difftime(fullans$RecordedAtTime,fullans$arrival_time, units = "mins"))
-    ans2 <- fullans[,c("RecordedAtTime","arrival_time", "timediff", "distance", "key3", "stop_code","stop_sequence","stop_lon","stop_lat","OriginAimedDepartureTime"  )]
+Description: Allows the user to compare SIRI data sets to their GTFS counterparts, a "Request_id" column us needed for the SIRI data frame in order to subset parts of it for use.   
 License: GPL-2
 Encoding: UTF-8
 LazyData: true

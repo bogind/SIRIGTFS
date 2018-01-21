@@ -9,7 +9,7 @@ read GTFS files from a folder into R's environment
 reads multiple tables into the environment, adds the "GTFS" prefix by default, based on \link[data.table]{fread} and \link[easycsv]{fread_folder}.
 }
 \usage{
-readGTFS = function(directory = NULL,
+readGTFS(directory = NULL,
                         extension = "BOTH",
                         sep="auto",
                         nrows=-1L,
@@ -128,11 +128,12 @@ Multiple \link[base]{data.frame} containing a representation of the data in the 
 \link[easycsv]{fread_folder}
 }
 \examples{
+\dontrun{
 require(SIRItoGTFS)
 readGTFS()
 #or:
 readGTFS(minimal=TRUE)
-
+  }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

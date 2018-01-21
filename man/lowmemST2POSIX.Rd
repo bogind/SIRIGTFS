@@ -37,7 +37,4 @@ those who whish to use it need to redefine \link[SIRItoGTFS]{organizeStopTimes} 
 \link[SIRItoGTFS]{StopTimes2POSIXct}
 \link[SIRItoGTFS]{STG}
 }
-\examples{
-column <- lowmemST2POSIX(column, SIRIref)
-}
 \keyword{ ~misc }

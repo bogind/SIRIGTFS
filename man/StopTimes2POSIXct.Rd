@@ -24,8 +24,8 @@ StopTimes2POSIXct(column,SIRIref)
 }
 \details{
 The function is intended to work with a SIRI reference table containing only date.
-the function is a part of \link[SIRItoGTFS]{organizeStoptimes} inside \link[SIRItoGTFS]{STG} and should not be used on it's own.
-it is also interchangable with \link[SIRItoGTFS]{lowmemST2POSIX} for advanced user with machines low on memory.
+the function is a part of \link{organizeStoptimes} inside \link{STG} and should not be used on it's own.
+it is also interchangable with \link{lowmemST2POSIX} for advanced user with machines low on memory.
 }
 \value{
 a \link[base]{vector} of POSIXct values in "\%Y-\%m-\%d \%H:\%M:\%S" format
@@ -37,8 +37,8 @@ Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Using Big Data and open source 
 Do Not use this function on it's own, it is meant to be used only as part of the STG process
 }
 \seealso{
-\link[SIRItoGTFS]{STG}
-\link[SIRItoGTFS]{organizeStoptimes}
-\link[SIRItoGTFS]{lowmemST2POSIX}
+\link{STG}
+\link{organizeStoptimes}
+\link{lowmemST2POSIX}
 }
 \keyword{ ~misc }

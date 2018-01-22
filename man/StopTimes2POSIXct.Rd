@@ -24,7 +24,7 @@ StopTimes2POSIXct(column,SIRIref)
 }
 \details{
 The function is intended to work with a SIRI reference table containing only date.
-the function is a part of \link{organizeStoptimes} inside \link{STG} and should not be used on it's own.
+the function is a part of \link{organizeStopTimes} inside \link{STG} and should not be used on it's own.
 it is also interchangable with \link{lowmemST2POSIX} for advanced user with machines low on memory.
 }
 \value{
@@ -38,7 +38,7 @@ Do Not use this function on it's own, it is meant to be used only as part of the
 }
 \seealso{
 \link{STG}
-\link{organizeStoptimes}
+\link{organizeStopTimes}
 \link{lowmemST2POSIX}
 }
 \keyword{ ~misc }

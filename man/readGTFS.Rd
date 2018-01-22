@@ -101,9 +101,6 @@ readGTFS(directory = NULL,
   \item{key}{
   Character vector of one or more column names which is passed to setkey. It may be a single comma separated string such as key="x,y,z", or a vector of names such as key=c("x","y","z"). Only valid when argument data.table=TRUE
   }
-  \item{Names}{
-  A character vector of names for the tables to be read, note that the table will be read and listed by an alphabetical order, use with caution.
-  }
   \item{prefix}{
   A character string to be prefixed to each table name.
   }

@@ -12,6 +12,7 @@ Creates a simple subset of the GTFS to refrence the SIRI data frame
 substoptimes(SIRIdf,
                 GTFSstop_times. = GTFSstop_times,
                 GTFSroutes. = GTFSroutes,
+                GTFStrips. = GTFStrips,
                 GTFScalendar. = GTFScalendar)
 }
 %- maybe also 'usage' for other objects documented here.
@@ -25,6 +26,9 @@ A SIRI data frame to use as refrence
   }
   \item{GTFSroutes.}{
   The Routes table from the GTFS, default name is GTFSroutes
+  }
+    \item{GTFStrips.}{
+  The trips table from the GTFS, default name is GTFStrips
   }
     \item{GTFScalendar.}{
   The Calendar table from the GTFS, default name is TFScalendar

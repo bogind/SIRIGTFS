@@ -1,4 +1,5 @@
 #' @importFrom sp CRS spTransform SpatialPointsDataFrame
+#' @importClassesFrom sp SpatialPointsDataFrame
 #' @importFrom rgdal make_EPSG
 #' @export SIRItoILTM
 

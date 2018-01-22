@@ -9,11 +9,11 @@ Converts the GTFS stops table to Israel's TM grid
 Converts a subset of the GTFS stops table to a \link[sp]{SpatialPointsDataFrame} With Israel's TM projection (epsg 2039).
 }
 \usage{
-stopstoILTM(GTFSstops, useSIRI, SIRI)
+stopstoILTM(GTFSstops., useSIRI = FALSE, SIRI = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{GTFSstops}{
+  \item{GTFSstops.}{
 %%     ~~Describe \code{x} here~~
 A subset of the GTFS stops table, should be the product of \link[SIRItoGTFS]{StopsForSIRI}
 }

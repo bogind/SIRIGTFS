@@ -33,6 +33,7 @@ includes the data for the local public transport operator in Be'er Sheva, Israel
     \item{\code{request_id}}{A unique identifier for each call to server}
     \item{\code{call_time_toServer}}{Local time stamp for each call, not for each response}
     \item{\code{AimedArrivalTime}}{The scheduled time, only relevant for trips that have not yet begun}
+    \item{\code{ArrivalStatus}}{In fully operational systems this should report whether the bus is early or late, in this case it does not report anything}
   }
 }
 \details{

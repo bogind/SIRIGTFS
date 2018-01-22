@@ -1,8 +1,9 @@
+#' @importFrom rgeos gConvexHull gBuffer gWithin
+#' @importClassesFrom sp SpatialPointsDataFrame
 #' @export
 
 
 check_outlier <- function(spSIRI){
-  require("rgeos", quietly = TRUE)
   testsp <- spSIRI
   for(trip in unique(testsp@data$trip_id)){
     tested <- testsp[testsp@data$trip_id == trip,]

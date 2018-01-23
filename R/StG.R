@@ -52,7 +52,6 @@
 #'               linerefs = unique(SIRIDF$lineref[1]))
 #' }
 #' @keywords package spatial
-#' @importFrom tcltk tkProgressBar setTkProgressBar
 #' @importFrom data.table rbindlist
 #' @importFrom dplyr right_join
 #' @import sp
@@ -84,34 +83,18 @@ STG = function(SIRIDF,
   for(lineref in linerefs){
     # SIRIdf
     looptime <- Sys.time()
-    pb <- tkProgressBar(title = paste("Line number ",w," out of ", length(linerefs)),
-                        min = 0,
-                        max = total,
-                        initial=0,
-                        width=400)
-
-    pbi = 0
 
     SIRIdf2 <- SubsetSIRI(SIRIDF, lineref)
-    print("created SIRIdf2")
-    pbi = pbi+1
-    setTkProgressBar(pb, pbi, label=paste( round(pbi/total*100, 0),
-                                           "% done"))
+
     # this part will organize it and add a unique key
     # it takes some time...
 
     SIRIdf3 <- organizeSIRIdf(SIRIdf2, noduplicates = TRUE, round = FALSE,
                               GTFStrips., GTFScalendar., GTFSstop_times.)
-    print("created SIRIdf3")
-    pbi = pbi+1
-    setTkProgressBar(pb, pbi, label=paste( round(pbi/total*100, 0),
-                                           "% done"))
+
 
     StimesforSIRI <- substoptimes(SIRIdf3, GTFSstop_times., GTFSroutes., GTFStrips. ,GTFScalendar.)
-    pbi = pbi+1
-    setTkProgressBar(pb, pbi, label=paste( round(pbi/total*100, 0),
-                                           "% done"))
-    print("created StimesforSIRI")
+
 
     if(NROW(StimesforSIRI$trip_id) < 1){
       print(paste("failed number: ", w, " in subset stop times"))
@@ -122,10 +105,7 @@ STG = function(SIRIDF,
       # comparison against the SIRI data frame
 
       Stimes2 <- organizeStopTimes(Stimes = StimesforSIRI, SIRIdf3. = SIRIdf3)
-      pbi = pbi+1
-      setTkProgressBar(pb, pbi, label=paste( round(pbi/total*100, 0),
-                                             "% done"))
-      print("created Stimes2")
+
 
       # and this part will remove duplicates
       # to check this does not need to change the DF
@@ -133,10 +113,7 @@ STG = function(SIRIDF,
 
       #Only for one line... this will not work for multiple lines
       SIRIstops <- StopsForSIRI(SIRI = SIRIdf3,stops = GTFSstops.) # DF of staions per line
-      pbi = pbi+1
-      setTkProgressBar(pb, pbi, label=paste( round(pbi/total*100, 0),
-                                             "% done"))
-      print("created SIRIstops")
+
 
       if(length(SIRIdf3$Longitude) == length(SIRIdf3$Longitude[is.na(SIRIdf3$Longitude)])){
 
@@ -148,10 +125,7 @@ STG = function(SIRIDF,
 
         # for a generic version you can use SIRItoSP with use of an EPSG code, and
         spSIRI <- SIRItoSP(SIRIdf3,epsg) # change siriDF to point with ITM
-        pbi = pbi+1
-        setTkProgressBar(pb, pbi, label=paste( round(pbi/total*100, 0),
-                                               "% done"))
-        print("created spSIRI")
+
         if(NROW(spSIRI[!is.na(spSIRI@data$trip_id),]) > 1){
           spSIRI <- spSIRI[!is.na(spSIRI@data$trip_id),]
           # find outliers
@@ -165,44 +139,28 @@ STG = function(SIRIDF,
         }
         # spSIRI2 <- SIRItoSP(SIRIdf, 2039) # change siriDF to point with selected EPSG CRS
         spstops <- stopstoSP(SIRIstops,epsg) # change pointsDF to point with ITM
-        pbi = pbi+1
-        setTkProgressBar(pb, pbi, label=paste( round(pbi/total*100, 0),
-                                               "% done"))
-        print("created spstops")
+
         # spstops2 <- stopstoSP(SIRIstops, 2039) # change pointsDF to point with selected EPSG CRS
 
 
         # nearest stop returns a SpatialPointsDataFrame object
         # if you want it to save to dataframe use the last row (SIRIdf2 <- spSIRI@data)
         spSIRI <- NearestStop(spSIRI,spstops)
-        pbi = pbi+1
-        setTkProgressBar(pb, pbi, label=paste( round(pbi/total*100, 0),
-                                               "% done"))
-        print("Finished NearestStop")
 
         SIRIdf4 <- spSIRI@data
-        pbi = pbi+1
-        setTkProgressBar(pb, pbi, label=paste( round(pbi/total*100, 0),
-                                               "% done"))
-        print("created SIRIdf4")
+
 
         # subsets the data frame further, leaving only the colsest call, per stop, per trip
 
         SIRIdf5 <- SIRIKeepClosestStop(SIRIdf4)
-        pbi = pbi+1
-        setTkProgressBar(pb, pbi, label=paste( round(pbi/total*100, 0),
-                                               "% done"))
-        print("created SIRIdf5")
+
         # check what is the range of the times selected
 
 
         # both these actions did not require specific functions, they join the SIRI
         # data to it's rellevant GTFSstop_times data and creates a time difference column
         # which is used to check the amount of time the bus was early/late per stop.
-        pbi = pbi+1
-        setTkProgressBar(pb, pbi, label=paste( round(pbi/total*100, 0),
-                                               "% done"))
-        print("Finishing touches")
+
         fullans <- right_join(SIRIdf5,Stimes2, by = c("key3" = "key", "trip_id" = "trip_id"))
         fullans <- check_outlier2(fullans)
 
@@ -230,7 +188,7 @@ STG = function(SIRIDF,
       }
     }
     end <- Sys.time()
-    close(pb)
+
     print(end-looptime)
 
     if(w >= length(linerefs)+1){

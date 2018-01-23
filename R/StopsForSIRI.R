@@ -1,3 +1,16 @@
+#' @name StopsForSIRI
+#' @title subset stops for SIRIdf
+#' @description
+#' A simple subset of the GTFS stops table to the SIRI data being used in the current analysis.
+#' requires the SIRI data.frame to be after \code{\link{organizeSIRIdf}} and the original GTFS stops table to be used.
+#' @param SIRI a SIRIdf after organizeSIRIdf (SIRIdf3)
+#' @param stops default is GTFSstops
+#' @return A subset of the GTFS stops table conforming to the bus route being evaluated.
+#' @references Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Using Big Data and open source tools for public transport reliability estimation}
+#' @section Warning:
+#' Do Not use this function on it's own, it is meant to be used only as part of the STG process
+#' @seealso \code{\link{STG}}
+#' @keywords misc internal
 #' @export
 
 

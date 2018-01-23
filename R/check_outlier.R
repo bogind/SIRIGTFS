@@ -1,3 +1,21 @@
+#' @name check_outlier
+#' @title Check for outliers in a SIRI SpatialPointsDataFrame
+#' @description
+#' Add an outlier column to the SIRI data,
+#' Requires the SIRI SpatialPointsDataFrame from \code{\link{SIRItoSP}}
+#' @param spSIRI A \code{\link[sp]{SpatialPointsDataFrame}}, containing SIRI data.
+#' should be used after \code{\link{SIRItoILTM}} or \code{\link{SIRItoSP}}
+#' @details
+#' Adds an outlier column to the SIRI data,
+#' the function is a part of STG and should not be used on it's own.
+#' @return
+#' A \code{\link[sp]{SpatialPointsDataFrame}} with an extra column representing the outliers
+#' @references Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Using Big Data and open source tools for public transport reliability estimation}
+#' @section Warning:
+#' Do Not use this function on it's own, it is meant to be used only as part of the STG process
+#' @seealso \code{\link[SIRItoGTFS]{STG}}, \code{\link[SIRItoGTFS]{SIRItoILTM}},
+#' \code{\link[SIRItoGTFS]{SIRItoSP}}, \code{\link[sp]{SpatialPointsDataFrame}}
+#' @keywords misc internal
 #' @importFrom rgeos gConvexHull gBuffer gWithin
 #' @importClassesFrom sp SpatialPointsDataFrame
 #' @export

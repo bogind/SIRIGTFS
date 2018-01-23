@@ -1,3 +1,20 @@
+#' @name stopstoILTM
+#' @title Projects the GTFS stops table to Israel's TM grid
+#' @description
+#' Projects a subset of the GTFS stops table to a \code{\link[sp]{SpatialPointsDataFrame}} With Israel's TM projection (epsg code 2039).
+#' @param GTFSstops. A subset of the GTFS stops table, should be the product of \code{\link{StopsForSIRI}}
+#' @param useSIRI logical. use a SIRI data frame as refrence?
+#' @param SIRI if useSIRI is TRUE, which SIRI data frame to use?
+#' @details
+#' Requires the product of \code{\link{StopsForSIRI}},
+#' is interchangeable with \code{\link{stopstoSP}}.
+#' the function is a part of STG and should not be used on it's own.
+#' @return A \code{\link[sp]{SpatialPointsDataFrame}} with stops relevant to SIRI's real-time data
+#' @references Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Using Big Data and open source tools for public transport reliability estimation}
+#' @section Warning:
+#' Do Not use this function on it's own, it is meant to be used only as part of the STG process
+#' @seealso \code{\link{STG}}, \code{\link{stopstoSP}}, \code{\link{StopsForSIRI}}
+#' @keywords misc internal
 #' @importFrom sp CRS SpatialPointsDataFrame spTransform
 #' @importClassesFrom sp SpatialPointsDataFrame
 #' @importFrom rgdal make_EPSG

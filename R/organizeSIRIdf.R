@@ -18,7 +18,7 @@
 #' @references Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Using Big Data and open source tools for public transport reliability estimation}
 #' @section Warning:
 #' Do Not use this function on it's own, it is meant to be used only as part of the STG process
-#' @keywords ~misc
+#' @keywords misc internal
 #' @export organizeSIRIdf
 organizeSIRIdf <- function(SIRIdf, noduplicates = FALSE, round = FALSE,
                            GTFStrips. = GTFStrips, GTFScalendar. = GTFScalendar,

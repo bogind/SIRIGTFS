@@ -1,3 +1,44 @@
+#' @name readGTFS
+#' @title read GTFS files from a folder into R's environment
+#' @description
+#' reads multiple tables into the environment, adds the "GTFS" prefix by default,
+#' based on \link[data.table]{fread} and \link[easycsv]{fread_folder}.
+#' @param directory a directory from which to read the GTFS tables, if NULL then a manual choice is provided on windows, Linux and OSX.
+#' @param extension "TXT" for tables in '.txt' files, "CSV" for tables in '.csv' files, "BOTH" for both file endings. Default is "BOTH"
+#' @param sep The separator between columns. Defaults to the first character in the set [,\verb{\t} |;:] that exists on line autostart outside quoted ("") regions, and separates the rows above autostart into a consistent number of fields, too.
+#' @param nrows The number of rows to read, by default -1 means all. Unlike read.table, it doesn't help speed to set this to the number of rows in the file (or an estimate), since the number of rows is automatically determined and is already fast. Only set nrows if you require the first 10 rows, for example. 'nrows=0' is a special case that just returns the column names and types; e.g., a dry run for a large file or to quickly check format consistency of a set of files before starting to read any.
+#' @param header Does the first data line contain column names? Defaults according to whether every non-empty field on the first data line is type character. If so, or TRUE is supplied, any empty column names are given a default name.
+#' @param na.strings A character vector of strings which are to be interpreted as NA values. By default ",," for columns read as type character is read as a blank string ("") and ",NA," is read as NA. Typical alternatives might be na.strings=NULL (no coercion to NA at all!) or perhaps na.strings=c("NA","N/A","null")
+#' @param stringsAsFactors Convert all character columns to factors?
+#' @param verbose Be chatty and report timings?
+#' @param autostart Any line number within the region of machine readable delimited text, by default 30. If the file is shorter or this line is empty (e.g. short files with trailing blank lines) then the last non empty line (with a non empty line above that) is used. This line and the lines above it are used to auto detect sep and the number of fields. It's extremely unlikely that autostart should ever need to be changed, we hope.
+#' @param skip If 0 (default) use the procedure described below starting on line autostart to find the first data row. skip>0 means ignore autostart and take line skip+1 as the first data row (or column names according to header="auto"|TRUE|FALSE as usual). skip="string" searches for "string" in the file (e.g. a substring of the column names row) and starts on that line (inspired by read.xls in package gdata).
+#' @param drop Vector of column names or numbers to drop, keep the rest.
+#' @param colClasses A character vector of classes (named or unnamed), as read.csv. Or a named list of vectors of column names or numbers, see examples. colClasses in fread is intended for rare overrides, not for routine use. fread will only promote a column to a higher type if colClasses requests it. It won't downgrade a column to a lower type since NAs would result. You have to coerce such columns afterwards yourself, if you really require data loss.
+#' @param integer64 "integer64" (default) reads columns detected as containing integers larger than 2^31 as type bit64::integer64. Alternatively, "double"|"numeric" reads as base::read.csv does; i.e., possibly with loss of precision and if so silently. Or, "character".
+#' @param dec The decimal separator as in base::read.csv. If not "." (default) then usually ",". See details.
+#' @param check.names default is FALSE. If TRUE then the names of the variables in the data.table are checked to ensure that they are syntactically valid variable names. If necessary they are adjusted (by \link[base]{make.names}) so that they are, and also to ensure that there are no duplicates.
+#' @param encoding default is "unknown". Other possible options are "UTF-8" and "Latin-1". Note: it is not used to re-encode the input, rather enables handling of encoded strings in their native encoding.
+#' @param quote  By default ("\""), if a field starts with a doublequote, fread handles embedded quotes robustly as explained under Details. If it fails, then another attempt is made to read the field as is, i.e., as if quotes are disabled. By setting quote="", the field is always read as if quotes are disabled.
+#' @param strip.white default is TRUE. Strips leading and trailing whitespaces of unquoted fields. If FALSE, only header trailing spaces are removed.
+#' @param fill logical (default is FALSE). If TRUE then in case the rows have unequal length, blank fields are implicitly filled.
+#' @param blank.lines.skip logical, default is FALSE. If TRUE blank lines in the input are ignored.
+#' @param key Character vector of one or more column names which is passed to setkey. It may be a single comma separated string such as key="x,y,z", or a vector of names such as key=c("x","y","z"). Only valid when argument data.table=TRUE
+#' @param prefix A character string to be prefixed to each table name, default is "GTFS".
+#' @param minimal wether or not to read all the GTFS tables or just those needed for SIRItoGTFS, default is FALSE, meaning all GTFS tables will be read
+#' @param showProgress TRUE displays progress on the console using \verb{\r}. It is produced in fread's C code where the very nice (but R level) txtProgressBar and tkProgressBar are not easily available.
+#' @param data.table logical. TRUE returns a data.table. FALSE returns a data.frame. default for SIRItoGTFS is FALSE, should be kept that way.
+#' @return Multiple \link[base]{data.frame} containing a representation of the data in the file with the "GTFS" prefix.
+#' @references Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Using Big Data and open source tools for public transport reliability estimation}
+#' @section Warning:
+#' Do Not use this function on it's own, it is meant to be used only as part of the STG process
+#' @seealso \code{\link{STG}}, \code{\link[data.table]{fread}}, \code{\link[easycsv]{fread_folder}}
+#' @examples \dontrun{
+#' require(SIRItoGTFS)
+#' readGTFS()
+#' #or:
+#' readGTFS(minimal=TRUE)}
+#' @keywords utilities iteration
 #' @importFrom utils installed.packages
 #' @importFrom data.table fread
 #' @importFrom easycsv Identify.OS choose_dir

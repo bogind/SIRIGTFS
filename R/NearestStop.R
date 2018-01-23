@@ -1,3 +1,20 @@
+#' @name NearestStop
+#' @title Find the nearest stop to each SIRI SpatialPoint
+#' @description
+#' Finds the nearest stop to each SIRI SpatialPoint in the SIRI SpatialPointsDataFrame.
+#' Requires both the SIRI SpatialPointsDataFrame and the GTFS stops SpatialPointsDataFrame.
+#' @param SIRIspdf The SIRI spatialPointsDataFrame
+#' @param Stopsspdf GTFS Stops spatialPointsDataFrame
+#' @details
+#' Returns the SIRI sp::SpatialPointsDataFrame with an extra column stating which GTFS stops is closest to each observation.
+#' The function is a part of STG and should not be used on it's own.
+#' @return
+#' Adds a column containing the Nearest stop to each observation in the SIRI sp::SpatialPointsDataFrame
+#' @references Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Using Big Data and open source tools for public transport reliability estimation}
+#' @section Warning:
+#' Do Not use this function on it's own, it is meant to be used only as part of the STG process
+#' @seealso \code{\link[SIRItoGTFS]{STG}}
+#' @keywords misc internal
 #' @importFrom  sp spDists SpatialPointsDataFrame
 #' @importClassesFrom sp SpatialPointsDataFrame
 #' @importFrom dplyr left_join

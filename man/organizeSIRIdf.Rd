@@ -40,4 +40,5 @@ Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Using Big Data and open source 
 \seealso{
 \code{\link[SIRItoGTFS]{STG}}
 }
-\keyword{~misc}
+\keyword{internal}
+\keyword{misc}

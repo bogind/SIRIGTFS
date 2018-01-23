@@ -1,3 +1,21 @@
+#' @name substoptimes
+#' @title Subset the stop_times table
+#' @description Creates a simple subset of the GTFS to refrence the SIRI data frame
+#' @param SIRIdf A SIRI data.frame to use as refrence
+#' @param GTFSstop_times. The Stop times table from the GTFS, default name is GTFSstop_times
+#' @param GTFSroutes. The Routes table from the GTFS, default name is GTFSroutes
+#' @param GTFStrips. The trips table from the GTFS, default name is GTFStrips
+#' @param GTFScalendar. The Calendar table from the GTFS, default name is TFScalendar
+#' @details
+#' creates a smaller subset of the GTFS stop_times table to use in further analysis of the SIRI data.
+#' the function is a part of STG and should not be used on it's own.
+#' @return
+#' A \code{\link[base]{data.frame}} with the exact same columns as the GTFSstop_times table, with only the rows relevant to the SIRI data present
+#' @references Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Using Big Data and open source tools for public transport reliability estimation}
+#' @section Warning:
+#' Do Not use this function on it's own, it is meant to be used only as part of the STG process
+#' @seealso \code{\link{STG}}
+#' @keywords misc internal
 #' @export
 
 substoptimes <- function(SIRIdf,

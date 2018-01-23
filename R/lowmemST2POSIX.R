@@ -1,3 +1,18 @@
+#' @name lowmemST2POSIX
+#' @title convert Stop_times columns to POSIXct on low memory machines
+#' @description
+#' A possible replacement function for \code{\link{StopTimes2POSIXct}}.
+#' Is not used by default.
+#' used to convert Date and Time columns in the GTFS Stop_times table to a conformable POSIXct.
+#' @param column A \code{\link[base]{vector}} to convert, should be a column in the GTFS Stop_Times table.
+#' @param SIRIref A SIRI refrence table from which to get the date.
+#' @details use of this function requires editing both the STG function and \code{\link{organizeSIRIdf}} within it to replace all \code{\link{StopTimes2POSIXct}} to lowmemST2POSIX
+#' @return Returns the column as a POSIXct \code{\link[base]{vector}}
+#' @references Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Using Big Data and open source tools for public transport reliability estimation}
+#' @section Warning:
+#' Do Not use this function on it's own, it is meant to be used only as part of the STG process
+#' @seealso \code{\link{STG}}, \code{\link{StopTimes2POSIXct}}
+#' @keywords misc internal
 #' @export
 lowmemST2POSIX <- function(column, SIRIref){
   s1 <- column

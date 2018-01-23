@@ -1,4 +1,17 @@
-#' @export organizeStopTimes
+#' @name organizeStopTimes
+#' @title Organizes the GTFS Stop_times table
+#' @description
+#' Requires the product of \code{\link{substoptimes}}.
+#' Prepares the subset of the GTFS stop_times table for comparison with SIRI's real-time data.
+#' @param Stimes The product of \code{\link{substoptimes}}, a GTFS stop_times \code{\link[base]{data.frame}} subset.
+#' @param SIRIdf3. A SIRI \code{\link[base]{data.frame}} after \code{\link{organizeSIRIdf}}.
+#' @return A \code{\link[base]{data.frame}} containing columns which can be compared to SIRI's date and time columns.
+#' @references Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Using Big Data and open source tools for public transport reliability estimation}
+#' @section Warning:
+#' Do Not use this function on it's own, it is meant to be used only as part of the STG process
+#' @seealso \code{\link{STG}}, \code{\link{substoptimes}}, \code{\link{organizeSIRIdf}}
+#' @keywords misc internal
+#' @export
 
 organizeStopTimes <- function(Stimes, SIRIdf3.){
   s2 <- Stimes

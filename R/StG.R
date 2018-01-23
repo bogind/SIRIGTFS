@@ -11,7 +11,6 @@
 #' @param GTFSroutes. A GTFS routes table, best load into environment with \code{\link{readGTFS}}
 #' @param GTFSstop_times. A GTFS stop_times table, best load into environment with \code{\link{readGTFS}}
 #' @param GTFStrips. A GTFS trips table, best load into environment with \code{\link{readGTFS}}
-#' @param dfname Character. The name of the output table
 #' @param linerefs Optional, a numeric vector of GTFS route_id numbers to process. if not used all route_id's in the SIRIDF provided will be used.
 #' @param epsg The EPSG code for the projection to be used.
 #' @details
@@ -43,9 +42,14 @@
 #' data("GTFStrips")
 #' data("GTFSagency")
 #' data("GTFSroutes")
-#' STG(SIRIDF,
-#'  dfname = "busesStG",
-#'  linerefs = unique(SIRIDF$lineref[1]))
+#' busesDF = STG(SIRIDF,
+#'               GTFSstops. = GTFSstops,
+#'               GTFSagency. = GTFSagency,
+#'               GTFScalendar. = GTFScalendar,
+#'               GTFSroutes. = GTFSroutes,
+#'               GTFSstop_times. = GTFSstop_times,
+#'               GTFStrips. = GTFStrips,
+#'               linerefs = unique(SIRIDF$lineref[1]))
 #' }
 #' @keywords package spatial
 #' @importFrom tcltk tkProgressBar setTkProgressBar
@@ -58,13 +62,12 @@
 
 
 STG = function(SIRIDF,
-                GTFSstops. = GTFSstops,
-                GTFSagency. = GTFSagency,
-                GTFScalendar. = GTFScalendar,
-                GTFSroutes. = GTFSroutes,
-                GTFSstop_times. = GTFSstop_times,
-                GTFStrips. = GTFStrips,
-                dfname = "busesStG",
+                GTFSstops.,
+                GTFSagency.,
+                GTFScalendar.,
+                GTFSroutes.,
+                GTFSstop_times.,
+                GTFStrips.,
                 linerefs = NULL,
                 epsg = 2039){
 
@@ -97,13 +100,14 @@ STG = function(SIRIDF,
     # this part will organize it and add a unique key
     # it takes some time...
 
-    SIRIdf3 <- organizeSIRIdf(SIRIdf2, noduplicates = TRUE, round = FALSE)
+    SIRIdf3 <- organizeSIRIdf(SIRIdf2, noduplicates = TRUE, round = FALSE,
+                              GTFStrips., GTFScalendar., GTFSstop_times.)
     print("created SIRIdf3")
     pbi = pbi+1
     setTkProgressBar(pb, pbi, label=paste( round(pbi/total*100, 0),
                                            "% done"))
 
-    StimesforSIRI <- substoptimes(SIRIdf3, GTFSstop_times. = GTFSstop_times, GTFSroutes. = GTFSroutes, GTFStrips. = GTFStrips,GTFScalendar. = GTFScalendar)
+    StimesforSIRI <- substoptimes(SIRIdf3, GTFSstop_times., GTFSroutes., GTFStrips. ,GTFScalendar.)
     pbi = pbi+1
     setTkProgressBar(pb, pbi, label=paste( round(pbi/total*100, 0),
                                            "% done"))
@@ -128,7 +132,7 @@ STG = function(SIRIDF,
       # SIRIdf <- SIRIdf[!duplicated(SIRIdf$key),]
 
       #Only for one line... this will not work for multiple lines
-      SIRIstops <- StopsForSIRI(SIRI = SIRIdf3,stops = GTFSstops) # DF of staions per line
+      SIRIstops <- StopsForSIRI(SIRI = SIRIdf3,stops = GTFSstops.) # DF of staions per line
       pbi = pbi+1
       setTkProgressBar(pb, pbi, label=paste( round(pbi/total*100, 0),
                                              "% done"))
@@ -233,7 +237,7 @@ STG = function(SIRIDF,
       print(paste("Finished All Bus lines in: ", end-start))}
     buses <- rbindlist(listallbuses, fill = TRUE)
     buses <- buses[!is.na(buses$timediff),]
-    assign(dfname,buses, envir = .GlobalEnv)
+    return(buses)
 
   }
 

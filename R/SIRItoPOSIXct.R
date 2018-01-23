@@ -15,7 +15,6 @@
 
 
 SIRItoPOSIXct <- function(column, round = FALSE){
-  require(reshape2, quietly = TRUE)
 
   if(round == TRUE){
     X <- reshape2::colsplit(column, "T", c("date","time"))

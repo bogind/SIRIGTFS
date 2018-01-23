@@ -4,7 +4,7 @@
 \alias{stopstoILTM}
 \title{Projects the GTFS stops table to Israel's TM grid}
 \usage{
-stopstoILTM(GTFSstops. = GTFSstops, useSIRI = FALSE, SIRI = NULL)
+stopstoILTM(GTFSstops., useSIRI = FALSE, SIRI = NULL)
 }
 \arguments{
 \item{GTFSstops.}{A subset of the GTFS stops table, should be the product of \code{\link{StopsForSIRI}}}

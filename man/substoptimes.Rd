@@ -4,9 +4,7 @@
 \alias{substoptimes}
 \title{Subset the stop_times table}
 \usage{
-substoptimes(SIRIdf, GTFSstop_times. = GTFSstop_times,
-  GTFSroutes. = GTFSroutes, GTFStrips. = GTFStrips,
-  GTFScalendar. = GTFScalendar)
+substoptimes(SIRIdf, GTFSstop_times., GTFSroutes., GTFStrips., GTFScalendar.)
 }
 \arguments{
 \item{SIRIdf}{A SIRI data.frame to use as refrence}

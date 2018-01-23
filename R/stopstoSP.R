@@ -1,7 +1,7 @@
 #' @name stopstoSP
 #' @title Projects the GTFS stops table to a SpatialPointsDataFrame
 #' @description Projects a subset of the GTFS stops table to a \code{\link[sp]{SpatialPointsDataFrame}} with the selected projection.
-#' @param GTFSstops A subset of the GTFS stops table, should be the product of \code{\link{StopsForSIRI}}.
+#' @param GTFSstops. A subset of the GTFS stops table, should be the product of \code{\link{StopsForSIRI}}.
 #' @param epsg a coordinate system code ( can be extracted using "make_EPSG" and searching the table).
 #' @param useSIRI logical. use a SIRI data frame as refrence?
 #' @param SIRI if useSIRI is TRUE, which SIRI data frame to use?
@@ -20,10 +20,10 @@
 #' @importFrom rgdal make_EPSG
 #' @export stopstoSP
 
-stopstoSP <- function(GTFSstops,epsg ,useSIRI = FALSE, SIRI = NULL){
+stopstoSP <- function(GTFSstops.,epsg ,useSIRI = FALSE, SIRI = NULL){
 
   if(useSIRI == FALSE & is.null(SIRI)){
-    GTFSstops <- GTFSstops[!is.na(GTFSstops$stop_lon),]
+    GTFSstops. <- GTFSstops.[!is.na(GTFSstops.$stop_lon),]
     proj = rgdal::make_EPSG()
     crs2 <- sp::CRS(proj$prj4[proj$code == epsg])
     crs1 <- sp::CRS("+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0")

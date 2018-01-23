@@ -21,8 +21,7 @@
 #' @keywords misc internal
 #' @export organizeSIRIdf
 organizeSIRIdf <- function(SIRIdf, noduplicates = FALSE, round = FALSE,
-                           GTFStrips. = GTFStrips, GTFScalendar. = GTFScalendar,
-                           GTFSstop_times. = GTFSstop_times){
+                           GTFStrips., GTFScalendar., GTFSstop_times.){
 
   if(noduplicates == FALSE){
 

@@ -4,9 +4,8 @@
 \alias{organizeSIRIdf}
 \title{Organize the subset of the SIRI DataFrame}
 \usage{
-organizeSIRIdf(SIRIdf, noduplicates = FALSE, round = FALSE,
-  GTFStrips. = GTFStrips, GTFScalendar. = GTFScalendar,
-  GTFSstop_times. = GTFSstop_times)
+organizeSIRIdf(SIRIdf, noduplicates = FALSE, round = FALSE, GTFStrips.,
+  GTFScalendar., GTFSstop_times.)
 }
 \arguments{
 \item{SIRIdf}{A SIRI \code{\link[base]{data.frame}}}

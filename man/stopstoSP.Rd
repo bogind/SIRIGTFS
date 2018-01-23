@@ -4,10 +4,10 @@
 \alias{stopstoSP}
 \title{Projects the GTFS stops table to a SpatialPointsDataFrame}
 \usage{
-stopstoSP(GTFSstops, epsg, useSIRI = FALSE, SIRI = NULL)
+stopstoSP(GTFSstops., epsg, useSIRI = FALSE, SIRI = NULL)
 }
 \arguments{
-\item{GTFSstops}{A subset of the GTFS stops table, should be the product of \code{\link{StopsForSIRI}}.}
+\item{GTFSstops.}{A subset of the GTFS stops table, should be the product of \code{\link{StopsForSIRI}}.}
 
 \item{epsg}{a coordinate system code ( can be extracted using "make_EPSG" and searching the table).}
 

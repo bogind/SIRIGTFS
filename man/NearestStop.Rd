@@ -12,14 +12,14 @@ NearestStop(SIRIspdf, Stopsspdf)
 \item{Stopsspdf}{GTFS Stops spatialPointsDataFrame}
 }
 \value{
-Adds a column containing the Nearest stop to each observation in the SIRI sp::SpatialPointsDataFrame
+Adds a column containing the Nearest stop to each observation in the SIRI \code{\link[sp]{SpatialPointsDataFrame}}
 }
 \description{
 Finds the nearest stop to each SIRI SpatialPoint in the SIRI SpatialPointsDataFrame.
 Requires both the SIRI SpatialPointsDataFrame and the GTFS stops SpatialPointsDataFrame.
 }
 \details{
-Returns the SIRI sp::SpatialPointsDataFrame with an extra column stating which GTFS stops is closest to each observation.
+Returns the SIRI \code{\link[sp]{SpatialPointsDataFrame}} with an extra column stating which GTFS stops is closest to each observation.
 The function is a part of STG and should not be used on it's own.
 }
 \section{Warning}{

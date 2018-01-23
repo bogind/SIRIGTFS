@@ -4,12 +4,12 @@
 \alias{StopsForSIRI}
 \title{subset stops for SIRIdf}
 \usage{
-StopsForSIRI(SIRI, stops = GTFSstops)
+StopsForSIRI(SIRI, stops)
 }
 \arguments{
 \item{SIRI}{a SIRIdf after organizeSIRIdf (SIRIdf3)}
 
-\item{stops}{default is GTFSstops}
+\item{stops}{GTFSstops table}
 }
 \value{
 A subset of the GTFS stops table conforming to the bus route being evaluated.

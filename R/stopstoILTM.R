@@ -20,9 +20,8 @@
 #' @importFrom rgdal make_EPSG
 #' @export
 
-stopstoILTM <- function(GTFSstops. = GTFSstops, useSIRI = FALSE, SIRI = NULL){
-  require(sp, quietly = TRUE)
-  require(rgdal, quietly = TRUE)
+stopstoILTM <- function(GTFSstops., useSIRI = FALSE, SIRI = NULL){
+
   if(useSIRI == FALSE & is.null(SIRI)){
     GTFSstops. <- GTFSstops.[!is.na(GTFSstops.$stop_lon),]
     proj = rgdal::make_EPSG()

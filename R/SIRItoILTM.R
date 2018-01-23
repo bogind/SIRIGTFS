@@ -23,8 +23,6 @@
 
 
 SIRItoILTM <- function(SIRIdf, epsg = NULL){
-  require(sp, quietly = TRUE)
-  require(rgdal, quietly = TRUE)
   if(is.null(epsg)){
     SIRIdf <- SIRIdf[!is.na(SIRIdf$Longitude),]
     proj = rgdal::make_EPSG()

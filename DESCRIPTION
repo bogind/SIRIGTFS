@@ -1,6 +1,6 @@
 Package: SIRItoGTFS
 Type: Package
-Title: Compare SIRI Datasets To GTFS Tables
+Title: Compare SIRI Datasets to GTFS Tables
 Version: 0.2.1
 Date: 2018-01-24
 Authors@R: person("Dror", "Bogin", email = "dror.bogin@gmail.com",role = c("aut", "cre"))

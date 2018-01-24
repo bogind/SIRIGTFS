@@ -169,12 +169,12 @@
 #' includes the data for the local public transport operator in Be'er Sheva, Israel for the date of 19/07/2017
 #' All columns are intentionally character vectors, this is raw data to be used in the analysis process of \code{\link{STG}}.
 #' The table includes the maximum possible columns a SIRI protocol can produce( with the Israeli server, including wrapper nodes which produce NA columns),
-#' The data was collected for the development of the SIRItoGTFS package and contains only one day's calls to server,
+#' The data was collected for the development of the SIRItoGTFS package and contains only 100 calls to server,
 #' the "request_id" and "call_time_toServer" columns were added locally and are needed for anyone trying to use the package.
 #' the data is provided for anyone wishing to test the methods used during research.
 #'
 #'
-#' @format A data frame with 1436930 observations on the following 22 variables.
+#' @format A data frame with 836 observations on the following 22 variables.
 #' \describe{
 #'    \item{\code{RecordedAtTime}}{Time stamp provided by the server, can differ within the same call, response rate for stops to server may vary}
 #'    \item{\code{ItemIdentifier}}{The server's ID for each observation}
@@ -200,6 +200,7 @@
 #'    \item{\code{ArrivalStatus}}{In fully operational systems this should report whether the bus is early or late, in this case it does not report anything}
 #' }
 #' @references Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Using Big Data and open source tools for public transport reliability estimation}
+#' @source http://user47094.vs.easily.co.uk/siri/documentation.htm
 #' @aliases sirisample
 "SIRIsample"
 

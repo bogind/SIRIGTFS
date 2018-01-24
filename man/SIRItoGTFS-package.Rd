@@ -17,8 +17,10 @@ The only two functions you're likely to need from \pkg{SIRItoGTFS} are
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/bogind/SIRItoGTFS}
-  \item Report bugs at \url{https://github.com/bogind/SIRItoGTFS/issues}
+  \item \url{<https://github.com/bogind/SIRItoGTFS>}
+  \item \url{SIRI documentation: <http://user47094.vs.easily.co.uk/siri/documentation.htm>}
+  \item \url{GTFS documentation: <https://developers.google.com/transit/gtfs/>}
+  \item Report bugs at \url{<https://github.com/bogind/SIRItoGTFS/issues>}
 }
 
 }

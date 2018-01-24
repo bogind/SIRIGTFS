@@ -2,7 +2,7 @@
 % Please edit documentation in R/downloadGTFSil.R
 \name{downloadGTFSil}
 \alias{downloadGTFSil}
-\title{download the israeli GTFS .zip file}
+\title{download the Israeli GTFS .zip file}
 \usage{
 downloadGTFSil(directory = NULL)
 }

@@ -12,7 +12,7 @@ SIRItoPOSIXct(column, round = FALSE)
 \item{round}{logical. round to nearest minute?}
 }
 \value{
-the same SIRI column with readeable POSIXct values
+the same SIRI column with readable POSIXct values
 }
 \description{
 For internal use in organizeSIRIdf, requires one column from a subset of the entire SIRI dataframe

@@ -3,7 +3,7 @@
 #' @description Projects a subset of the GTFS stops table to a \code{\link[sp]{SpatialPointsDataFrame}} with the selected projection.
 #' @param GTFSstops. A subset of the GTFS stops table, should be the product of \code{\link{StopsForSIRI}}.
 #' @param epsg a coordinate system code ( can be extracted using "make_EPSG" and searching the table).
-#' @param useSIRI logical. use a SIRI data frame as refrence?
+#' @param useSIRI logical. use a SIRI data frame as reference?
 #' @param SIRI if useSIRI is TRUE, which SIRI data frame to use?
 #' @details
 #' Requires the product of \code{\link{StopsForSIRI}},

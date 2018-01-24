@@ -1,7 +1,7 @@
 #' @name substoptimes
 #' @title Subset the stop_times table
-#' @description Creates a simple subset of the GTFS to refrence the SIRI data frame
-#' @param SIRIdf A SIRI data.frame to use as refrence
+#' @description Creates a simple subset of the GTFS to reference the SIRI data frame
+#' @param SIRIdf A SIRI data.frame to use as reference
 #' @param GTFSstop_times. The Stop times table from the GTFS, default name is GTFSstop_times
 #' @param GTFSroutes. The Routes table from the GTFS, default name is GTFSroutes
 #' @param GTFStrips. The trips table from the GTFS, default name is GTFStrips

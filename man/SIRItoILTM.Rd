@@ -10,7 +10,7 @@ SIRItoILTM(SIRIdf, epsg = NULL)
 \item{SIRIdf}{A SIRI df after organizeSIRIdf (SIRIdf3)}
 
 \item{epsg}{a coordinate system code ( can be extracted using "make_EPSG" and searching the table ),
-defualt is NULL with Israel's TM Grid (epsg 2039)}
+default is NULL with Israel's TM Grid (epsg 2039)}
 }
 \value{
 A \code{\link[sp]{SpatialPointsDataFrame}} with SIRI's real-time data

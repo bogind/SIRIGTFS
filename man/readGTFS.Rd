@@ -59,7 +59,7 @@ readGTFS(directory = NULL, extension = "BOTH", sep = "auto",
 
 \item{prefix}{A character string to be prefixed to each table name, default is "GTFS".}
 
-\item{minimal}{wether or not to read all the GTFS tables or just those needed for SIRItoGTFS, default is FALSE, meaning all GTFS tables will be read}
+\item{minimal}{whether or not to read all the GTFS tables or just those needed for SIRItoGTFS, default is FALSE, meaning all GTFS tables will be read}
 
 \item{showProgress}{TRUE displays progress on the console using \verb{\r}. It is produced in fread's C code where the very nice (but R level) txtProgressBar and tkProgressBar are not easily available.}
 

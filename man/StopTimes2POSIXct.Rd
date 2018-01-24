@@ -9,7 +9,7 @@ StopTimes2POSIXct(column, SIRIref)
 \arguments{
 \item{column}{the column to reshape}
 
-\item{SIRIref}{a SIRI refrence table from which to get the date}
+\item{SIRIref}{a SIRI reference table from which to get the date}
 }
 \value{
 A \code{\link[base]{vector}} of POSIXct values in "\%Y-\%m-\%d \%H:\%M:\%S" format.
@@ -21,7 +21,7 @@ used inside of organizeStoptimes
 \details{
 The function is intended to work with a SIRI reference table containing only date.
 the function is a part of \code{\link{organizeStopTimes}} inside \code{\link{STG}} and should not be used on it's own.
-it is also interchangable with \link{lowmemST2POSIX} for advanced user with machines low on memory.
+it is also interchangeable with \link{lowmemST2POSIX} for advanced user with machines low on memory.
 }
 \section{Warning}{
 

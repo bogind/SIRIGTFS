@@ -7,7 +7,7 @@
 substoptimes(SIRIdf, GTFSstop_times., GTFSroutes., GTFStrips., GTFScalendar.)
 }
 \arguments{
-\item{SIRIdf}{A SIRI data.frame to use as refrence}
+\item{SIRIdf}{A SIRI data.frame to use as reference}
 
 \item{GTFSstop_times.}{The Stop times table from the GTFS, default name is GTFSstop_times}
 
@@ -21,7 +21,7 @@ substoptimes(SIRIdf, GTFSstop_times., GTFSroutes., GTFStrips., GTFScalendar.)
 A \code{\link[base]{data.frame}} with the exact same columns as the GTFSstop_times table, with only the rows relevant to the SIRI data present
 }
 \description{
-Creates a simple subset of the GTFS to refrence the SIRI data frame
+Creates a simple subset of the GTFS to reference the SIRI data frame
 }
 \details{
 creates a smaller subset of the GTFS stop_times table to use in further analysis of the SIRI data.

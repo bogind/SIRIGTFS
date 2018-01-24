@@ -9,7 +9,7 @@ lowmemST2POSIX(column, SIRIref)
 \arguments{
 \item{column}{A \code{\link[base]{vector}} to convert, should be a column in the GTFS Stop_Times table.}
 
-\item{SIRIref}{A SIRI refrence table from which to get the date.}
+\item{SIRIref}{A SIRI reference table from which to get the date.}
 }
 \value{
 Returns the column as a POSIXct \code{\link[base]{vector}}

@@ -8,9 +8,9 @@
 \describe{
     \item{route_id}{An ID that uniquely identifies a route.}
     \item{agency_id}{An agency for the specified route. This value is referenced from the agency file.}
-    \item{route_short_name}{The short name of a route. This will often be a short, abstract identifier like "32", "100X", or "Green" that riders use to identify a route, set to NA due it being in UTF-8 hebrew}
-    \item{route_long_name}{The full name of a route, set to NA due it being in UTF-8 hebrew}
-    \item{route_desc}{A description of a route, set to NA due it being in UTF-8 hebrew.}
+    \item{route_short_name}{The short name of a route. This will often be a short, abstract identifier like "32", "100X", or "Green" that riders use to identify a route, set to NA due it being in UTF-8 Hebrew}
+    \item{route_long_name}{The full name of a route, set to NA due it being in UTF-8 Hebrew}
+    \item{route_desc}{A description of a route, set to NA due it being in UTF-8 Hebrew.}
     \item{route_type}{The type of transportation used on a route, in this case all values are 3 for bus.}
     \item{route_color}{In systems that have colors assigned to routes, the route_color field defines a color that corresponds to a route.}
 }}

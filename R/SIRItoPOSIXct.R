@@ -4,7 +4,7 @@
 #' For internal use in organizeSIRIdf, requires one column from a subset of the entire SIRI dataframe
 #' @param column the column to reshape into POSIXct
 #' @param round logical. round to nearest minute?
-#' @return the same SIRI column with readeable POSIXct values
+#' @return the same SIRI column with readable POSIXct values
 #' @references Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Using Big Data and open source tools for public transport reliability estimation}
 #' @section Warning:
 #' Do Not use this function on it's own, it is meant to be used only as part of the STG process

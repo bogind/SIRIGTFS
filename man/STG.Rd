@@ -35,7 +35,7 @@ requires the SIRI table  as well as the minimal GTFS tables to be in the environ
 should be used after \code{\link{readGTFS}}.
 }
 \details{
-The function provides an "easy to use" wrapper for users unfamilliar with the functions in **SIRItoGTFS**.
+The function provides an "easy to use" wrapper for users unfamiliar with the functions in **SIRItoGTFS**.
 It should be used after a SIRI table has been read into R's environment along with GTFS tables who have a corresponding date.
 it is best used after \code{\link{readGTFS}}.
 the SIRI table used should have the minimal columns:

@@ -8,8 +8,8 @@
 \describe{
    \item{\code{stop_id}}{An ID that uniquely identifies a stop, station, or station entrance.}
    \item{\code{stop_code}}{A short text or a number that uniquely identifies the stop for passengers.}
-   \item{\code{stop_name}}{The name of a stop, station, or station entrance, set to NA due it being in UTF-8 hebrew.}
-   \item{\code{stop_desc}}{The description of a stop, set to NA due it being in UTF-8 hebrew.}
+   \item{\code{stop_name}}{The name of a stop, station, or station entrance, set to NA due it being in UTF-8 Hebrew.}
+   \item{\code{stop_desc}}{The description of a stop, set to NA due it being in UTF-8 Hebrew.}
    \item{\code{stop_lat}}{The latitude of a stop, station, or station entrance. The field value must be a valid WGS 84 latitude.}
    \item{\code{stop_lon}}{The longitude of a stop, station, or station entrance. The field value must be a valid WGS 84 longitude value from -180 to 180.}
    \item{\code{location_type}}{Identifies whether this stop ID represents a stop, station, or station entrance. If no location type is specified, or the location_type is blank, stop IDs are treated as stops.}

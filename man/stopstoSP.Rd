@@ -11,7 +11,7 @@ stopstoSP(GTFSstops., epsg, useSIRI = FALSE, SIRI = NULL)
 
 \item{epsg}{a coordinate system code ( can be extracted using "make_EPSG" and searching the table).}
 
-\item{useSIRI}{logical. use a SIRI data frame as refrence?}
+\item{useSIRI}{logical. use a SIRI data frame as reference?}
 
 \item{SIRI}{if useSIRI is TRUE, which SIRI data frame to use?}
 }

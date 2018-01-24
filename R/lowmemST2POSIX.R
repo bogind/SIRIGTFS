@@ -5,7 +5,7 @@
 #' Is not used by default.
 #' used to convert Date and Time columns in the GTFS Stop_times table to a conformable POSIXct.
 #' @param column A \code{\link[base]{vector}} to convert, should be a column in the GTFS Stop_Times table.
-#' @param SIRIref A SIRI refrence table from which to get the date.
+#' @param SIRIref A SIRI reference table from which to get the date.
 #' @details use of this function requires editing both the STG function and \code{\link{organizeSIRIdf}} within it to replace all \code{\link{StopTimes2POSIXct}} to lowmemST2POSIX
 #' @return Returns the column as a POSIXct \code{\link[base]{vector}}
 #' @references Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Using Big Data and open source tools for public transport reliability estimation}

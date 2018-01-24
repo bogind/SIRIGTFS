@@ -58,9 +58,9 @@
 #' \describe{
 #'     \item{route_id}{An ID that uniquely identifies a route.}
 #'     \item{agency_id}{An agency for the specified route. This value is referenced from the agency file.}
-#'     \item{route_short_name}{The short name of a route. This will often be a short, abstract identifier like "32", "100X", or "Green" that riders use to identify a route, set to NA due it being in UTF-8 hebrew}
-#'     \item{route_long_name}{The full name of a route, set to NA due it being in UTF-8 hebrew}
-#'     \item{route_desc}{A description of a route, set to NA due it being in UTF-8 hebrew.}
+#'     \item{route_short_name}{The short name of a route. This will often be a short, abstract identifier like "32", "100X", or "Green" that riders use to identify a route, set to NA due it being in UTF-8 Hebrew}
+#'     \item{route_long_name}{The full name of a route, set to NA due it being in UTF-8 Hebrew}
+#'     \item{route_desc}{A description of a route, set to NA due it being in UTF-8 Hebrew.}
 #'     \item{route_type}{The type of transportation used on a route, in this case all values are 3 for bus.}
 #'     \item{route_color}{In systems that have colors assigned to routes, the route_color field defines a color that corresponds to a route.}
 #' }
@@ -127,8 +127,8 @@
 #' \describe{
 #'    \item{\code{stop_id}}{An ID that uniquely identifies a stop, station, or station entrance.}
 #'    \item{\code{stop_code}}{A short text or a number that uniquely identifies the stop for passengers.}
-#'    \item{\code{stop_name}}{The name of a stop, station, or station entrance, set to NA due it being in UTF-8 hebrew.}
-#'    \item{\code{stop_desc}}{The description of a stop, set to NA due it being in UTF-8 hebrew.}
+#'    \item{\code{stop_name}}{The name of a stop, station, or station entrance, set to NA due it being in UTF-8 Hebrew.}
+#'    \item{\code{stop_desc}}{The description of a stop, set to NA due it being in UTF-8 Hebrew.}
 #'    \item{\code{stop_lat}}{The latitude of a stop, station, or station entrance. The field value must be a valid WGS 84 latitude.}
 #'    \item{\code{stop_lon}}{The longitude of a stop, station, or station entrance. The field value must be a valid WGS 84 longitude value from -180 to 180.}
 #'    \item{\code{location_type}}{Identifies whether this stop ID represents a stop, station, or station entrance. If no location type is specified, or the location_type is blank, stop IDs are treated as stops.}
@@ -191,8 +191,8 @@
 #'    \item{\code{MonitoredCall}}{A wrapper node, can be ignored}
 #'    \item{\code{Longitude}}{The observations recorded Longitude on a WGS 84 projection}
 #'    \item{\code{Latitude}}{The observations recorded Latitude on a WGS 84 projection}
-#'    \item{\code{StopPointRef}}{The stops's ID in the GTFS stops table}
-#'    \item{\code{VehicleAtStop}}{Is the vehicle currently at the stop, by defualt NA which is FALSE}
+#'    \item{\code{StopPointRef}}{The stops' ID in the GTFS stops table}
+#'    \item{\code{VehicleAtStop}}{Is the vehicle currently at the stop, by default NA which is FALSE}
 #'    \item{\code{ExpectedArrivalTime}}{The predicted time the bus will arrive at the stop}
 #'    \item{\code{request_id}}{A unique identifier for each call to server}
 #'    \item{\code{call_time_toServer}}{Local time stamp for each call, not for each response}

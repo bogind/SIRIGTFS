@@ -8,7 +8,7 @@
 #' Requires the product of \code{\link{organizeSIRIdf}}
 #' @param SIRIdf A SIRI df after organizeSIRIdf (SIRIdf3)
 #' @param epsg a coordinate system code ( can be extracted using "make_EPSG" and searching the table ),
-#' defualt is NULL with Israel's TM Grid (epsg 2039)
+#' default is NULL with Israel's TM Grid (epsg 2039)
 #' @details
 #' Requires the product of \code{\link{organizeSIRIdf}},
 #' is interchangeable with \link[SIRItoGTFS]{SIRItoSP}.

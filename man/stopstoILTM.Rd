@@ -9,7 +9,7 @@ stopstoILTM(GTFSstops., useSIRI = FALSE, SIRI = NULL)
 \arguments{
 \item{GTFSstops.}{A subset of the GTFS stops table, should be the product of \code{\link{StopsForSIRI}}}
 
-\item{useSIRI}{logical. use a SIRI data frame as refrence?}
+\item{useSIRI}{logical. use a SIRI data frame as reference?}
 
 \item{SIRI}{if useSIRI is TRUE, which SIRI data frame to use?}
 }

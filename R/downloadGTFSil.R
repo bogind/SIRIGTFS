@@ -1,5 +1,5 @@
 #' @name downloadGTFSil
-#' @title download the israeli GTFS .zip file
+#' @title download the Israeli GTFS .zip file
 #' @description downloads the Israeli GTFS .zip file into the selected directory with a date added to the files name.
 #' @param directory If directory remains NULL the function allows you to choose a directory manually via \code{\link[easycsv]{choose_dir}}
 #' @return A .zip file in the selected directory, not read into the environment

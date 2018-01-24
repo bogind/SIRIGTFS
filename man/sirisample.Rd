@@ -22,8 +22,8 @@
    \item{\code{MonitoredCall}}{A wrapper node, can be ignored}
    \item{\code{Longitude}}{The observations recorded Longitude on a WGS 84 projection}
    \item{\code{Latitude}}{The observations recorded Latitude on a WGS 84 projection}
-   \item{\code{StopPointRef}}{The stops's ID in the GTFS stops table}
-   \item{\code{VehicleAtStop}}{Is the vehicle currently at the stop, by defualt NA which is FALSE}
+   \item{\code{StopPointRef}}{The stops' ID in the GTFS stops table}
+   \item{\code{VehicleAtStop}}{Is the vehicle currently at the stop, by default NA which is FALSE}
    \item{\code{ExpectedArrivalTime}}{The predicted time the bus will arrive at the stop}
    \item{\code{request_id}}{A unique identifier for each call to server}
    \item{\code{call_time_toServer}}{Local time stamp for each call, not for each response}

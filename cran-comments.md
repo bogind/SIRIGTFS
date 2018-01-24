@@ -9,18 +9,12 @@
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 notes
+0 errors | 0 warnings | 0 notes
 
-* checking installed package size ... NOTE
-  installed size is 29.5Mb
-  sub-directories of 1Mb or more:
-    data  29.1Mb
 
 ---
 
-I realise the dataset "sirisample" is large,
-but it is preferable to provide a full day of data for any and all researchers wishing to test the library,
-if possible i would like to keep it the way it is.
+fixed the file size for the full package and added link to SIRI and GTFS documentation, as per the notes i recieved from Uwe.
 
 problem with devtools::build() in RStudio in windows 10,
 R CMD build and R CMD check (plus --as-cran) come back pefect from terminal.

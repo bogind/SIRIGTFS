@@ -16,8 +16,8 @@ Imports: dplyr (>= 0.7.2),
          data.table (>= 1.10.4),
          rgeos (>= 0.3.23),
          easycsv (>= 1.0.5)
-URL: \url{https://github.com/bogind/SIRItoGTFS},
-    SIRI documentation: \url{http://user47094.vs.easily.co.uk/siri/documentation.htm},
-    GTFS documentation: \url{https://developers.google.com/transit/gtfs/}
+URL: https://github.com/bogind/SIRItoGTFS,
+     http://user47094.vs.easily.co.uk/siri/documentation.htm,
+     https://developers.google.com/transit/gtfs/
 BugReports:https://github.com/bogind/SIRItoGTFS/issues
 RoxygenNote: 6.0.1

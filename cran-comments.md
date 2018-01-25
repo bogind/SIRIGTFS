@@ -28,5 +28,5 @@ ERROR: Error in 'git2r_remote_fetch': error authenticating: failed connecting ag
 happend with my previous package *easycsv* on the same computer too,    
 all connections are fine and it only happens with the first time release checks.    
     
-The URL addresses for the SIRI and GTFS documentation in the description file come back as Message: Invalid URI scheme.   
-these are the actual addresses for the documentation and both work.
+The problem that cam up with the invalid URI apperently was adding the "SIRI/GTFS Documentation:" string in front of it.
+removed that and the link are just added as useful links.

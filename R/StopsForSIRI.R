@@ -6,7 +6,7 @@
 #' @param SIRI a SIRIdf after organizeSIRIdf (SIRIdf3)
 #' @param stops GTFSstops table
 #' @return A subset of the GTFS stops table conforming to the bus route being evaluated.
-#' @references Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Using Big Data and open source tools for public transport reliability estimation}
+#' @references Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Estimation of public transport service reliability using Big Data and open source tools}
 #' @section Warning:
 #' Do Not use this function on it's own, it is meant to be used only as part of the STG process
 #' @seealso \code{\link{STG}}

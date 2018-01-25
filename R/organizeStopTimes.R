@@ -6,7 +6,7 @@
 #' @param Stimes The product of \code{\link{substoptimes}}, a GTFS stop_times \code{\link[base]{data.frame}} subset.
 #' @param SIRIdf3. A SIRI \code{\link[base]{data.frame}} after \code{\link{organizeSIRIdf}}.
 #' @return A \code{\link[base]{data.frame}} containing columns which can be compared to SIRI's date and time columns.
-#' @references Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Using Big Data and open source tools for public transport reliability estimation}
+#' @references Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Estimation of public transport service reliability using Big Data and open source tools}
 #' @section Warning:
 #' Do Not use this function on it's own, it is meant to be used only as part of the STG process
 #' @seealso \code{\link{STG}}, \code{\link{substoptimes}}, \code{\link{organizeSIRIdf}}

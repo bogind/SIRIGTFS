@@ -25,7 +25,7 @@
 #' with the SIRI table.
 #' @return A \code{\link[base]{data.frame}} containing a comparison between a public transportation mode's schedule and real-time data.
 #' @references
-#' Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Using Big Data and open source tools for public transport reliability estimation}
+#' Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Estimation of public transport service reliability using Big Data and open source tools}
 #' @seealso \code{readGTFS}
 #' @examples
 #' require(SIRItoGTFS)

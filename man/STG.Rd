@@ -46,13 +46,11 @@ The output table will contain a time and distance comparison between the schedul
 with the SIRI table.
 }
 \examples{
-\dontrun{
 require(SIRItoGTFS)
 require(data.table)
 # use the sample SIRI data included with the package
-SIRIDF = data("sirisample")
-# load your own GTFS data
-readGTFS()
+SIRIDF = SIRIsample
+# load your own GTFS data with `readGTFS()`
 # or use the subset of GTFS data conformable to the SIRI sample, also included in the package
 data("GTFSstops")
 data("GTFSstop_times")
@@ -68,7 +66,7 @@ busesDF = STG(SIRIDF,
               GTFSstop_times. = GTFSstop_times,
               GTFStrips. = GTFStrips,
               linerefs = unique(SIRIDF$lineref[1]))
-}
+
 }
 \references{
 Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Using Big Data and open source tools for public transport reliability estimation}

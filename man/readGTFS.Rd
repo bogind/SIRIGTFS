@@ -78,11 +78,21 @@ Do Not use this function on it's own, it is meant to be used only as part of the
 }
 
 \examples{
-\dontrun{
-require(SIRItoGTFS)
-readGTFS()
-#or:
-readGTFS(minimal=TRUE)}
+  require(SIRItoGTFS)
+  directory = getwd()
+  write.csv(data.frame(matrix(1:9, nrow = 3)), file = file.path(directory,"/agency.csv"))
+  write.csv(data.frame(matrix(1:9, nrow = 3)), file = file.path(directory,"/calendar.csv"))
+  write.csv(data.frame(matrix(1:9, nrow = 3)), file = file.path(directory,"/routes.txt"))
+  write.csv(data.frame(matrix(1:9, nrow = 3)), file = file.path(directory,"/shapes.txt"))
+  write.csv(data.frame(matrix(1:9, nrow = 3)), file = file.path(directory,"/stop_times.txt"))
+  write.csv(data.frame(matrix(1:9, nrow = 3)), file = file.path(directory,"/stops.txt"))
+  write.csv(data.frame(matrix(1:9, nrow = 3)), file = file.path(directory,"/translations.txt"))
+  write.csv(data.frame(matrix(1:9, nrow = 3)), file = file.path(directory,"/trips.txt"))
+
+  # now we read just the minimal tables needed for `STG`,
+  # meaning everything besides shapes and translations
+  readGTFS(directory, minimal = TRUE, extension = "BOTH")
+
 }
 \references{
 Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Using Big Data and open source tools for public transport reliability estimation}

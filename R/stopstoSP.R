@@ -36,7 +36,7 @@ stopstoSP <- function(GTFSstops.,epsg ,useSIRI = FALSE, SIRI = NULL){
   else
     {
     GTFSstops <- GTFSstops[!is.na(GTFSstops$stop_lon),]
-    GTFSstops <- SIRItoGTFS::StopsForSIRI(SIRI = SIRI, stops = GTFSstops)
+    GTFSstops <- StopsForSIRI(SIRI = SIRI, stops = GTFSstops)
     proj = rgdal::make_EPSG()
     crs2 <- sp::CRS(proj$prj4[proj$code == epsg])
     crs1 <- sp::CRS("+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0")

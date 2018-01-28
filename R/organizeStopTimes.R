@@ -23,10 +23,10 @@ organizeStopTimes <- function(Stimes, SIRIdf3.){
   if(length(depart_firststr) > 0){
     s3 <- cbind(s2, depart_firststr)
     s3$depart_firststr <- as.character(s3$depart_firststr)
-    s3$depart_first <- SIRItoGTFS::StopTimes2POSIXct(s3$depart_firststr,SIRIdf3.)
+    s3$depart_first <- StopTimes2POSIXct(s3$depart_firststr,SIRIdf3.)
     s3$key <- paste(s3$depart_first," ", s3$stop_id)
-    s3$arrival_time <- SIRItoGTFS::StopTimes2POSIXct(s3$arrival_time,SIRIdf3.)
-    s3$departure_time <- SIRItoGTFS::StopTimes2POSIXct(s3$departure_time,SIRIdf3.)
+    s3$arrival_time <- StopTimes2POSIXct(s3$arrival_time,SIRIdf3.)
+    s3$departure_time <- StopTimes2POSIXct(s3$departure_time,SIRIdf3.)
     s3 <- s3[!is.na(s3$arrival_time),]
     s3
   }else{

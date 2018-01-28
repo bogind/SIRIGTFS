@@ -42,10 +42,10 @@ organizeSIRIdf <- function(SIRIdf, noduplicates = FALSE, round = FALSE,
       datet <- data.frame(table(SIRIdf$date))
       SIRIdf <- SIRIdf[SIRIdf$date == datet$Var1[which.max(datet$Freq)],]
 
-      SIRIdf$RecordedAtTime <- SIRItoGTFS::SIRItoPOSIXct(SIRIdf$RecordedAtTime, round = FALSE)
-      SIRIdf$OriginAimedDepartureTime <- SIRItoGTFS::SIRItoPOSIXct(SIRIdf$OriginAimedDepartureTime)
-      SIRIdf$ExpectedArrivalTime <- SIRItoGTFS::SIRItoPOSIXct(SIRIdf$ExpectedArrivalTime)
-      SIRIdf$AimedArrivalTime <- SIRItoGTFS::SIRItoPOSIXct(SIRIdf$AimedArrivalTime)
+      SIRIdf$RecordedAtTime <- SIRItoPOSIXct(SIRIdf$RecordedAtTime, round = FALSE)
+      SIRIdf$OriginAimedDepartureTime <- SIRItoPOSIXct(SIRIdf$OriginAimedDepartureTime)
+      SIRIdf$ExpectedArrivalTime <- SIRItoPOSIXct(SIRIdf$ExpectedArrivalTime)
+      SIRIdf$AimedArrivalTime <- SIRItoPOSIXct(SIRIdf$AimedArrivalTime)
       SIRIdf$key <-paste(SIRIdf$request_id,SIRIdf$OriginAimedDepartureTime, SIRIdf$VehicleRef, sep = " ; ")
       SIRIdf$BUS_XY <- ifelse(is.na(SIRIdf$Longitude) | is.na(SIRIdf$Latitude), NA,  paste(SIRIdf$Longitude, SIRIdf$Latitude, sep = " , "))
 
@@ -76,10 +76,10 @@ organizeSIRIdf <- function(SIRIdf, noduplicates = FALSE, round = FALSE,
 
 
     }else{
-      SIRIdf$RecordedAtTime <- SIRItoGTFS::SIRItoPOSIXct(SIRIdf$RecordedAtTime, round = FALSE)
-      SIRIdf$OriginAimedDepartureTime <- SIRItoGTFS::SIRItoPOSIXct(SIRIdf$OriginAimedDepartureTime)
-      SIRIdf$ExpectedArrivalTime <- SIRItoGTFS::SIRItoPOSIXct(SIRIdf$ExpectedArrivalTime)
-      SIRIdf$AimedArrivalTime <- SIRItoGTFS::SIRItoPOSIXct(SIRIdf$AimedArrivalTime)
+      SIRIdf$RecordedAtTime <- SIRItoPOSIXct(SIRIdf$RecordedAtTime, round = FALSE)
+      SIRIdf$OriginAimedDepartureTime <- SIRItoPOSIXct(SIRIdf$OriginAimedDepartureTime)
+      SIRIdf$ExpectedArrivalTime <- SIRItoPOSIXct(SIRIdf$ExpectedArrivalTime)
+      SIRIdf$AimedArrivalTime <- SIRItoPOSIXct(SIRIdf$AimedArrivalTime)
       SIRIdf$key <-paste(SIRIdf$request_id,SIRIdf$OriginAimedDepartureTime, SIRIdf$VehicleRef, sep = " ; ")
       SIRIdf$BUS_XY <- ifelse(is.na(SIRIdf$Longitude) | is.na(SIRIdf$Latitude), NA,  paste(SIRIdf$Longitude, SIRIdf$Latitude, sep = " , "))
 
@@ -130,10 +130,10 @@ organizeSIRIdf <- function(SIRIdf, noduplicates = FALSE, round = FALSE,
       SIRIdf <- SIRIdf[SIRIdf$date == datet$Var1[which.max(datet$Freq)],]
 
 
-      SIRIdf$RecordedAtTime <- SIRItoGTFS::SIRItoPOSIXct(SIRIdf$RecordedAtTime, round = FALSE)
-      SIRIdf$OriginAimedDepartureTime <- SIRItoGTFS::SIRItoPOSIXct(SIRIdf$OriginAimedDepartureTime)
-      SIRIdf$ExpectedArrivalTime <- SIRItoGTFS::SIRItoPOSIXct(SIRIdf$ExpectedArrivalTime)
-      SIRIdf$AimedArrivalTime <- SIRItoGTFS::SIRItoPOSIXct(SIRIdf$AimedArrivalTime)
+      SIRIdf$RecordedAtTime <- SIRItoPOSIXct(SIRIdf$RecordedAtTime, round = FALSE)
+      SIRIdf$OriginAimedDepartureTime <- SIRItoPOSIXct(SIRIdf$OriginAimedDepartureTime)
+      SIRIdf$ExpectedArrivalTime <- SIRItoPOSIXct(SIRIdf$ExpectedArrivalTime)
+      SIRIdf$AimedArrivalTime <- SIRItoPOSIXct(SIRIdf$AimedArrivalTime)
       SIRIdf$key <-paste(SIRIdf$request_id,SIRIdf$OriginAimedDepartureTime, SIRIdf$VehicleRef, sep = " ; ")
       SIRIdf$BUS_XY <- ifelse(is.na(SIRIdf$Longitude) | is.na(SIRIdf$Latitude), NA,  paste(SIRIdf$Longitude, SIRIdf$Latitude, sep = " , "))
 
@@ -166,10 +166,10 @@ organizeSIRIdf <- function(SIRIdf, noduplicates = FALSE, round = FALSE,
 
 
     }else{
-      SIRIdf$RecordedAtTime <- SIRItoGTFS::SIRItoPOSIXct(SIRIdf$RecordedAtTime, round = FALSE)
-      SIRIdf$OriginAimedDepartureTime <- SIRItoGTFS::SIRItoPOSIXct(SIRIdf$OriginAimedDepartureTime)
-      SIRIdf$ExpectedArrivalTime <- SIRItoGTFS::SIRItoPOSIXct(SIRIdf$ExpectedArrivalTime)
-      SIRIdf$AimedArrivalTime <- SIRItoGTFS::SIRItoPOSIXct(SIRIdf$AimedArrivalTime)
+      SIRIdf$RecordedAtTime <- SIRItoPOSIXct(SIRIdf$RecordedAtTime, round = FALSE)
+      SIRIdf$OriginAimedDepartureTime <- SIRItoPOSIXct(SIRIdf$OriginAimedDepartureTime)
+      SIRIdf$ExpectedArrivalTime <- SIRItoPOSIXct(SIRIdf$ExpectedArrivalTime)
+      SIRIdf$AimedArrivalTime <- SIRItoPOSIXct(SIRIdf$AimedArrivalTime)
       SIRIdf$key <-paste(SIRIdf$request_id,SIRIdf$OriginAimedDepartureTime, SIRIdf$VehicleRef, sep = " ; ")
       SIRIdf$BUS_XY <- ifelse(is.na(SIRIdf$Longitude) | is.na(SIRIdf$Latitude), NA,  paste(SIRIdf$Longitude, SIRIdf$Latitude, sep = " , "))
 

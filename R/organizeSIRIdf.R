@@ -19,7 +19,7 @@
 #' @section Warning:
 #' Do Not use this function on it's own, it is meant to be used only as part of the STG process
 #' @keywords misc internal
-#' @export organizeSIRIdf
+
 organizeSIRIdf <- function(SIRIdf, noduplicates = FALSE, round = FALSE,
                            GTFStrips., GTFScalendar., GTFSstop_times.){
 

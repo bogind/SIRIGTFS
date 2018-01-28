@@ -13,7 +13,7 @@
 #' Do Not use this function on it's own, it is meant to be used only as part of the STG process
 #' @seealso \code{\link{STG}}, \code{\link{StopTimes2POSIXct}}
 #' @keywords misc internal
-#' @export
+
 lowmemST2POSIX <- function(column, SIRIref){
   s1 <- column
   s2 <- as.Date(as.POSIXct(SIRIref$RecordedAtTime[1:length(column)]))

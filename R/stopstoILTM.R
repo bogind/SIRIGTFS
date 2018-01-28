@@ -18,7 +18,7 @@
 #' @importFrom sp CRS SpatialPointsDataFrame spTransform
 #' @importClassesFrom sp SpatialPointsDataFrame
 #' @importFrom rgdal make_EPSG
-#' @export
+
 
 stopstoILTM <- function(GTFSstops., useSIRI = FALSE, SIRI = NULL){
 

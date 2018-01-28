@@ -11,7 +11,7 @@
 #' @seealso \code{\link{STG}}, \code{\link{organizeSIRIdf}}
 #' @keywords misc internal
 #' @importFrom reshape2 colsplit
-#' @export
+
 
 
 SIRItoPOSIXct <- function(column, round = FALSE){

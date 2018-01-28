@@ -10,7 +10,7 @@
 #' Do Not use this function on it's own, it is meant to be used only as part of the STG process
 #' @seealso \code{\link{STG}}, \code{\link{SIRIKeepClosestStop}}
 #' @keywords misc internal
-#' @export
+
 check_outlier2 <- function(fullans){
   for(trip in unique(fullans$trip_id)){
     testdf <- fullans[fullans$trip_id == trip,]

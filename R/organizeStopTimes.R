@@ -11,7 +11,7 @@
 #' Do Not use this function on it's own, it is meant to be used only as part of the STG process
 #' @seealso \code{\link{STG}}, \code{\link{substoptimes}}, \code{\link{organizeSIRIdf}}
 #' @keywords misc internal
-#' @export
+
 
 organizeStopTimes <- function(Stimes, SIRIdf3.){
   s2 <- Stimes

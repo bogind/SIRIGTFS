@@ -18,7 +18,7 @@
 #' @keywords misc internal
 #' @importFrom rgeos gConvexHull gBuffer gWithin
 #' @importClassesFrom sp SpatialPointsDataFrame
-#' @export
+
 
 
 check_outlier <- function(spSIRI){

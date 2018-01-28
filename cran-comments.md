@@ -10,12 +10,15 @@
 
 ## R CMD check results
 
-0 errors | 0 warnings | 0 notes
+0 errors | 0 warnings | 1 notes
 
-
+checking dependencies in R code ... NOTE
+Missing or unexported objects:
+  'SIRItoGTFS::SIRItoPOSIXct' 'SIRItoGTFS::StopTimes2POSIXct'
+  'SIRItoGTFS::StopsForSIRI'
 ---
 
-fixed the file size for the full package and added link to SIRI and GTFS documentation, as per the notes i recieved from Uwe.    
+all of these objects should not be exported, other than that checks come back clean. 
     
 problem with devtools::build() in RStudio in windows 10,
 R CMD build and R CMD check (plus --as-cran) come back pefect from terminal.

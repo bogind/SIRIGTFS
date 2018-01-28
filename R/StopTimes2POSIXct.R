@@ -15,7 +15,7 @@
 #' Do Not use this function on it's own, it is meant to be used only as part of the STG process
 #' @seealso \code{\link{STG}} \code{\link{organizeStopTimes}}, \code{\link{lowmemST2POSIX}}
 #' @keywords misc internal
-#' @export
+
 
 StopTimes2POSIXct <- function(column, SIRIref){
   d <- column

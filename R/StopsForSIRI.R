@@ -11,7 +11,7 @@
 #' Do Not use this function on it's own, it is meant to be used only as part of the STG process
 #' @seealso \code{\link{STG}}
 #' @keywords misc internal
-#' @export
+
 
 
 StopsForSIRI <- function(SIRI, stops){

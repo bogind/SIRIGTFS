@@ -18,7 +18,7 @@
 #' @importFrom  sp spDists SpatialPointsDataFrame
 #' @importClassesFrom sp SpatialPointsDataFrame
 #' @importFrom dplyr left_join
-#' @export
+
 
 NearestStop <- function(SIRIspdf , Stopsspdf){
 

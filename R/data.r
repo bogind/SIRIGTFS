@@ -174,7 +174,7 @@
 #' the data is provided for anyone wishing to test the methods used during research.
 #'
 #'
-#' @format A data frame with 836 observations on the following 22 variables.
+#' @format A data frame with 127653 observations on the following 22 variables.
 #' \describe{
 #'    \item{\code{RecordedAtTime}}{Time stamp provided by the server, can differ within the same call, response rate for stops to server may vary}
 #'    \item{\code{ItemIdentifier}}{The server's ID for each observation}

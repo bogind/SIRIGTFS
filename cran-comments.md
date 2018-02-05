@@ -14,8 +14,9 @@
 
 
 ---
-Fixed the problem with exporting internal functions.
-
+I know it's only been a week but i got a bug report about the datasets, 
+which led to a bug in the example of the main function.
+both fixed now with no errors, warnings or notes on all systems.
 
 
 problem with devtools::build() in RStudio in windows 10,

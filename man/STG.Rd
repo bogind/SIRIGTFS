@@ -49,7 +49,9 @@ with the SIRI table.
 require(SIRItoGTFS)
 require(data.table)
 # use the sample SIRI data included with the package
-SIRIDF = SIRIsample
+data("sirisample")
+SIRIsample$Longitude = as.numeric(SIRIsample$Longitude)
+SIRIsample$Latitude = as.numeric(SIRIsample$Latitude)
 # load your own GTFS data with `readGTFS()`
 # or use the subset of GTFS data conformable to the SIRI sample, also included in the package
 data("GTFSstops")
@@ -58,14 +60,15 @@ data("GTFScalendar")
 data("GTFStrips")
 data("GTFSagency")
 data("GTFSroutes")
-busesDF = STG(SIRIDF,
-              GTFSstops. = GTFSstops,
-              GTFSagency. = GTFSagency,
-              GTFScalendar. = GTFScalendar,
-              GTFSroutes. = GTFSroutes,
-              GTFSstop_times. = GTFSstop_times,
-              GTFStrips. = GTFStrips,
-              linerefs = unique(SIRIDF$lineref[1]))
+busesDF = STG(SIRIsample,
+             GTFSstops. = GTFSstops,
+             GTFSagency. = GTFSagency,
+             GTFScalendar. = GTFScalendar,
+             GTFSroutes. = GTFSroutes,
+             GTFSstop_times. = GTFSstop_times,
+             GTFStrips. = GTFStrips,
+             linerefs = unique(SIRIsample$LineRef[1]))
+
 
 }
 \references{

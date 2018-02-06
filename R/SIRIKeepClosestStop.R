@@ -5,7 +5,7 @@
 #' requires the data.frame from the product of \code{\link{NearestStop}}.
 #' @param SIRIdf A SIRI df with a distance field (SIRIdf4)
 #' @return A SIRI \code{\link[base]{data.frame}} with removed duplicates.
-#' @references Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Estimation of public transport service reliability using Big Data and open source tools}
+#' @references Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Estimation of Public Transportation Service Reliability Using Big Data and Open Source Tools}
 #' @section Warning:
 #' Do Not use this function on it's own, it is meant to be used only as part of the STG process
 #' @seealso \code{\link{STG}}

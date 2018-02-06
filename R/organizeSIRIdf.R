@@ -15,7 +15,7 @@
 #' Prepares the subset of the SIRI data.frame for comparison to the GTFS schedule
 #' the function is a part of STG and should not be used on it's own.
 #' @seealso \code{\link[SIRItoGTFS]{STG}}
-#' @references Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Estimation of public transport service reliability using Big Data and open source tools}
+#' @references Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Estimation of Public Transportation Service Reliability Using Big Data and Open Source Tools}
 #' @section Warning:
 #' Do Not use this function on it's own, it is meant to be used only as part of the STG process
 #' @keywords misc internal

@@ -30,7 +30,7 @@ Do Not use this function on it's own, it is meant to be used only as part of the
 }
 
 \references{
-Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Estimation of public transport service reliability using Big Data and open source tools}
+Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Estimation of Public Transportation Service Reliability Using Big Data and Open Source Tools}
 }
 \seealso{
 \code{\link{STG}}, \code{\link{SIRItoSP}}, \code{\link{organizeSIRIdf}}

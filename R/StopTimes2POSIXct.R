@@ -10,7 +10,7 @@
 #' the function is a part of \code{\link{organizeStopTimes}} inside \code{\link{STG}} and should not be used on it's own.
 #' it is also interchangeable with \link{lowmemST2POSIX} for advanced user with machines low on memory.
 #' @return A \code{\link[base]{vector}} of POSIXct values in "\%Y-\%m-\%d \%H:\%M:\%S" format.
-#' @references Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Estimation of public transport service reliability using Big Data and open source tools}
+#' @references Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Estimation of Public Transportation Service Reliability Using Big Data and Open Source Tools}
 #' @section Warning:
 #' Do Not use this function on it's own, it is meant to be used only as part of the STG process
 #' @seealso \code{\link{STG}} \code{\link{organizeStopTimes}}, \code{\link{lowmemST2POSIX}}

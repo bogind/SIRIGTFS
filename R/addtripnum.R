@@ -9,7 +9,7 @@
 #' the function is a part of STG and should not be used on it's own.
 #' @return
 #' A \code{\link[base]{data.frame}} containing the final result of \code{\link{STG}} with a trip number column added.
-#' @references Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Estimation of public transport service reliability using Big Data and open source tools}
+#' @references Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Estimation of Public Transportation Service Reliability Using Big Data and Open Source Tools}
 #' @section Warning:
 #' Do Not use this function on it's own, it is meant to be used only as part of the STG process
 #' @seealso \code{\link{STG}}

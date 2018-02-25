@@ -4,12 +4,16 @@
 \alias{StopsForSIRI}
 \title{subset stops for SIRIdf}
 \usage{
-StopsForSIRI(SIRI, stops)
+StopsForSIRI(SIRI, stops, trips, stop_times)
 }
 \arguments{
 \item{SIRI}{a SIRIdf after organizeSIRIdf (SIRIdf3)}
 
 \item{stops}{GTFSstops table}
+
+\item{trips}{GTFStrips table}
+
+\item{stop_times}{GTFSstop_times table}
 }
 \value{
 A subset of the GTFS stops table conforming to the bus route being evaluated.
@@ -24,7 +28,7 @@ Do Not use this function on it's own, it is meant to be used only as part of the
 }
 
 \references{
-Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Estimation of Public Transportation Service Reliability Using Big Data and Open Source Tools}
+Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Spatial and Temporal Estimation of the Service Reliability of Public Transportation Using Big Data and Open Source Tools}
 }
 \seealso{
 \code{\link{STG}}

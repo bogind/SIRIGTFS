@@ -46,6 +46,6 @@ the "request_id" and "call_time_toServer" columns were added locally and are nee
 the data is provided for anyone wishing to test the methods used during research.
 }
 \references{
-Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Estimation of Public Transportation Service Reliability Using Big Data and Open Source Tools}
+Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Spatial and Temporal Estimation of the Service Reliability of Public Transportation Using Big Data and Open Source Tools}
 }
 \keyword{datasets}

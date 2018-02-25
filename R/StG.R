@@ -25,7 +25,7 @@
 #' with the SIRI table.
 #' @return A \code{\link[base]{data.frame}} containing a comparison between a public transportation mode's schedule and real-time data.
 #' @references
-#' Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Estimation of Public Transportation Service Reliability Using Big Data and Open Source Tools}
+#' Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Spatial and Temporal Estimation of the Service Reliability of Public Transportation Using Big Data and Open Source Tools}
 #' @seealso \code{readGTFS}
 #' @examples
 #' require(SIRItoGTFS)
@@ -113,7 +113,7 @@ STG = function(SIRIDF,
       # SIRIdf <- SIRIdf[!duplicated(SIRIdf$key),]
 
       #Only for one line... this will not work for multiple lines
-      SIRIstops <- StopsForSIRI(SIRI = SIRIdf3,stops = GTFSstops.) # DF of staions per line
+      SIRIstops <- StopsForSIRI(SIRI = SIRIdf3,stops = GTFSstops., trips = GTFStrips., stop_times = GTFSstop_times.) # DF of staions per line
 
 
       if(length(SIRIdf3$Longitude) == length(SIRIdf3$Longitude[is.na(SIRIdf3$Longitude)])){

@@ -8,7 +8,7 @@
 #' @param SIRIref A SIRI reference table from which to get the date.
 #' @details use of this function requires editing both the STG function and \code{\link{organizeSIRIdf}} within it to replace all \code{\link{StopTimes2POSIXct}} to lowmemST2POSIX
 #' @return Returns the column as a POSIXct \code{\link[base]{vector}}
-#' @references Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Estimation of Public Transportation Service Reliability Using Big Data and Open Source Tools}
+#' @references Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Spatial and Temporal Estimation of the Service Reliability of Public Transportation Using Big Data and Open Source Tools}
 #' @section Warning:
 #' Do Not use this function on it's own, it is meant to be used only as part of the STG process
 #' @seealso \code{\link{STG}}, \code{\link{StopTimes2POSIXct}}

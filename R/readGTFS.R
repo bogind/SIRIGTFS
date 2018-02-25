@@ -29,7 +29,7 @@
 #' @param showProgress TRUE displays progress on the console using \verb{\r}. It is produced in fread's C code where the very nice (but R level) txtProgressBar and tkProgressBar are not easily available.
 #' @param data.table logical. TRUE returns a data.table. FALSE returns a data.frame. default for SIRItoGTFS is FALSE, should be kept that way.
 #' @return Multiple \link[base]{data.frame} containing a representation of the data in the file with the "GTFS" prefix.
-#' @references Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{EEstimation of Public Transportation Service Reliability Using Big Data and Open Source Tools}
+#' @references Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Spatial and Temporal Estimation of the Service Reliability of Public Transportation Using Big Data and Open Source Tools}
 #' @section Warning:
 #' Do Not use this function on it's own, it is meant to be used only as part of the STG process
 #' @seealso \code{\link{STG}}, \code{\link[data.table]{fread}}, \code{\link[easycsv]{fread_folder}}

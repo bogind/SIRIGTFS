@@ -12,7 +12,7 @@ readGTFS(directory = NULL, extension = "BOTH", sep = "auto",
   else ",", check.names = FALSE, encoding = "unknown", quote = "\\"",
   strip.white = TRUE, fill = FALSE, blank.lines.skip = FALSE,
   key = NULL, prefix = "GTFS", minimal = FALSE,
-  showProgress = getOption("datatable.showProgress"), data.table = FALSE)
+  showProgress = interactive(), data.table = FALSE)
 }
 \arguments{
 \item{directory}{a directory from which to read the GTFS tables, if NULL then a manual choice is provided on windows, Linux and OSX.}
@@ -61,7 +61,7 @@ readGTFS(directory = NULL, extension = "BOTH", sep = "auto",
 
 \item{minimal}{whether or not to read all the GTFS tables or just those needed for SIRItoGTFS, default is FALSE, meaning all GTFS tables will be read}
 
-\item{showProgress}{TRUE displays progress on the console using \verb{\r}. It is produced in fread's C code where the very nice (but R level) txtProgressBar and tkProgressBar are not easily available.}
+\item{showProgress}{TRUE displays progress on the console using \verb{\r}. It is produced in fread's C code where the very nice (but R level) txtProgressBar and tkProgressBar are not easily available, by default is set to the sessions's interactivity.}
 
 \item{data.table}{logical. TRUE returns a data.table. FALSE returns a data.frame. default for SIRItoGTFS is FALSE, should be kept that way.}
 }

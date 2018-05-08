@@ -26,7 +26,7 @@
 #' @param key Character vector of one or more column names which is passed to setkey. It may be a single comma separated string such as key="x,y,z", or a vector of names such as key=c("x","y","z"). Only valid when argument data.table=TRUE
 #' @param prefix A character string to be prefixed to each table name, default is "GTFS".
 #' @param minimal whether or not to read all the GTFS tables or just those needed for SIRItoGTFS, default is FALSE, meaning all GTFS tables will be read
-#' @param showProgress TRUE displays progress on the console using \verb{\r}. It is produced in fread's C code where the very nice (but R level) txtProgressBar and tkProgressBar are not easily available.
+#' @param showProgress TRUE displays progress on the console using \verb{\r}. It is produced in fread's C code where the very nice (but R level) txtProgressBar and tkProgressBar are not easily available, by default is set to the sessions's interactivity.
 #' @param data.table logical. TRUE returns a data.table. FALSE returns a data.frame. default for SIRItoGTFS is FALSE, should be kept that way.
 #' @return Multiple \link[base]{data.frame} containing a representation of the data in the file with the "GTFS" prefix.
 #' @references Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Spatial and Temporal Estimation of the Service Reliability of Public Transportation Using Big Data and Open Source Tools}
@@ -79,7 +79,7 @@ readGTFS = function(directory = NULL,
                         key=NULL,
                         prefix="GTFS",
                         minimal=FALSE,
-                        showProgress=getOption("datatable.showProgress"),
+                        showProgress=interactive(),
                         data.table=FALSE
 ){
   if ("data.table" %in% rownames(installed.packages()) == FALSE) {
@@ -187,7 +187,7 @@ readGTFS = function(directory = NULL,
                                     fill=fill,
                                     blank.lines.skip=blank.lines.skip,
                                     key=key,
-                                    showProgress=getOption("datatable.showProgress"),
+                                    showProgress=interactive(),
                                     data.table=data.table
         )
         assign_to_global <- function(pos=1){

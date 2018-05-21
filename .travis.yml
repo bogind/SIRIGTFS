@@ -23,7 +23,6 @@ matrix:
           osx_image: xcode9.2
           before_install:
                 - brew update
-                - brew upgrade
                 - brew tap osgeo/osgeo4mac
                 - brew outdated gdal
                 - brew outdated gdal2

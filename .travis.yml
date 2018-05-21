@@ -27,4 +27,5 @@ matrix:
                 - brew install geos
                 - brew install gdal2 --with-armadillo --with-complete --with-libkml --with-unsupported
                 - brew link --force gdal2
+                - brew outdated geos || brew upgrade geos
 

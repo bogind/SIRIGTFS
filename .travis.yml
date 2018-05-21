@@ -25,7 +25,7 @@ matrix:
                 - brew update
                 - brew upgrade
                 - brew tap osgeo/osgeo4mac
-                - brew outdated gdal || brew upgrade gdal
-                - brew outdated gdal2 || brew upgrade gdal2
-                - brew outdated geos || brew upgrade geos
+                - brew outdated gdal
+                - brew outdated gdal2
+                - brew outdated geos
 

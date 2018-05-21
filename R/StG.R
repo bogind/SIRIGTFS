@@ -77,7 +77,7 @@ STG = function(SIRIDF,
   listallbuses <- list()
   outliers <- NULL
   start <- Sys.time()
-  total = 11
+
 
 
   print("Strating")

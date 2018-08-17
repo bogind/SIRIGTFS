@@ -8,11 +8,11 @@ readGTFS(directory = NULL, extension = "BOTH", sep = "auto",
   nrows = -1L, header = "auto", na.strings = "NA",
   stringsAsFactors = FALSE, verbose = getOption("datatable.verbose"),
   skip = 0L, drop = NULL, colClasses = NULL,
-  integer64 = getOption("datatable.integer64"), dec = if (sep != ".") "."
-  else ",", check.names = FALSE, encoding = "unknown", quote = "\\"",
-  strip.white = TRUE, fill = FALSE, blank.lines.skip = FALSE,
-  key = NULL, prefix = "GTFS", minimal = FALSE,
-  showProgress = interactive(), data.table = FALSE)
+  integer64 = getOption("datatable.integer64"), dec = if (sep != ".")
+  "." else ",", check.names = FALSE, encoding = "unknown",
+  quote = "\\"", strip.white = TRUE, fill = FALSE,
+  blank.lines.skip = FALSE, key = NULL, prefix = "GTFS",
+  minimal = FALSE, showProgress = interactive(), data.table = FALSE)
 }
 \arguments{
 \item{directory}{a directory from which to read the GTFS tables, if NULL then a manual choice is provided on windows, Linux and OSX.}

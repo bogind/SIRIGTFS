@@ -69,7 +69,7 @@ organizeSIRIdf <- function(SIRIdf, noduplicates = FALSE, round = FALSE,
         ch <- unique(as.character(strftime(SIRIdf$OriginAimedDepartureTime, "%H:%M:%S")))
         SIRIdf <- dplyr::left_join(SIRIdf, st, by = c("time" = "arrival_time"))
         SIRIdf <- SIRIdf[,-which(names(SIRIdf) %in% c("weekday", "time", "date", "stop_id", "stop_sequence", "pickup_type", "drop_off_type", "shape_dist_traveled"))]
-        SIRIdf <- SIRIdf[order(SIRIdf$request_id,SIRIdf$OriginAimedDepartureTime ,SIRIdf$VehicleRef,SIRIdf$BUS_XY, rev(SIRIdf$RecordedAtTime),SIRIdf$VehicleAtStop ),]
+        SIRIdf <- SIRIdf[order(SIRIdf$request_id,SIRIdf$OriginAimedDepartureTime ,SIRIdf$VehicleRef,SIRIdf$BUS_XY, rev(SIRIdf$RecordedAtTime)),]
         SIRIdf <- SIRIdf[!is.na(SIRIdf$LineRef),]
         SIRIdf
       }else{print("SIRI date does not match the loaded GTFS")}
@@ -103,7 +103,7 @@ organizeSIRIdf <- function(SIRIdf, noduplicates = FALSE, round = FALSE,
         ch <- unique(as.character(strftime(SIRIdf$OriginAimedDepartureTime, "%H:%M:%S")))
         SIRIdf <- dplyr::left_join(SIRIdf, st, by = c("time" = "arrival_time"))
         SIRIdf <- SIRIdf[,-which(names(SIRIdf) %in% c("weekday", "time", "date", "stop_id", "stop_sequence", "pickup_type", "drop_off_type", "shape_dist_traveled"))]
-        SIRIdf <- SIRIdf[order(SIRIdf$request_id,SIRIdf$OriginAimedDepartureTime ,SIRIdf$VehicleRef,SIRIdf$BUS_XY, rev(SIRIdf$RecordedAtTime),SIRIdf$VehicleAtStop ),]
+        SIRIdf <- SIRIdf[order(SIRIdf$request_id,SIRIdf$OriginAimedDepartureTime ,SIRIdf$VehicleRef,SIRIdf$BUS_XY, rev(SIRIdf$RecordedAtTime)),]
         SIRIdf <- SIRIdf[!is.na(SIRIdf$LineRef),]
         SIRIdf
       }else{print("SIRI date does not match the loaded GTFS")}
@@ -158,7 +158,7 @@ organizeSIRIdf <- function(SIRIdf, noduplicates = FALSE, round = FALSE,
         SIRIdf <- dplyr::left_join(SIRIdf, st, by = c("time" = "arrival_time"))
 
         SIRIdf <- SIRIdf[,-which(names(SIRIdf) %in% c("weekday", "time", "date", "stop_id", "stop_sequence", "pickup_type", "drop_off_type", "shape_dist_traveled"))]
-        SIRIdf <- SIRIdf[order(SIRIdf$request_id,SIRIdf$OriginAimedDepartureTime ,SIRIdf$VehicleRef,SIRIdf$BUS_XY, rev(SIRIdf$RecordedAtTime),SIRIdf$VehicleAtStop ),]
+        SIRIdf <- SIRIdf[order(SIRIdf$request_id,SIRIdf$OriginAimedDepartureTime ,SIRIdf$VehicleRef,SIRIdf$BUS_XY, rev(SIRIdf$RecordedAtTime)),]
 
         SIRIdf <- SIRIdf[!is.na(SIRIdf$LineRef),]
         SIRIdf
@@ -194,7 +194,7 @@ organizeSIRIdf <- function(SIRIdf, noduplicates = FALSE, round = FALSE,
         ch <- unique(as.character(strftime(SIRIdf$OriginAimedDepartureTime, "%H:%M:%S")))
         SIRIdf <- dplyr::left_join(SIRIdf, st, by = c("time" = "arrival_time"))
         SIRIdf <- SIRIdf[,-which(names(SIRIdf) %in% c("weekday", "time", "date", "stop_id", "stop_sequence", "pickup_type", "drop_off_type", "shape_dist_traveled"))]
-        SIRIdf <- SIRIdf[order(SIRIdf$request_id,SIRIdf$OriginAimedDepartureTime ,SIRIdf$VehicleRef,SIRIdf$BUS_XY, rev(SIRIdf$RecordedAtTime),SIRIdf$VehicleAtStop ),]
+        SIRIdf <- SIRIdf[order(SIRIdf$request_id,SIRIdf$OriginAimedDepartureTime ,SIRIdf$VehicleRef,SIRIdf$BUS_XY, rev(SIRIdf$RecordedAtTime)),]
 
         SIRIdf <- SIRIdf[!is.na(SIRIdf$LineRef),]
         SIRI <- SIRIdf[!duplicated(SIRIdf$key),]

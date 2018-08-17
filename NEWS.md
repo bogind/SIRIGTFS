@@ -3,6 +3,10 @@ title: "NEWS"
 output: html_document
 ---
 
+# SIRItoGTFS 0.2.5 17/08/2018
+
+minor bug fix in an internal function
+
 # SIRItoGTFS 0.2.4 21/05/2018
 
 several bug fixes, now works on all platforms and adapted to changes in data.table,

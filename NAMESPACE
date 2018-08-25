@@ -2,7 +2,9 @@
 
 export(STG)
 export(downloadGTFSil)
+export(makexmlsiri)
 export(readGTFS)
+import(XML)
 import(rgdal)
 import(rgeos)
 import(sp)

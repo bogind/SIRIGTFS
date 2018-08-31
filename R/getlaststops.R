@@ -19,10 +19,10 @@
 #' @importFrom easycsv choose_dir
 #' @export
 
-getlaststops <- function(GTFSroutes.,
-                         GTFStrips.,
-                         GTFSstop_times.,
-                         GTFSstops.  ){
+getlaststops <- function(GTFSroutes. = GTFSroutes,
+                         GTFStrips. = GTFStrips,
+                         GTFSstop_times. = GTFSstop_times,
+                         GTFSstops. = GTFSstops){
   query1 = paste("select a.route_id, b.trip_id, b.shape_id from",
                  deparse(substitute(GTFSroutes.)),
                  "a left join",

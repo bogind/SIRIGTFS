@@ -4,7 +4,8 @@
 \alias{getlaststops}
 \title{Create a stops table for makexmlsiri}
 \usage{
-getlaststops(GTFSroutes., GTFStrips., GTFSstop_times., GTFSstops.)
+getlaststops(GTFSroutes. = GTFSroutes, GTFStrips. = GTFStrips,
+  GTFSstop_times. = GTFSstop_times, GTFSstops. = GTFSstops)
 }
 \arguments{
 \item{GTFSroutes.}{A GTFS routes table, best load into environment with \code{\link{readGTFS}}}

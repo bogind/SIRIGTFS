@@ -24,8 +24,6 @@
 #' The output table will contain a time and distance comparison between the schedule provided in the GTFS tables and the real-time data provided
 #' with the SIRI table.
 #' @return A \code{\link[base]{data.frame}} containing a comparison between a public transportation mode's schedule and real-time data.
-#' @references
-#' Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Spatial and Temporal Estimation of the Service Reliability of Public Transportation Using Big Data and Open Source Tools}
 #' @seealso \code{readGTFS}
 #' @examples
 #' require(SIRItoGTFS)

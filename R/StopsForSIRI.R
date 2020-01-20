@@ -21,7 +21,7 @@ StopsForSIRI <- function(SIRI, stops,trips,stop_times){
     print("ERROR: SIRI file contains more then one LineRef, there should only be 1 unique LineRef")
   }else{
     tr = trips$trip_id[trips$route_id %in% SIRI$LineRef]
-    st = stop_times$stop_id[stop_times$trip_id %in% tr]
+    st = unique(stop_times$stop_id[stop_times$trip_id %in% tr])
     s = stops[which(stops$stop_id %in% st, arr.ind = TRUE),]
     return(s)
   }

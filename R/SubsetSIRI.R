@@ -12,7 +12,6 @@
 
 
 SubsetSIRI <- function(SIRIdf, lineref){
-  subdf <- SIRIdf[SIRIdf$LineRef == lineref,]
-  subdf
+  return(SIRIdf[SIRIdf$LineRef %in% lineref,])
 }
 

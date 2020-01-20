@@ -28,7 +28,7 @@ organizeStopTimes <- function(Stimes, SIRIdf3.){
     s3$arrival_time <- StopTimes2POSIXct(s3$arrival_time,SIRIdf3.)
     s3$departure_time <- StopTimes2POSIXct(s3$departure_time,SIRIdf3.)
     s3 <- s3[!is.na(s3$arrival_time),]
-    s3
+    return(s3)
   }else{
     print('failed to subset stop times')
   }

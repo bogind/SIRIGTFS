@@ -3,13 +3,18 @@ library(shinysky)
 library(shinythemes)
 library(purrr)
 library(dplyr)
+library(leaflet)
+library(htmltools)
 library(easycsv)
+library(sf)
 library(readr)
 
 lineNames = c()
 
 ui <- fluidPage(
   # shinythemes::themeSelector(),
+  tags$head(tags$style(".rightAlign{float:right;}"),
+            tags$title("SIRI to GTFS")),
   theme = shinytheme("paper"),
   busyIndicator(),
   # Application title
@@ -17,10 +22,13 @@ ui <- fluidPage(
                        "SIRI to GTFS Analysis UI")),
 
 
-
+  hr(),
   sidebarLayout(
     sidebarPanel(
-      shiny::actionButton("filechoose",icon=icon("file-upload"),label = "Pick a file"),
+      shiny::actionButton("filechoose",
+                          icon=icon("file-upload"),
+                          label = "Pick a file"
+                          ),
       # htmlOutput("load")
       shiny::actionButton("run",label = "Load")
 
@@ -30,6 +38,7 @@ ui <- fluidPage(
       htmlOutput("filechosen")
     )
   ),
+  hr(),
   sidebarLayout(
     sidebarPanel(
       # actionButton("folderchoose", icon = icon("fa-folder-open",lib="font-awesome"), label = "Pick a folder"),
@@ -45,27 +54,41 @@ ui <- fluidPage(
       htmlOutput("folderchosen")
     )
   ),
+  hr(),
   fluidRow(
     column(4,
 
            hr(),
-           htmlOutput("selectOperator"),
-           htmlOutput("selectUI"),
-           htmlOutput("NselectedLines")
+           # htmlOutput("selectOperator"),
+           # htmlOutput("selectUI"),
+           # htmlOutput("NselectedLines")
            # selectInput('inLinerefs', 'Options', lineNames, multiple=TRUE, selectize=FALSE),
 
     )
-  )
-  # fluidRow(
-  #   column(4,
-  #
-  #          hr(),
-  #          htmlOutput("selectOperator"),
-  #          htmlOutput("selectUI"),
-  #          # selectInput('inLinerefs', 'Options', lineNames, multiple=TRUE, selectize=FALSE),
-  #
-  #   )
-  # )
+  ),
+  hr(),
+  sidebarLayout(
+    sidebarPanel(
+      htmlOutput("selectOperator"),
+      htmlOutput("selectUI"),
+      htmlOutput("NselectedLines"),
+      htmlOutput("startButton")
+
+
+    ),
+
+    mainPanel(
+      htmlOutput("undecided"),
+      leafletOutput("map1", width = 400, height = 400)
+    )
+  ),
+  hr(),
+  fluidRow(
+    column(4,
+           htmlOutput("attribution")
+           )
+    )
+
 )
 
 
@@ -83,6 +106,9 @@ server <- function(input, output) {
   loaded <- reactiveValues(
     siri=NULL,
     GTFS=NULL
+  )
+  selection <- reactiveValues(
+    linerefs = NULL
   )
 
 
@@ -208,11 +234,11 @@ server <- function(input, output) {
   ################
 
 
-    toListen <- reactive({
+    loadedTables <- reactive({
       list(input$run,input$run2)
     })
 
-    observeEvent(toListen(), {
+    observeEvent(loadedTables(), {
 
       if(input$run==1 && input$run2==1 && exists("SIRIdf")){
 
@@ -226,6 +252,8 @@ server <- function(input, output) {
         routes2 = routes2[order(routes2$name),]
 
         assign(x = "routes2", value = routes2, envir = as.environment(1))
+
+        selection$linerefs = unique(routes2$route_id)
 
         output$selectOperator <- renderUI({
 
@@ -266,6 +294,14 @@ server <- function(input, output) {
 
 
         })
+
+        # Add the Start Analysis button
+
+        output$startButton <- renderUI({
+
+          shiny::actionButton("run3",label = "Run", icon = icon("play"))
+
+        })
       }else{
         return()
       }
@@ -279,6 +315,9 @@ server <- function(input, output) {
 
     observeEvent(input$inOperators,{
       ids = unique(GTFSagency$agency_id[GTFSagency$agency_name %in% input$inOperators])
+
+      selection$linerefs = unique(routes2$route_id[routes2$agency_id %in% ids])
+      print(length(selection$linerefs))
 
         output$selectUI <- renderUI({
 
@@ -300,21 +339,88 @@ server <- function(input, output) {
 
     observeEvent(input$inLinerefs,{
 
-      linerefs = unique(SIRIdf$LineRef[SIRIdf$LineRef %in%
+      selection$linerefs = unique(SIRIdf$LineRef[SIRIdf$LineRef %in%
                                          routes2$route_id[routes2$name %in% input$inLinerefs]])
 
-      print(length(linerefs))
 
-      output$NselectedLines <- renderUI({
 
-        if(length(linerefs) <= 0 ){
-          HTML("Nothing selected")
-        }else{
-          str1 = paste(length(linerefs), "routes have been selected")
-          HTML(str1)
-        }
-      })
+      print(length(selection$linerefs))
+
+      # output$NselectedLines <- renderUI({
+      #
+      #   if(length(selection$linerefs) <= 0 ){
+      #     HTML("Nothing selected")
+      #   }else{
+      #     str1 = paste(length(selection$linerefs), "routes have been selected")
+      #     HTML(str1)
+      #   }
+      # })
     })
+
+
+
+    ################
+    # Start
+    ################
+
+    observeEvent(input$run3,{
+      print("starting")
+
+      assign(x = "linerefs", value = selection$linerefs, envir = as.environment(1))
+
+      routes = GTFSroutes[GTFSroutes$route_id %in% linerefs,]
+      print("routes")
+      trips = GTFStrips[GTFStrips$route_id %in% routes$route_id,]
+      print("trips")
+      shapes = GTFSshapes[GTFSshapes$shape_id %in% trips$shape_id,]
+      print("shapes")
+      shapes =shapes[order(shapes$shape_pt_sequence),]
+      print("shapes ordered")
+      shapes_sf =   st_as_sf(shapes, coords = c("shape_pt_lon","shape_pt_lat"), crs = 4326)
+      bbox <- st_bbox(shapes_sf) %>%
+        as.vector()
+      shapes_lines = shapes_sf %>%
+        group_by(shape_id) %>%
+        left_join(trips) %>%
+        left_join(routes) %>%
+        left_join(GTFSagency) %>%
+        summarize(n = n(),
+                  agency_name = min(agency_name),
+                  route_name = min(route_short_name),
+                  route_desc = min(route_long_name),
+                  do_union=FALSE) %>%
+        st_cast("LINESTRING")
+
+      shapes_lines$popup_content = paste("<div dir='rtl' style='direction: rtl; text-align:right'><b>",
+                                         shapes_lines$agency_name,"</b><br>",
+                                         "קו",shapes_lines$route_name,"<br>",
+                                         shapes_lines$route_desc,"</div>")
+
+      map1 = leaflet(data = shapes_lines) %>%
+        addTiles() %>%
+        fitBounds(bbox[1], bbox[2], bbox[3], bbox[4]) %>%
+        addPolylines(weight = 3, popup = ~popup_content)#~htmlEscape(popup))
+
+      output$map1 <- renderLeaflet(map1)
+
+    })
+
+    ################
+    # Placeholder for  SIRI File
+    ################
+
+    output$undecided <- renderUI({
+      if(is.null(selection$linerefs)){
+        HTML("")
+      }else if(length(selection$linerefs) == length(unique(SIRIdf$LineRef)) ){
+        str1 = paste0("Nothing selected, All routes will be used, ",length(selection$linerefs)," routes")
+        HTML(str1)
+      }else{
+        str1 = paste(length(selection$linerefs), "routes have been selected")
+        HTML(str1)
+      }
+    })
+
 
 
   ################
@@ -353,6 +459,10 @@ server <- function(input, output) {
 
 
     }
+  })
+
+  output$attribution <- renderUI({
+    HTML("<span style='font-size: xx-small;'>נבנה ע\"י <a href='mailto:dror@kaplanopensource.co.il'>דרור בוגין</a></span>")
   })
 }
 

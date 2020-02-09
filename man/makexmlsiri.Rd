@@ -4,8 +4,15 @@
 \alias{makexmlsiri}
 \title{Create the required XML files for SIRI downloads}
 \usage{
-makexmlsiri(stop_codes, route_codes, wd = NULL, xml_size = 200,
-  RequestorRef = NULL, xml_name = "xml", newfolder = TRUE)
+makexmlsiri(
+  stop_codes,
+  route_codes,
+  wd = NULL,
+  xml_size = 200,
+  RequestorRef = NULL,
+  xml_name = "xml",
+  newfolder = TRUE
+)
 }
 \arguments{
 \item{stop_codes}{A \code{\link[base]{vector} of stop_code integers taken from the GTFS tables}. the XML will not fail to create if there are no integers.}

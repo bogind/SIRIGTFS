@@ -4,8 +4,12 @@
 \alias{getlaststops}
 \title{Create a stops table for makexmlsiri}
 \usage{
-getlaststops(GTFSroutes. = GTFSroutes, GTFStrips. = GTFStrips,
-  GTFSstop_times. = GTFSstop_times, GTFSstops. = GTFSstops)
+getlaststops(
+  GTFSroutes. = GTFSroutes,
+  GTFStrips. = GTFStrips,
+  GTFSstop_times. = GTFSstop_times,
+  GTFSstops. = GTFSstops
+)
 }
 \arguments{
 \item{GTFSroutes.}{A GTFS routes table, best load into environment with \code{\link{readGTFS}}}
@@ -22,6 +26,12 @@ shape_id and the stop_id and stop_code of the last stop in that shape
 }
 \description{
 Creates a
+}
+\details{
+
+}
+\seealso{
+
 }
 \keyword{misc}
 \keyword{utilities}

@@ -2,6 +2,7 @@
 #' @title Organize the subset of the SIRI DataFrame
 #' @importFrom reshape2 colsplit
 #' @importFrom dplyr left_join
+#' @importFrom lubridate day
 #' @description
 #' Requires the product of \code{\link{SubsetSIRI}}.
 #' Prepares the subset of the SIRI data for comparison with the GTFS tables.

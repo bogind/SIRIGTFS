@@ -4,8 +4,17 @@
 \alias{STG}
 \title{Wrapper function for the SIRItoGTFS library}
 \usage{
-STG(SIRIDF, GTFSstops., GTFSagency., GTFScalendar., GTFSroutes.,
-  GTFSstop_times., GTFStrips., linerefs = NULL, epsg = 2039)
+STG(
+  SIRIDF,
+  GTFSstops.,
+  GTFSagency.,
+  GTFScalendar.,
+  GTFSroutes.,
+  GTFSstop_times.,
+  GTFStrips.,
+  linerefs = NULL,
+  epsg = 2039
+)
 }
 \arguments{
 \item{SIRIDF}{A \code{\link[base]{data.frame}} containing SIRI protocol data downloaded from a public transportation authority.}
@@ -70,9 +79,6 @@ busesDF = STG(SIRIsample,
              linerefs = unique(SIRIsample$LineRef[1]))
 
 
-}
-\references{
-Bogin, D., Levy, N. and Ben-Elia E. (2018) \emph{Spatial and Temporal Estimation of the Service Reliability of Public Transportation Using Big Data and Open Source Tools}
 }
 \seealso{
 \code{readGTFS}

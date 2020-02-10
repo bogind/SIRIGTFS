@@ -3,6 +3,7 @@ title: "Untitled"
 output: pdf_document
 params:
   n: NA
+  buses: NA
 ---
 
 ```{r setup, include=FALSE}
@@ -38,4 +39,12 @@ A plot of `params$n` random points.
 
 ```{r}
 plot(rnorm(params$n), rnorm(params$n))
+```
+
+
+A plot of buses difftimes
+
+```{r}
+plot(params$buses$timediff,params$buses$lineref)
+
 ```

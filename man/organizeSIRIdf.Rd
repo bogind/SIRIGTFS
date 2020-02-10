@@ -5,7 +5,7 @@
 \title{Organize the subset of the SIRI DataFrame}
 \usage{
 organizeSIRIdf(
-  SIRIdf,
+  SIRIdf2,
   noduplicates = FALSE,
   round = FALSE,
   GTFStrips.,
@@ -14,8 +14,6 @@ organizeSIRIdf(
 )
 }
 \arguments{
-\item{SIRIdf}{A SIRI \code{\link[base]{data.frame}}}
-
 \item{noduplicates}{logical, default is FALSE}
 
 \item{round}{logical, should POSIXct column be rounded to nearest minute. default is FALSE.}
@@ -25,6 +23,8 @@ organizeSIRIdf(
 \item{GTFScalendar.}{The GTFS calendar table to be used}
 
 \item{GTFSstop_times.}{The GTFS stop_times table to be used}
+
+\item{SIRIdf}{A SIRI \code{\link[base]{data.frame}}}
 }
 \description{
 Requires the product of \code{\link{SubsetSIRI}}.

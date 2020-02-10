@@ -600,9 +600,6 @@ server <- function(input, output) {
 
         if(length(input$inPlotAgency) > 0){
 
-
-          print(ids)
-          print(unique(data$buses$name[data$buses$agency_id %in% ids]))
           selectizeInput('inPlotLinerefs', 'בחירת קווים',
                          unique(data$buses$name[data$buses$agency_id %in% ids]),
                          size = 10,options = list(
@@ -728,7 +725,7 @@ server <- function(input, output) {
     observeEvent(input$inPlotLinerefs,{
 
       selection$plotLinerefs = unique(data$buses$lineref[data$buses$name %in% input$inPlotLinerefs])
-      print(selection$plotLinerefs)
+
       t <- data$buses[data$buses$lineref %in% selection$plotLinerefs,]
       t <- t[order(t$RecordedAtTime,t$OriginAimedDepartureTime),]
       t$hour <- as.numeric(strftime(t$arrival_time, format = "%H"))
@@ -787,9 +784,9 @@ server <- function(input, output) {
       matTA2 = matTA2 %>%
         left_join(GTFSstops)
 
-      p1 <- ggplot(data$buses[data$buses$timediff < 200,], aes(x = timediff, color = weekday, fill = weekday)) +
+      p1 <- ggplot(t[t$timediff < 200,], aes(x = timediff, color = weekday, fill = weekday)) +
         geom_density(alpha = 0.2) +
-        labs(title = paste("Density plot of",nrow(data$buses), "observations \n"),
+        labs(title = paste("Density plot of",nrow(t), "observations \n"),
              x = "Time Variation in minutes",
              y = "Density")+
         theme(plot.title = element_text(hjust = 0.5,size=14),
@@ -809,7 +806,7 @@ server <- function(input, output) {
         scale_colour_manual("",breaks = c("timediff", "tmed"),values = c("timediff"="Red", "tmed"="green"), labels = c("Mean", "Median"))+
         scale_fill_manual("",values = hcl(c(15,195,100),100,65, alpha=c(0.5,0.2,0.15)),
                           labels = c("SD","IQR","2SD"))+
-        labs(title = paste("Time Variation \n", nrow(data$buses), "observations\n"),
+        labs(title = paste("Time Variation \n", nrow(t1), "observations\n"),
              x = "Hour",
              y = "Time difference")+
         theme(plot.title = element_text(hjust = 0.5, size = 14),

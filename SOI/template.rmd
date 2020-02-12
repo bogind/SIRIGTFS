@@ -1,10 +1,12 @@
 ---
-title: "Untitled"
+title: "SIRItoGTFS Report"
 output: pdf_document
 params:
   n: NA
   buses: NA
   t1: NA
+  bbox: NA
+  shapes: NA
 
 ---
 
@@ -12,60 +14,67 @@ params:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+# Template
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+This is a sample template for a generated report of the SIRItoGTFS algorithm
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+```{r, echo=FALSE, results='asis'}
+cat('\n')
+cat(paste(length(unique(params$buses$lineref)), ' routes checked\n'))
+cat('\n')  
+cat(paste('The Average time variation for all lines was',mean(params$buses$timediff),'\n'))
+cat('\n')  
+cat(paste('The Median time variation for all lines was',median(params$buses$timediff),'\n'))
+cat('\n')  
+linerefs = unique(params$buses$lineref)
+for(i in 1:length(unique(params$buses$lineref))){
+  cat('\n\n')
+  cat(paste('Route',linerefs[i], 'had', nrow(params$buses[params$buses$lineref == linerefs[i],]), 'observations'))
+  cat('\n\n')  
+  cat(paste('\tand a mean', round(mean(params$buses[params$buses$lineref == linerefs[i],'timediff']),3), 'time variation'))
+  cat('\n')  
+}
+paste()
 
-```{r cars}
-summary(cars)
-```
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
-
-```{r}
-# The `params` object is available in the document.
-params$n
-```
-
-A plot of `params$n` random points.
-
-```{r}
-plot(rnorm(params$n), rnorm(params$n))
 ```
 
 
-A plot of buses difftimes
+```{r map, echo=FALSE}
 
-```{r, echo=FALSE}
-plot(density(params$buses$timediff))
+map1 = leaflet(data = params$shapes) %>%
+        addTiles() %>%
+        #fitBounds(data$bbox[1], data$bbox[2], data$bbox[3], data$bbox[4]) %>%
+        addPolylines(weight = 3, popup = ~popup_content)
+temp = tempfile(fileext = ".png")
+mapshot(map1, file = temp)
 
 ```
 
-With ggplot
 
-```{r, echo=FALSE}
-p1 <- ggplot(params$buses[params$buses$timediff < 200,], aes(x = timediff, color = weekday, fill = weekday)) +
+
+
+## Density of Time Variation
+
+```{r, echo=FALSE, results='asis'}
+
+  ggplot(params$buses[params$buses$timediff < 200 ,], aes(x = timediff, color = weekday, fill = weekday)) +
         geom_density(alpha = 0.2) +
-        labs(title = paste("Density plot of",nrow(params$buses), "observations \n"),
+        labs(title = paste("Density plot of",nrow(params$buses), "observations \nRoute ID",i),
              x = "Time Variation in minutes",
              y = "Density")+
         theme(plot.title = element_text(hjust = 0.5,size=14),
               panel.border = element_rect(linetype = "dashed", fill = NA),
               plot.background = element_rect(fill = "azure1"),
-              legend.position="none"
-        )
-p1
+              legend.position="none")
+  
+ 
+
 ```
+
+
+## Basic Statistics
+
 
 ```{r, echo=FALSE}
 p2 <- ggplot(data = params$t1, aes(x=hour)) +
@@ -89,3 +98,9 @@ p2 <- ggplot(data = params$t1, aes(x=hour)) +
 p2
 
 ```
+
+
+
+## Map
+
+![Map Of Selected Lines.](`r temp`)

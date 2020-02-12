@@ -11,6 +11,7 @@ library(readr)
 library(SIRItoGTFS)
 library(ggplot2)
 library(plotly)
+library(mapview)
 
 lineNames = c()
 
@@ -164,7 +165,9 @@ server <- function(input, output) {
     isIt = TRUE
   )
   data <- reactiveValues(
-    buses = NULL
+    buses = NULL,
+    shapes_lines = NULL,
+    bbox = NULL
   )
 
 
@@ -469,6 +472,8 @@ server <- function(input, output) {
                                          shapes_lines$agency_name,"</b><br>",
                                          "קו",shapes_lines$route_name,"<br>",
                                          shapes_lines$route_desc,"</div>")
+      data$shapes_lines = shapes_lines
+      data$bbox = bbox
 
       map1 = leaflet(data = shapes_lines) %>%
         addTiles() %>%
@@ -529,6 +534,52 @@ server <- function(input, output) {
         appendTab(inputId = "tabs",
           tabPanel("Table", DT::dataTableOutput("table"))
         )
+
+        assign(x = "linerefs", value = selection$linerefs, envir = as.environment(1))
+
+        routes = GTFSroutes[GTFSroutes$route_id %in% linerefs,]
+
+        trips = GTFStrips[GTFStrips$route_id %in% routes$route_id,]
+
+        shapes = GTFSshapes[GTFSshapes$shape_id %in% trips$shape_id,]
+
+        shapes =shapes[order(shapes$shape_pt_sequence),]
+
+        shapes_sf = st_as_sf(shapes, coords = c("shape_pt_lon","shape_pt_lat"), crs = 4326)
+        bbox <- st_bbox(shapes_sf) %>%
+          as.vector()
+        t = data.frame("shape_id" = c(),"route_id"=c())
+        for(s in 1:length(unique(shapes_sf$shape_id))){
+          shp = unique(shapes_sf$shape_id)[s]
+          route = unique(trips$route_id[trips$shape_id == unique(shapes_sf$shape_id)[s]])[1]
+          t[s,"shape_id"] = shp
+          t[s,"route_id"] = route
+        }
+        shapes_lines = shapes_sf %>%
+          group_by(shape_id) %>%
+          left_join(t) %>%
+          left_join(routes) %>%
+          left_join(GTFSagency) %>%
+          summarize(n = n(),
+                    agency_name = min(agency_name),
+                    route_name = min(route_short_name),
+                    route_desc = min(route_long_name),
+                    do_union=FALSE) %>%
+          st_cast("LINESTRING")
+
+        shapes_lines$popup_content = paste("<div dir='rtl' style='direction: rtl; text-align:right'><b>",
+                                           shapes_lines$agency_name,"</b><br>",
+                                           "קו",shapes_lines$route_name,"<br>",
+                                           shapes_lines$route_desc,"</div>")
+        data$shapes_lines = shapes_lines
+        data$bbox = bbox
+
+        map1 = leaflet(data = shapes_lines) %>%
+          addTiles() %>%
+          fitBounds(bbox[1], bbox[2], bbox[3], bbox[4]) %>%
+          addPolylines(weight = 3, popup = ~popup_content)#~htmlEscape(popup))
+
+        output$map1 <- renderLeaflet(map1)
 
 
         output$table <- DT::renderDataTable({
@@ -890,6 +941,7 @@ server <- function(input, output) {
   })
 
   output$report <- downloadHandler(
+
     # For PDF output, change this to "report.pdf"
     filename = "report.html",
     content = function(file) {
@@ -900,9 +952,19 @@ server <- function(input, output) {
       file.copy("template.Rmd", tempReport, overwrite = TRUE)
 
       # Set up parameters to pass to Rmd document
-      params <- list(n = 50,
-                     buses = data$buses,
-                     t1=data$t1)
+      if(!is.null(data$shapes_lines)){
+        params <- list(n = 50,
+                       buses = data$buses,
+                       t1=data$t1,
+                       shapes=data$shapes_lines,
+                       bbox = data$bbox)
+      }else{
+        params <- list(n = 50,
+                       buses = data$buses,
+                       t1=data$t1)
+
+      }
+
 
       # Knit the document, passing in the `params` list, and eval it in a
       # child of the global environment (this isolates the code in the document

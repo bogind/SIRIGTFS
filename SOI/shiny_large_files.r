@@ -516,6 +516,7 @@ server <- function(input, output) {
                              sidebarPanel(
                                htmlOutput("selectPlotAgency"),
                                htmlOutput("selectPlotLine"),
+                               htmlOutput("report_placeholder"),
                                width = 6
                              ),
                              mainPanel(plotOutput("plot1", height = 300),
@@ -562,6 +563,10 @@ server <- function(input, output) {
           }
 
 
+        })
+
+        output$report_placeholder <- renderUI({
+          downloadButton("report", "Generate report")
         })
 
 
@@ -691,7 +696,7 @@ server <- function(input, output) {
               legend.position="none"
         )
 
-
+      data$t1 = t1
       p3 <- ggplot(data = t1, aes(x=hour)) +
         geom_ribbon(aes(ymin=timediff-2*sd(timediff), ymax=timediff+2*sd(timediff),fill = "orange"),alpha=0.15) +
         geom_ribbon(aes(ymin=timediff-1*sd(timediff), ymax=timediff+1*sd(timediff),fill = "cyan"),alpha=0.2) +
@@ -883,6 +888,31 @@ server <- function(input, output) {
   output$attribution <- renderUI({
     HTML("<span style='font-size: xx-small;'>נבנה ע\"י <a href='mailto:dror@kaplanopensource.co.il'>דרור בוגין</a></span>")
   })
+
+  output$report <- downloadHandler(
+    # For PDF output, change this to "report.pdf"
+    filename = "report.html",
+    content = function(file) {
+      # Copy the report file to a temporary directory before processing it, in
+      # case we don't have write permissions to the current working dir (which
+      # can happen when deployed).
+      tempReport <- file.path(tempdir(), "template.Rmd")
+      file.copy("template.Rmd", tempReport, overwrite = TRUE)
+
+      # Set up parameters to pass to Rmd document
+      params <- list(n = 50,
+                     buses = data$buses,
+                     t1=data$t1)
+
+      # Knit the document, passing in the `params` list, and eval it in a
+      # child of the global environment (this isolates the code in the document
+      # from the code in this app).
+      rmarkdown::render(tempReport, output_file = file,
+                        params = params,
+                        envir = new.env(parent = globalenv())
+      )
+    }
+  )
 }
 
 # Run the application

@@ -4,6 +4,8 @@ output: pdf_document
 params:
   n: NA
   buses: NA
+  t1: NA
+
 ---
 
 ```{r setup, include=FALSE}
@@ -44,7 +46,46 @@ plot(rnorm(params$n), rnorm(params$n))
 
 A plot of buses difftimes
 
-```{r}
-plot(params$buses$timediff,params$buses$lineref)
+```{r, echo=FALSE}
+plot(density(params$buses$timediff))
+
+```
+
+With ggplot
+
+```{r, echo=FALSE}
+p1 <- ggplot(params$buses[params$buses$timediff < 200,], aes(x = timediff, color = weekday, fill = weekday)) +
+        geom_density(alpha = 0.2) +
+        labs(title = paste("Density plot of",nrow(params$buses), "observations \n"),
+             x = "Time Variation in minutes",
+             y = "Density")+
+        theme(plot.title = element_text(hjust = 0.5,size=14),
+              panel.border = element_rect(linetype = "dashed", fill = NA),
+              plot.background = element_rect(fill = "azure1"),
+              legend.position="none"
+        )
+p1
+```
+
+```{r, echo=FALSE}
+p2 <- ggplot(data = params$t1, aes(x=hour)) +
+        geom_ribbon(aes(ymin=timediff-2*sd(timediff), ymax=timediff+2*sd(timediff),fill = "orange"),alpha=0.15) +
+        geom_ribbon(aes(ymin=timediff-1*sd(timediff), ymax=timediff+1*sd(timediff),fill = "cyan"),alpha=0.2) +
+        geom_ribbon(aes(ymin=tmed-0.5*IQR(tmed), ymax=tmed+0.5*IQR(tmed),fill = "grey70"),alpha=0.5) +
+        scale_x_continuous(breaks=seq(1,24,1)) +
+        geom_line(aes(y=timediff,colour = "timediff")) +
+        geom_line(aes(y = tmed,colour = "tmed"))+
+        scale_colour_manual("",breaks = c("timediff", "tmed"),values = c("timediff"="Red", "tmed"="green"), labels = c("Mean", "Median"))+
+        scale_fill_manual("",values = hcl(c(15,195,100),100,65, alpha=c(0.5,0.2,0.15)),
+                          labels = c("SD","IQR","2SD"))+
+        labs(title = paste("Time Variation \n", nrow(params$buses), "observations\n"),
+             x = "Hour",
+             y = "Time difference")+
+        theme(plot.title = element_text(hjust = 0.5, size = 14),
+              panel.border = element_rect(linetype = "dashed", fill = NA),
+              plot.background = element_rect(fill = "azure1"),
+              legend.box.background = element_rect(),
+              legend.box.margin = margin(5, 5, 5, 5))
+p2
 
 ```

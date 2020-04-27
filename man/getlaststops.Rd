@@ -4,12 +4,7 @@
 \alias{getlaststops}
 \title{Create a stops table for makexmlsiri}
 \usage{
-getlaststops(
-  GTFSroutes. = GTFSroutes,
-  GTFStrips. = GTFStrips,
-  GTFSstop_times. = GTFSstop_times,
-  GTFSstops. = GTFSstops
-)
+getlaststops(GTFSroutes., GTFStrips., GTFSstop_times., GTFSstops.)
 }
 \arguments{
 \item{GTFSroutes.}{A GTFS routes table, best load into environment with \code{\link{readGTFS}}}
@@ -28,10 +23,12 @@ shape_id and the stop_id and stop_code of the last stop in that shape
 Creates a
 }
 \details{
-
+Uses SQL within R to create a table containing each unique route_id in the GTFS provided,
+for each route, it's shape_id and the stop_code and stop_id of the last stop in that shape.
+usefull for the creation of XML files using \code{\link[SIRItoGTFS]{makexmlsiri}}
 }
 \seealso{
-
+\code{\link{SIRItoGTFS}}, \code{\link[SIRItoGTFS]{makexmlsiri}}
 }
 \keyword{misc}
 \keyword{utilities}

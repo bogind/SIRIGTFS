@@ -52,6 +52,13 @@ mapshot(map1, file = temp)
 ```
 
 
+```{r map2, echo=FALSE}
+
+base = getTiles(x = params$shapes, type = 'CartoDB.Voyager')
+tilesLayer(base)
+plot(x = params$shapes, lwd =0.5, add=TRUE)
+
+```
 
 
 ## Density of Time Variation

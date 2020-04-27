@@ -46,6 +46,11 @@ organizeSIRIDF <- function(SIRIdf2, noduplicates = FALSE, round = FALSE,
                                               "%Y-%m-%dT%H%M%OS%z", tz = Sys.timezone())
     SIRIdf2$AimedArrivalTime <- as.POSIXct(gsub(":", "", SIRIdf2$AimedArrivalTime),
                                            "%Y-%m-%dT%H%M%OS%z", tz = Sys.timezone())
+    if(length(unique(day(SIRIdf2$RecordedAtTime))) > 1){
+      datet = data.frame(table(lubridate::date(SIRIdf2$RecordedAtTime),dnn = c("date")))
+      SIRIdf2 = SIRIdf2[lubridate::date(SIRIdf2$RecordedAtTime) ==
+                          lubridate::date(datet$date[which.max(datet[,2])]),]
+    }
     SIRIdf2$key <- paste(SIRIdf2$request_id, SIRIdf2$OriginAimedDepartureTime, SIRIdf2$VehicleRef, sep = " ; ")
     SIRIdf2$BUS_XY <- ifelse(is.na(SIRIdf2$Longitude) |
                               is.na(SIRIdf2$Latitude), NA, paste(SIRIdf2$Longitude,
@@ -55,6 +60,7 @@ organizeSIRIDF <- function(SIRIdf2, noduplicates = FALSE, round = FALSE,
     cal <- GTFScalendar.[GTFScalendar.$service_id %in% trips$service_id,]
     week <- c("Sunday","Monday","Tuesday","Wednesday", "Thursday","Friday", "Saturday" )
     colnames(cal)[2:8] <- week
+    cal = as.data.frame(cal)
     cal[,9:10] <- sapply(cal[,9:10], as.character)
     cal[,9] <- as.Date(cal[,9], format = "%Y%m%d")
     cal[,10] <- as.Date(cal[,10], format = "%Y%m%d")
@@ -64,7 +70,7 @@ organizeSIRIDF <- function(SIRIdf2, noduplicates = FALSE, round = FALSE,
       if(cal$start_date[1] <= as.Date(SIRIdf2$RecordedAtTime[1]) &
          as.Date(SIRIdf2$RecordedAtTime[1]) <= cal$end_date[1] &
          NROW(cal) >=1){
-          weekday = colnames(cal)[weekdays(SIRIdf2$RecordedAtTime[1]) == colnames(cal)]
+          weekday = colnames(cal)[weekdays(SIRIdf2$RecordedAtTime[2]) == colnames(cal)]
           cols = c("service_id",weekday)
           c1 = cal[cal[,weekday] > 0,cols]
           if(class(c1) == "data.frame"){
@@ -75,7 +81,10 @@ organizeSIRIDF <- function(SIRIdf2, noduplicates = FALSE, round = FALSE,
           }
           st1 <- GTFSstop_times.[GTFSstop_times.$trip_id %in% t1$trip_id ,]
           st <- st1[st1$stop_sequence == 1,]
-
+          if(nrow(st) < 1){
+            stop("calendar did not match SIRI data")
+          }
+          st$arrival_time = as.character(st$arrival_time)
           ch <- unique(as.character(strftime(SIRIdf2$OriginAimedDepartureTime, "%H:%M:%S")))
           SIRIdf2 <- dplyr::left_join(SIRIdf2, st[,c("arrival_time","trip_id")], by = "arrival_time")
           SIRIdf2 <- SIRIdf2[order(SIRIdf2$request_id,SIRIdf2$OriginAimedDepartureTime ,SIRIdf2$VehicleRef,SIRIdf2$BUS_XY, rev(SIRIdf2$RecordedAtTime)),]

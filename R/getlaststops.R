@@ -9,20 +9,20 @@
 #' @details
 #' Uses SQL within R to create a table containing each unique route_id in the GTFS provided,
 #' for each route, it's shape_id and the stop_code and stop_id of the last stop in that shape.
-#' usefull for the creation of XML files using \code{\link[SIRItoGTFS]{makexmlsiri}
+#' usefull for the creation of XML files using \code{\link[SIRItoGTFS]{makexmlsiri}}
 #' @return
 #' A \code{\link[base]{data.frame}} containing for each unique route_id in the GTFS tables it's
 #' shape_id and the stop_id and stop_code of the last stop in that shape
-#' @seealso \code{\link{SIRItoGTFS}}, \code{\link[SIRItoGTFS]{makexmlsiri}
+#' @seealso \code{\link{SIRItoGTFS}}, \code{\link[SIRItoGTFS]{makexmlsiri}}
 #' @keywords misc utilities
 #' @importFrom sqldf sqldf
 #' @importFrom easycsv choose_dir
 #' @export
 
-getlaststops <- function(GTFSroutes. = GTFSroutes,
-                         GTFStrips. = GTFStrips,
-                         GTFSstop_times. = GTFSstop_times,
-                         GTFSstops. = GTFSstops){
+getlaststops <- function(GTFSroutes.,
+                         GTFStrips.,
+                         GTFSstop_times.,
+                         GTFSstops. ){
   query1 = paste("select a.route_id, b.trip_id, b.shape_id from",
                  deparse(substitute(GTFSroutes.)),
                  "a left join",

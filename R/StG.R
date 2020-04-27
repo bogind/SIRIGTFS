@@ -53,6 +53,7 @@
 #' @keywords package spatial
 #' @importFrom data.table rbindlist
 #' @importFrom dplyr right_join
+#' @importFrom stats complete.cases
 #' @import sp
 #' @import rgdal
 #' @import rgeos
@@ -76,13 +77,18 @@ STG = function(SIRIDF,
   listallbuses <- list()
   outliers <- NULL
   start <- Sys.time()
-
+  SIRIDF = as.data.frame(SIRIDF)
+  GTFSstops. = as.data.frame(GTFSstops.)
+  GTFSagency. = as.data.frame(GTFSagency.)
+  GTFScalendar. = as.data.frame(GTFScalendar.)
+  GTFSroutes. = as.data.frame(GTFSroutes.)
+  GTFStrips. = as.data.frame(GTFStrips.)
   # Filter placeholders
   SIRIDF = SIRIDF[SIRIDF$Latitude != 'a',]
   # Filter rows with no location data
   SIRIDF = SIRIDF[complete.cases(SIRIDF[ , c("Latitude","Longitude")]),]
 
-  print("Strating")
+  message("Strating")
   if(is.null(linerefs)){
     linerefs = unique(SIRIDF$LineRef)
   }
@@ -102,17 +108,16 @@ STG = function(SIRIDF,
 
     # StimesforSIRI <- substoptimes(SIRIdf3, GTFSstop_times., GTFSroutes., GTFStrips. ,GTFScalendar.)
 
-    ll = organizeSIRIdf(SIRIdf2, noduplicates = TRUE, round = FALSE,
+    ll = organizeSIRIDF(SIRIdf2, noduplicates = TRUE, round = FALSE,
                         GTFStrips., GTFScalendar., GTFSstop_times.)
     SIRIdf3 = ll[[1]]
     StimesforSIRI = ll[[2]]
 
 
     if(NROW(StimesforSIRI$trip_id) < 1){
-      print(paste("failed number: ", w, " in subset stop times"))
+      message(paste("failed number: ", w, " in subset stop times"))
       w <- w+1
-      next
-    }
+    }else{
 
       # organizeStopTimes takes the output of substoptimes and makes it ready for
       # comparison against the SIRI data frame
@@ -131,11 +136,10 @@ STG = function(SIRIDF,
 
       if(length(SIRIdf3$Longitude) == length(SIRIdf3$Longitude[is.na(SIRIdf3$Longitude)])){
 
-        print(paste("failed number: ", w))
+        message(paste("failed number: ", w))
         w <- w+1
-        next
 
-      }
+      }else{
 
 
         # for a generic version you can use SIRItoSP with use of an EPSG code, and
@@ -181,7 +185,7 @@ STG = function(SIRIDF,
         fullans <- check_outlier2(fullans)
 
 
-        # length(fullans$arrival_time[is.na(fullans$arrival_time)]) # the join causes quite a lot of NA's
+        length(fullans$arrival_time[is.na(fullans$arrival_time)]) # the join causes quite a lot of NA's
         # but comparison to the number of rellevant obsevations shows that is missing data from SIRI
 
         fullans$timediff <- as.numeric(difftime(fullans$RecordedAtTime,fullans$arrival_time, units = "mins"))
@@ -191,30 +195,32 @@ STG = function(SIRIDF,
         # write.csv(ans2, file = "C:\\Users\\Dror Bogin\\Desktop\\University\\Geogeraphy\\Seminar\\test\\line5ScG.csv")
 
         # checks how many observations you currently have
-        print(paste("lineref no",w,"had",length(ans2$timediff[!is.na(ans2$timediff)]), "observations"))
+        message(paste("lineref no",w,"had",length(ans2$timediff[!is.na(ans2$timediff)]), "observations"))
         ans2$lineref <- rep_len(lineref,length(ans2$RecordedAtTime))
         if(length(ans2$RecordedAtTime[!is.na(ans2$RecordedAtTime)]) > 0){
           ans2 <- addtripnum(ans2)
           listallbuses[[w]] <- ans2
-          print(paste("finished number: ", w))
+          message(paste("finished number: ", w))
           w <- w+1
         }
         else{
-          print(paste("failed number: ", w))
+          message(paste("failed number: ", w))
           w <- w+1}
-
-
+      }
+    }
     end <- Sys.time()
 
-    print(end-looptime)
-    }
+    message(end-looptime)
 
     if(w >= length(linerefs)+1){
-      print(paste("Finished All Bus lines in: ", end-start))}
+      message(paste("Finished All Bus lines in: ", end-start))}
     buses <- rbindlist(listallbuses, fill = TRUE)
     buses <- buses[!is.na(buses$timediff),]
-    return(buses)
+
+
+  }
+
+  return(buses)
 
 }
-
 

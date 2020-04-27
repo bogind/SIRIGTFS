@@ -1,7 +1,7 @@
 Package: SIRItoGTFS
 Type: Package
 Title: Compare SIRI Datasets to GTFS Tables
-Version: 0.2.7
+Version: 0.2.8
 Date: 2020-02-09
 Authors@R: person("Dror", "Bogin", email = "dror.bogin@gmail.com",role = c("aut", "cre"))
 Description: Allows the user to compare SIRI (Service Interface for Real Time Information) data sets to their GTFS (General Transit Feed Specification) counterparts, a "Request_id" column us needed for the SIRI data frame in order to subset parts of it for use.   

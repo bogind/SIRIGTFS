@@ -4,3 +4,7 @@
 ^\cran-comments.md
 ^cran-comments\.md$
 ^1
+^\SOI$
+^report.Rmd
+^Untitled/*
+^rosm.cache/*

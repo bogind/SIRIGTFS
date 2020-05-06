@@ -36,6 +36,7 @@ organizeSIRIDF <- function(SIRIdf2, noduplicates = FALSE, round = FALSE,
       print(paste("SIRI data frame contained ",
                   length(unique(day(time))),
                   " dates, the one with most values was used"  ))
+      datet$date = as.character(datet$date)
       SIRIdf2 = SIRIdf2[lubridate::date(SIRIdf2$OriginAimedDepartureTime) ==
                            lubridate::date(datet$date[which.max(datet[,2])]),]
     }

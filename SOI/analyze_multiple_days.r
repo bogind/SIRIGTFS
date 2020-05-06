@@ -1,3 +1,17 @@
+ll = installed.packages()
+if(!("shiny" %in% ll)){install.packages("shiny")}
+if(!("shinysky" %in% ll)){remotes::install_github("AnalytixWare/ShinySky")}
+if(!("shinyjs" %in% ll)){install.packages("shinyjs")}
+if(!("shinythemes" %in% ll)){install.packages("shinythemes")}
+if(!("shinyalert" %in% ll)){install.packages("shinyalert")}
+if(!("purrr" %in% ll)){install.packages("purrr")}
+if(!("dplyr" %in% ll)){install.packages("dplyr")}
+if(!("leaflet" %in% ll)){install.packages("leaflet")}
+if(!("htmltools" %in% ll)){install.packages("htmltools")}
+if(!("easycsv" %in% ll)){install.packages("easycsv")}
+if(!("sf" %in% ll)){install.packages("sf")}
+if(!("readr" %in% ll)){install.packages("readr")}
+if(!("beepr" %in% ll)){install.packages("beepr")}
 library(shiny)
 library(shinysky)
 library(shinyjs)

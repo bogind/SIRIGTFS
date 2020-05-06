@@ -39,13 +39,25 @@ organizeSIRIDF <- function(SIRIdf2, noduplicates = FALSE, round = FALSE,
       SIRIdf2 = SIRIdf2[lubridate::date(SIRIdf2$OriginAimedDepartureTime) ==
                            lubridate::date(datet$date[which.max(datet[,2])]),]
     }
-
+    if("RecordedAtTime" %in% colnames(SIRIdf2)){
     SIRIdf2$RecordedAtTime <- as.POSIXct(gsub(":", "", SIRIdf2$RecordedAtTime),
                                          "%Y-%m-%dT%H%M%OS%z", tz = Sys.timezone())
+    }else{
+      stop("SIRI table did not contain RecordedAtTime column")
+    }
+    if("ExpectedArrivalTime" %in% colnames(SIRIdf2)){
     SIRIdf2$ExpectedArrivalTime <- as.POSIXct(gsub(":", "", SIRIdf2$ExpectedArrivalTime),
                                               "%Y-%m-%dT%H%M%OS%z", tz = Sys.timezone())
-    SIRIdf2$AimedArrivalTime <- as.POSIXct(gsub(":", "", SIRIdf2$AimedArrivalTime),
-                                           "%Y-%m-%dT%H%M%OS%z", tz = Sys.timezone())
+    }else{
+      message("SIRI table did not contain ExpectedArrivalTime column")
+    }
+    if("AimedArrivalTime" %in% colnames(SIRIdf2)){
+      SIRIdf2$AimedArrivalTime <- as.POSIXct(gsub(":", "", SIRIdf2$AimedArrivalTime),
+                                             "%Y-%m-%dT%H%M%OS%z", tz = Sys.timezone())
+    }else{
+      message("SIRI table did not contain AimedArrivalTime column")
+    }
+
     if(length(unique(day(SIRIdf2$RecordedAtTime))) > 1){
       datet = data.frame(table(lubridate::date(SIRIdf2$RecordedAtTime),dnn = c("date")))
       SIRIdf2 = SIRIdf2[lubridate::date(SIRIdf2$RecordedAtTime) ==

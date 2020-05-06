@@ -148,6 +148,7 @@ server = function(input, output) {
   paths <- reactiveValues(
     siri=NULL,
     folders=c(),
+    filelist=NULL,
     output=NULL
   )
 
@@ -166,8 +167,14 @@ server = function(input, output) {
   ################################
 
   observeEvent(input$outputchoose,{
-    paths$output <- file.choose(new = TRUE)
-
+    paths$output <- easycsv::choose_dir()
+    output$fileschosen <- renderUI({
+      if(is.null(paths$output)){
+        HTML("No Output location selected")
+      }else{
+        HTML(paste("Output Path Will Be:", paths$output))
+      }
+    })
     })
 
   ################################
@@ -297,16 +304,18 @@ server = function(input, output) {
 
         s = s[s$Latitude != 'a',]
         s = s[complete.cases(s[ , c("Latitude","Longitude")]),]
+        baseName = basename(paths$siri[j])
+        baseName = substr(baseName,1,nchar(baseName)-4)
         assign(x = "SIRIdf", value = s, envir = as.environment(1))
 
         # Load GTFS
-        filelist = list.files(paths$folders[j],pattern = ".*.txt")
-        gtfsNames = paste0("GTFS",substr(filelist,1,nchar(filelist)-4))
+        paths$filelist = list.files(paths$folders[j],pattern = ".*.txt")
+        gtfsNames = paste0("GTFS",substr(paths$filelist,1,nchar(paths$filelist)-4))
         withProgress(message = 'Loading GTFS', style = "notification", detail = "part 0", value = 0, {
-          for (i in 1:length(filelist)) {
+          for (i in 1:length(paths$filelist)) {
 
-            incProgress(1/length(filelist), detail = paste("loading", filelist[i]))
-            dat <- readr::read_csv(paste0(paths$folders[j],"/",filelist[i]))
+            incProgress(1/length(paths$filelist), detail = paste("loading", paths$filelist[i]))
+            dat <- readr::read_csv(paste0(paths$folders[j],"/",paths$filelist[i]))
             assign(x = gtfsNames[i], value = dat, envir = as.environment(1))
 
             }
@@ -323,6 +332,18 @@ server = function(input, output) {
                         GTFStrips,
                         linerefs = unique(SIRIdf$LineRef),
                         epsg = 2039)
+        if(!is.null(paths$output)){
+          path = paste0(path.expand(paths$output),"/",baseName,"_output.csv")
+          readr::write_csv(data$buses,path)
+        }
+        if(j == 1){
+          path = paste0(path.expand(paths$output),"/output.csv")
+          readr::write_csv(data$buses,path)
+        }else{
+          path = paste0(path.expand(paths$output),"/output.csv")
+          readr::write_csv(data$buses,path,append=TRUE)
+        }
+
 
 
 

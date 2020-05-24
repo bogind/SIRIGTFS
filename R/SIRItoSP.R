@@ -16,11 +16,13 @@
 #' @importFrom sp CRS SpatialPointsDataFrame spTransform
 #' @importClassesFrom sp SpatialPointsDataFrame
 #' @importFrom rgdal make_EPSG
+#' @importFrom dplyr between
 
 
 SIRItoSP <- function(SIRIdf, epsg){
 
-    SIRIdf <- SIRIdf[!is.na(SIRIdf$Longitude),]
+  SIRIdf <- SIRIdf[!is.na(SIRIdf$Longitude),]
+  SIRIdf <- SIRIdf[(between(SIRIdf$Longitude,-180,180)) & (between(SIRIdf$Latitude,-85,85)),]
   proj = rgdal::make_EPSG()
   crs2 <- sp::CRS(proj$prj4[proj$code == epsg][1])
 

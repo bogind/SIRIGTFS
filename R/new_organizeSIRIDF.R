@@ -31,14 +31,14 @@ organizeSIRIDF <- function(SIRIdf2, noduplicates = FALSE, round = FALSE,
     SIRIdf2$OriginAimedDepartureTime <- time
     SIRIdf2$arrival_time = as.character(strftime(time[1], format="%H:%M:%S"))
     SIRIdf2 = SIRIdf2[!is.na(SIRIdf2$OriginAimedDepartureTime), ]
-    if (length(unique(day(time))) > 1) {
+    if (length(unique(lubridate::day(time))) > 1) {
       datet = data.frame(table(lubridate::date(SIRIdf2$OriginAimedDepartureTime),dnn = c("date")))
       print(paste("SIRI data frame contained ",
-                  length(unique(day(time))),
+                  length(unique(lubridate::day(time))),
                   " dates, the one with most values was used"  ))
       datet$date = as.character(datet$date)
       SIRIdf2 = SIRIdf2[lubridate::date(SIRIdf2$OriginAimedDepartureTime) ==
-                           lubridate::date(datet$date[which.max(datet[,2])]),]
+                           lubridate::date(as.character(datet$date[which.max(datet[,2])])),]
     }
     if("RecordedAtTime" %in% colnames(SIRIdf2)){
     SIRIdf2$RecordedAtTime <- as.POSIXct(gsub(":", "", SIRIdf2$RecordedAtTime),
@@ -59,10 +59,11 @@ organizeSIRIDF <- function(SIRIdf2, noduplicates = FALSE, round = FALSE,
       message("SIRI table did not contain AimedArrivalTime column")
     }
 
-    if(length(unique(day(SIRIdf2$RecordedAtTime))) > 1){
+    if(length(unique(lubridate::day(SIRIdf2$RecordedAtTime))) > 1){
       datet = data.frame(table(lubridate::date(SIRIdf2$RecordedAtTime),dnn = c("date")))
+      datet$date = as.character(datet$date)
       SIRIdf2 = SIRIdf2[lubridate::date(SIRIdf2$RecordedAtTime) ==
-                          lubridate::date(datet$date[which.max(datet[,2])]),]
+                          lubridate::date(as.character(datet$date[which.max(datet[,2])])),]
     }
     SIRIdf2$key <- paste(SIRIdf2$request_id, SIRIdf2$OriginAimedDepartureTime, SIRIdf2$VehicleRef, sep = " ; ")
     SIRIdf2$BUS_XY <- ifelse(is.na(SIRIdf2$Longitude) |

@@ -144,6 +144,8 @@ STG = function(SIRIDF,
 
         # for a generic version you can use SIRItoSP with use of an EPSG code, and
         SIRIdf3 = SIRIdf3[as.numeric(SIRIdf3$Latitude) < 180 & as.numeric(SIRIdf3$Longitude) < 180,]
+        SIRIdf3$Latitude = as.numeric(SIRIdf3$Latitude)
+        SIRIdf3$Longitude = as.numeric(SIRIdf3$Longitude)
         spSIRI <- SIRItoSP(SIRIdf3,epsg) # change siriDF to point with ITM
 
         if(NROW(spSIRI[!is.na(spSIRI@data$trip_id),]) > 1){

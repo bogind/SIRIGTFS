@@ -19,6 +19,7 @@
 #' @section Warning:
 #' Do Not use this function on it's own, it is meant to be used only as part of the STG process
 #' @keywords misc internal
+#' @export
 
 organizeSIRIdf <- function(SIRIdf2, noduplicates = FALSE, round = FALSE,
                            GTFStrips., GTFScalendar., GTFSstop_times.){
@@ -36,7 +37,7 @@ organizeSIRIdf <- function(SIRIdf2, noduplicates = FALSE, round = FALSE,
                 length(unique(lubridate::day(time))),
                 " dates, the one with most values was used"  ))
     SIRIdf2 = SIRIdf2[lubridate::date(SIRIdf2$OriginAimedDepartureTime) ==
-                        lubridate::date(datet$date[which.max(datet[,2])]),]
+                        lubridate::date(as.character(datet$date[which.max(datet[,2])])),]
   }
 
   SIRIdf2$RecordedAtTime <- as.POSIXct(gsub(":", "", SIRIdf2$RecordedAtTime),

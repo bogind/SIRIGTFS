@@ -1,6 +1,6 @@
 ---
 title: "SIRItoGTFS Report"
-output: pdf_document
+output: html_document
 params:
   n: NA
   buses: NA
@@ -11,6 +11,7 @@ params:
 ---
 
 ```{r setup, include=FALSE}
+library(sp)
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
@@ -39,6 +40,35 @@ paste()
 
 ```
 
+```{r,results='asis', echo=FALSE}
+agencies = unique(params$buses$agency_name)
+l = length(agencies)
+agencies = data.frame(agencies)
+#knitr::kable(agencies)
+
+for( idx in seq(l) ) {
+  
+  #title = paste('### Agency', agencies[idx], '\n' )
+
+  #print(cat( paste('### Agency', agencies[idx], '\n' ) ) )
+  tempDat = params$buses[params$buses$timediff < 200 & 
+                        params$buses$agency_name ==  agencies[idx,1],]
+  ggp = ggplot(tempDat, 
+         aes(x = timediff, color = weekday, fill = weekday)) +
+        geom_density(alpha = 0.2) +
+        labs(title = paste("Agency: ",agencies[idx,1],"\nDensity plot of",nrow(tempDat), "observations \nRoute ID",i),
+             x = "Time Variation in minutes",
+             y = "Density")+
+        theme(plot.title = element_text(hjust = 0.5,size=14),
+              panel.border = element_rect(linetype = "dashed", fill = NA),
+              plot.background = element_rect(fill = "azure1"),
+              legend.position="none")
+  print(ggp)
+  cat('\n\n')
+  }
+
+```
+
 
 ```{r map, echo=FALSE}
 
@@ -54,8 +84,8 @@ mapshot(map1, file = temp)
 
 ```{r map2, echo=FALSE}
 
-base = getTiles(x = params$shapes, type = 'CartoDB.Voyager')
-tilesLayer(base)
+base = cartography::getTiles(x = params$shapes, type = 'CartoDB.Voyager')
+cartography::tilesLayer(base)
 plot(x = params$shapes, lwd =0.5, add=TRUE)
 
 ```
@@ -84,29 +114,76 @@ plot(x = params$shapes, lwd =0.5, add=TRUE)
 
 
 ```{r, echo=FALSE}
-p2 <- ggplot(data = params$t1, aes(x=hour)) +
-        geom_ribbon(aes(ymin=timediff-2*sd(timediff), ymax=timediff+2*sd(timediff),fill = "orange"),alpha=0.15) +
-        geom_ribbon(aes(ymin=timediff-1*sd(timediff), ymax=timediff+1*sd(timediff),fill = "cyan"),alpha=0.2) +
-        geom_ribbon(aes(ymin=tmed-0.5*IQR(tmed), ymax=tmed+0.5*IQR(tmed),fill = "grey70"),alpha=0.5) +
-        scale_x_continuous(breaks=seq(1,24,1)) +
-        geom_line(aes(y=timediff,colour = "timediff")) +
-        geom_line(aes(y = tmed,colour = "tmed"))+
-        scale_colour_manual("",breaks = c("timediff", "tmed"),values = c("timediff"="Red", "tmed"="green"), labels = c("Mean", "Median"))+
-        scale_fill_manual("",values = hcl(c(15,195,100),100,65, alpha=c(0.5,0.2,0.15)),
-                          labels = c("SD","IQR","2SD"))+
-        labs(title = paste("Time Variation \n", nrow(params$buses), "observations\n"),
-             x = "Hour",
-             y = "Time difference")+
-        theme(plot.title = element_text(hjust = 0.5, size = 14),
-              panel.border = element_rect(linetype = "dashed", fill = NA),
-              plot.background = element_rect(fill = "azure1"),
-              legend.box.background = element_rect(),
-              legend.box.margin = margin(5, 5, 5, 5))
-p2
+# p2 <- ggplot(data = params$t1, aes(x=hour)) +
+#         geom_ribbon(aes(ymin=timediff-2*sd(timediff), ymax=timediff+2*sd(timediff),fill = "orange"),alpha=0.15) +
+#         geom_ribbon(aes(ymin=timediff-1*sd(timediff), ymax=timediff+1*sd(timediff),fill = "cyan"),alpha=0.2) +
+#         geom_ribbon(aes(ymin=tmed-0.5*IQR(tmed), ymax=tmed+0.5*IQR(tmed),fill = "grey70"),alpha=0.5) +
+#         scale_x_continuous(breaks=seq(1,24,1)) +
+#         geom_line(aes(y=timediff,colour = "timediff")) +
+#         geom_line(aes(y = tmed,colour = "tmed"))+
+#         scale_colour_manual("",breaks = c("timediff", "tmed"),values = c("timediff"="Red", "tmed"="green"), labels = c("Mean", "Median"))+
+#         scale_fill_manual("",values = hcl(c(15,195,100),100,65, alpha=c(0.5,0.2,0.15)),
+#                           labels = c("SD","IQR","2SD"))+
+#         labs(title = paste("Time Variation \n", nrow(params$buses), "observations\n"),
+#              x = "Hour",
+#              y = "Time difference")+
+#         theme(plot.title = element_text(hjust = 0.5, size = 14),
+#               panel.border = element_rect(linetype = "dashed", fill = NA),
+#               plot.background = element_rect(fill = "azure1"),
+#               legend.box.background = element_rect(),
+#               legend.box.margin = margin(5, 5, 5, 5))
+# p2
 
 ```
 
+```{r map3, echo=FALSE, results='hide'}
+buses = params$buses
+for( idx in seq(length(unique(buses$agency_id)))){
+  output = buses[buses$agency_id == unique(buses$agency_id)[idx],]
+  output = output[complete.cases(output[ , c("stop_lat","stop_lon")]),]
+  sp_output = sf::st_as_sf(output,coords = c(8,9))
+  sf::st_crs(sp_output) <- 2039
+  
+  sp_output = dplyr::left_join(sp_output,output)
+  sp_output = as(sp_output, "Spatial")
+  pnt = sp::spsample(
+    sp_output,
+    type = "hexagonal",
+    cellsize = 1000
+  )
+  pol = sp::HexPoints2SpatialPolygons(pnt)
+  pol = sf::st_as_sf(pol)
+  pol = sf::st_transform(pol,2039)
+  pol <- sf::st_sf(id = 1:nrow(pol), geometry = pol$geometry)
+  pnt =  sf::st_as_sf(sp_output)
+  out <- sf::st_join(pol, pnt, join = st_contains)
+  out2 = sf::st_join(pol, pnt, join = st_contains) %>%
+    group_by(id) %>%
+    summarise(timediff = mean(timediff))
+  out2 = out2[!is.na(out2$timediff),]
+  sp_output = sf::st_transform(out2,4326)
+  coords = sf::st_coordinates(sp_output)
+  bbox = sf::st_bbox(sp_output)
+  box = ggmap::make_bbox(X, Y, coords, f = 0.05)
+  zoom = ggmap::calc_zoom(box)
+  names(bbox) = c("left", "bottom", "right", "top")
+  #ph_basemap <- get_map(source = "stamen",maptype ="toner-hybrid", location = bbox)#, zoom = 14)
+  #ph_basemap <- get_map(source = "osm", location = bbox)#, zoom = 14)
+  #ph_basemap <- get_openstreetmap(bbox)
+  ph_basemap <- ggmap::get_stamenmap(bbox,maptype ="toner",zoom = zoom)
+  
+  map = ggmap::ggmap(ph_basemap) +
+    ggplot2::geom_sf(data = sp_output, aes(fill=timediff), alpha=0.6, inherit.aes = FALSE) +
+    ggplot2::scale_fill_gradient2(low = "blue", mid = "white",
+                         high = "red", midpoint = 0)+
+    ggplot2::coord_sf(crs = st_crs(4326))
+  
+  print(map)
+  cat('\n\n')
+}
 
+
+```
 
 ## Map
 

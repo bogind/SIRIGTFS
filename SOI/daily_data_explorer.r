@@ -503,8 +503,11 @@ server <- function(input, output) {
                     GTFStrips,
                     linerefs = linerefs,
                     epsg = 2039)
+        assign(x = "buses", value = data$buses, envir = as.environment(1))
+        try(
+          data$buses$weekday <- as.factor(strftime(data$buses$RecordedAtTime, format = "%A"))
+        )
 
-        data$buses$weekday <- as.factor(strftime(data$buses$RecordedAtTime, format = "%A"))
         data$buses$weekday <- factor(data$buses$weekday, levels = levels(data$buses$weekday)[c(4,2,6:7,5,1,3)])
         data$buses$lineref <-  as.numeric(data$buses$lineref)
 
@@ -522,6 +525,7 @@ server <- function(input, output) {
                                htmlOutput("selectPlotAgency"),
                                htmlOutput("selectPlotLine"),
                                htmlOutput("report_placeholder"),
+                               htmlOutput("report_placeholder2"),
                                width = 6
                              ),
                              mainPanel(plotOutput("plot1", height = 300),
@@ -585,7 +589,7 @@ server <- function(input, output) {
         output$table <- DT::renderDataTable({
           DT::datatable(data$buses)
         })
-
+        assign(x = "buses", value = data$buses, envir = as.environment(1))
         output$selectPlotAgency <- renderUI({
           selectizeInput('inPlotAgency', 'בחירת מפעיל',
                          unique(data$buses$agency_name),
@@ -618,6 +622,10 @@ server <- function(input, output) {
 
         output$report_placeholder <- renderUI({
           downloadButton("report", "Generate report")
+        })
+
+        output$report_placeholder2 <- renderUI({
+          downloadButton("report2", "Select Location")
         })
 
 
@@ -943,7 +951,7 @@ server <- function(input, output) {
   output$report <- downloadHandler(
 
     # For PDF output, change this to "report.pdf"
-    filename = "report.pdf",
+    filename = "report.html",
     content = function(file) {
       # Copy the report file to a temporary directory before processing it, in
       # case we don't have write permissions to the current working dir (which
@@ -969,6 +977,43 @@ server <- function(input, output) {
       # Knit the document, passing in the `params` list, and eval it in a
       # child of the global environment (this isolates the code in the document
       # from the code in this app).
+      assign(x = "params", value = params, envir = as.environment(1))
+      rmarkdown::render(tempReport, output_file = file,
+                        params = params,
+                        envir = new.env(parent = globalenv())
+      )
+    }
+  )
+
+
+  output$report2 <- downloadHandler(
+    filename = file.choose(new=TRUE),
+    content = function(file) {
+      # Copy the report file to a temporary directory before processing it, in
+      # case we don't have write permissions to the current working dir (which
+      # can happen when deployed).
+      tempReport <- file.path(tempdir(), "template.Rmd")
+      file.copy("template.Rmd", tempReport, overwrite = TRUE)
+
+      # Set up parameters to pass to Rmd document
+      if(!is.null(data$shapes_lines)){
+        params <- list(n = 50,
+                       buses = data$buses,
+                       t1=data$t1,
+                       shapes=data$shapes_lines,
+                       bbox = data$bbox)
+      }else{
+        params <- list(n = 50,
+                       buses = data$buses,
+                       t1=data$t1)
+
+      }
+
+
+      # Knit the document, passing in the `params` list, and eval it in a
+      # child of the global environment (this isolates the code in the document
+      # from the code in this app).
+      assign(x = "params", value = params, envir = as.environment(1))
       rmarkdown::render(tempReport, output_file = file,
                         params = params,
                         envir = new.env(parent = globalenv())

@@ -1,0 +1,113 @@
+---
+title: "SIRItoGTFS Report"
+output: pdf_document
+params:
+  n: NA
+  buses: NA
+  t1: NA
+  bbox: NA
+  shapes: NA
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Template
+
+This is a sample template for a generated report of the SIRItoGTFS algorithm
+
+```{r, echo=FALSE, results='asis'}
+cat('\n')
+cat(paste(length(unique(params$buses$lineref)), ' routes checked\n'))
+cat('\n')  
+cat(paste('The Average time variation for all lines was',mean(params$buses$timediff),'\n'))
+cat('\n')  
+cat(paste('The Median time variation for all lines was',median(params$buses$timediff),'\n'))
+cat('\n')  
+linerefs = unique(params$buses$lineref)
+for(i in 1:length(unique(params$buses$lineref))){
+  cat('\n\n')
+  cat(paste('Route',linerefs[i], 'had', nrow(params$buses[params$buses$lineref == linerefs[i],]), 'observations'))
+  cat('\n\n')  
+  cat(paste('\tand a mean', round(mean(params$buses[params$buses$lineref == linerefs[i],'timediff']),3), 'time variation'))
+  cat('\n')  
+}
+paste()
+
+
+```
+
+
+```{r map, echo=FALSE}
+
+map1 = leaflet(data = params$shapes) %>%
+        addTiles() %>%
+        #fitBounds(data$bbox[1], data$bbox[2], data$bbox[3], data$bbox[4]) %>%
+        addPolylines(weight = 3, popup = ~popup_content)
+temp = tempfile(fileext = ".png")
+mapshot(map1, file = temp)
+
+```
+
+
+```{r map2, echo=FALSE}
+
+base = getTiles(x = params$shapes, type = 'CartoDB.Voyager')
+tilesLayer(base)
+plot(x = params$shapes, lwd =0.5, add=TRUE)
+
+```
+
+
+## Density of Time Variation
+
+```{r, echo=FALSE, results='asis'}
+
+  ggplot(params$buses[params$buses$timediff < 200 ,], aes(x = timediff, color = weekday, fill = weekday)) +
+        geom_density(alpha = 0.2) +
+        labs(title = paste("Density plot of",nrow(params$buses), "observations \nRoute ID",i),
+             x = "Time Variation in minutes",
+             y = "Density")+
+        theme(plot.title = element_text(hjust = 0.5,size=14),
+              panel.border = element_rect(linetype = "dashed", fill = NA),
+              plot.background = element_rect(fill = "azure1"),
+              legend.position="none")
+  
+ 
+
+```
+
+
+## Basic Statistics
+
+
+```{r, echo=FALSE}
+p2 <- ggplot(data = params$t1, aes(x=hour)) +
+        geom_ribbon(aes(ymin=timediff-2*sd(timediff), ymax=timediff+2*sd(timediff),fill = "orange"),alpha=0.15) +
+        geom_ribbon(aes(ymin=timediff-1*sd(timediff), ymax=timediff+1*sd(timediff),fill = "cyan"),alpha=0.2) +
+        geom_ribbon(aes(ymin=tmed-0.5*IQR(tmed), ymax=tmed+0.5*IQR(tmed),fill = "grey70"),alpha=0.5) +
+        scale_x_continuous(breaks=seq(1,24,1)) +
+        geom_line(aes(y=timediff,colour = "timediff")) +
+        geom_line(aes(y = tmed,colour = "tmed"))+
+        scale_colour_manual("",breaks = c("timediff", "tmed"),values = c("timediff"="Red", "tmed"="green"), labels = c("Mean", "Median"))+
+        scale_fill_manual("",values = hcl(c(15,195,100),100,65, alpha=c(0.5,0.2,0.15)),
+                          labels = c("SD","IQR","2SD"))+
+        labs(title = paste("Time Variation \n", nrow(params$buses), "observations\n"),
+             x = "Hour",
+             y = "Time difference")+
+        theme(plot.title = element_text(hjust = 0.5, size = 14),
+              panel.border = element_rect(linetype = "dashed", fill = NA),
+              plot.background = element_rect(fill = "azure1"),
+              legend.box.background = element_rect(),
+              legend.box.margin = margin(5, 5, 5, 5))
+p2
+
+```
+
+
+
+## Map
+
+![Map Of Selected Lines.](`r temp`)

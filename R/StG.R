@@ -67,6 +67,7 @@ STG = function(SIRIDF,
                GTFSroutes.,
                GTFSstop_times.,
                GTFStrips.,
+               GTFSshapes.=NULL,
                linerefs = NULL,
                epsg = 2039){
 
@@ -83,6 +84,9 @@ STG = function(SIRIDF,
   GTFScalendar. = as.data.frame(GTFScalendar.)
   GTFSroutes. = as.data.frame(GTFSroutes.)
   GTFStrips. = as.data.frame(GTFStrips.)
+  if(!is.null(GTFSshapes.)){
+    GTFSshapes. = as.data.frame(GTFSshapes.)
+  }
   # Filter placeholders
   SIRIDF = SIRIDF[SIRIDF$Latitude != 'a',]
   # Filter rows with no location data
@@ -143,7 +147,7 @@ STG = function(SIRIDF,
 
 
         # for a generic version you can use SIRItoSP with use of an EPSG code, and
-        SIRIdf3 = SIRIdf3[as.numeric(SIRIdf3$Latitude) < 180 & as.numeric(SIRIdf3$Longitude) < 180,]
+        SIRIdf3 = SIRIdf3[abs(as.numeric(SIRIdf3$Latitude)) < 90 & abs(as.numeric(SIRIdf3$Longitude)) < 180,]
         SIRIdf3$Latitude = as.numeric(SIRIdf3$Latitude)
         SIRIdf3$Longitude = as.numeric(SIRIdf3$Longitude)
         spSIRI <- SIRItoSP(SIRIdf3,epsg) # change siriDF to point with ITM
@@ -195,7 +199,7 @@ STG = function(SIRIDF,
         fullans = fullans[!is.na(fullans$timediff),]
 
         ans2 <- fullans[,c("RecordedAtTime","arrival_time", "timediff", "distance", "key3", "stop_code","stop_sequence","stop_lon","stop_lat","OriginAimedDepartureTime", "trip_id", "outlier" )]
-        # write.csv(ans2, file = "C:\\Users\\Dror Bogin\\Desktop\\University\\Geogeraphy\\Seminar\\test\\line5ScG.csv")
+
 
         # checks how many observations you currently have
         message(paste("lineref no",w,"had",length(ans2$timediff[!is.na(ans2$timediff)]), "observations"))

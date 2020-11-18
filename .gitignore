@@ -6,3 +6,7 @@ cran-comments.md
 NAGTFS2018-08-31.zip
 Untitled/*
 rosm.cache/*
+*.shp
+*.prj
+*.shx
+*.dbf

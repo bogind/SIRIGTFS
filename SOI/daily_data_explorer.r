@@ -385,11 +385,11 @@ server <- function(input, output) {
 
     })
 
-    ################
-    # filter lines list by operator
-    ################
+  ################
+  # filter lines list by operator
+  ################
 
-    observeEvent(input$inOperators,{
+  observeEvent(input$inOperators,{
       if(length(input$inOperators) > 0){
         ids = unique(GTFSagency$agency_id[GTFSagency$agency_name %in% input$inOperators])
 
@@ -416,11 +416,11 @@ server <- function(input, output) {
     })
 
 
-    ################
-    # select lines
-    ################
+  ################
+  # select lines
+  ################
 
-    observeEvent(input$inLinerefs,{
+  observeEvent(input$inLinerefs,{
 
 
       selection$linerefs = unique(SIRIdf$LineRef[SIRIdf$LineRef %in%
@@ -429,64 +429,64 @@ server <- function(input, output) {
     })
 
 
-    ################
-    # Show Routes on Map
-    ################
+  ################
+  # Show Routes on Map
+  ################
 
-    observeEvent(input$mapRoutes,{
+  observeEvent(input$mapRoutes,{
 
 
-      assign(x = "linerefs", value = selection$linerefs, envir = as.environment(1))
+    assign(x = "linerefs", value = selection$linerefs, envir = as.environment(1))
 
-      routes = GTFSroutes[GTFSroutes$route_id %in% linerefs,]
+    routes = GTFSroutes[GTFSroutes$route_id %in% linerefs,]
 
-      trips = GTFStrips[GTFStrips$route_id %in% routes$route_id,]
+    trips = GTFStrips[GTFStrips$route_id %in% routes$route_id,]
 
-      shapes = GTFSshapes[GTFSshapes$shape_id %in% trips$shape_id,]
+    shapes = GTFSshapes[GTFSshapes$shape_id %in% trips$shape_id,]
 
-      shapes =shapes[order(shapes$shape_pt_sequence),]
+    shapes =shapes[order(shapes$shape_pt_sequence),]
 
-      shapes_sf = st_as_sf(shapes, coords = c("shape_pt_lon","shape_pt_lat"), crs = 4326)
-      bbox <- st_bbox(shapes_sf) %>%
-        as.vector()
-      t = data.frame("shape_id" = c(),"route_id"=c())
-      for(s in 1:length(unique(shapes_sf$shape_id))){
-        shp = unique(shapes_sf$shape_id)[s]
-        route = unique(trips$route_id[trips$shape_id == unique(shapes_sf$shape_id)[s]])[1]
-        t[s,"shape_id"] = shp
-        t[s,"route_id"] = route
-      }
-      shapes_lines = shapes_sf %>%
-        group_by(shape_id) %>%
-        left_join(t) %>%
-        left_join(routes) %>%
-        left_join(GTFSagency) %>%
-        summarize(n = n(),
-                  agency_name = min(agency_name),
-                  route_name = min(route_short_name),
-                  route_desc = min(route_long_name),
-                  do_union=FALSE) %>%
-        st_cast("LINESTRING")
+    shapes_sf = st_as_sf(shapes, coords = c("shape_pt_lon","shape_pt_lat"), crs = 4326)
+    bbox <- st_bbox(shapes_sf) %>%
+      as.vector()
+    t = data.frame("shape_id" = c(),"route_id"=c())
+    for(s in 1:length(unique(shapes_sf$shape_id))){
+      shp = unique(shapes_sf$shape_id)[s]
+      route = unique(trips$route_id[trips$shape_id == unique(shapes_sf$shape_id)[s]])[1]
+      t[s,"shape_id"] = shp
+      t[s,"route_id"] = route
+    }
+    shapes_lines = shapes_sf %>%
+      group_by(shape_id) %>%
+      left_join(t) %>%
+      left_join(routes) %>%
+      left_join(GTFSagency) %>%
+      summarize(n = n(),
+                agency_name = min(agency_name),
+                route_name = min(route_short_name),
+                route_desc = min(route_long_name),
+                do_union=FALSE) %>%
+      st_cast("LINESTRING")
 
-      shapes_lines$popup_content = paste("<div dir='rtl' style='direction: rtl; text-align:right'><b>",
-                                         shapes_lines$agency_name,"</b><br>",
-                                         "קו",shapes_lines$route_name,"<br>",
-                                         shapes_lines$route_desc,"</div>")
-      data$shapes_lines = shapes_lines
-      data$bbox = bbox
+    shapes_lines$popup_content = paste("<div dir='rtl' style='direction: rtl; text-align:right'><b>",
+                                       shapes_lines$agency_name,"</b><br>",
+                                       "קו",shapes_lines$route_name,"<br>",
+                                       shapes_lines$route_desc,"</div>")
+    data$shapes_lines = shapes_lines
+    data$bbox = bbox
 
-      map1 = leaflet(data = shapes_lines) %>%
-        addTiles() %>%
-        fitBounds(bbox[1], bbox[2], bbox[3], bbox[4]) %>%
-        addPolylines(weight = 3, popup = ~popup_content)#~htmlEscape(popup))
+    map1 = leaflet(data = shapes_lines) %>%
+      addTiles() %>%
+      fitBounds(bbox[1], bbox[2], bbox[3], bbox[4]) %>%
+      addPolylines(weight = 3, popup = ~popup_content)#~htmlEscape(popup))
 
-      output$map1 <- renderLeaflet(map1)
+    output$map1 <- renderLeaflet(map1)
 
-    })
+  })
 
-    ################
-    # Start
-    ################
+  ################
+  # Start
+  ################
 
     observeEvent(input$run3,{
       assign(x = "linerefs", value = selection$linerefs, envir = as.environment(1))
@@ -637,262 +637,267 @@ server <- function(input, output) {
     })
 
 
-    ################
-    # Plots reactive functions
-    ################
+  ################
+  # Plots reactive functions
+  ################
 
-    observeEvent(input$inPlotAgency,{
-
-      ids = unique(GTFSagency$agency_id[GTFSagency$agency_name %in% input$inPlotAgency])
-
-
-
-      selection$plotLinerefs = unique(data$buses$route_id[data$buses$agency_id %in% ids])
+  observeEvent(input$inPlotAgency,{
+    ids = unique(GTFSagency$agency_id[GTFSagency$agency_name %in% input$inPlotAgency])
+    selection$plotLinerefs = unique(data$buses$route_id[data$buses$agency_id %in% ids])
 
 
-      output$selectPlotLine <- renderUI({
+    output$selectPlotLine <- renderUI({
 
-        selectizeInput('inLinerefs', 'בחירת קווים',
-                       unique(data$buses$name[buses$agency_id %in% ids]),
+      selectizeInput('inLinerefs', 'בחירת קווים',
+                     unique(data$buses$name[buses$agency_id %in% ids]),
+                     size = 10,options = list(
+                       placeholder = 'Please select an option below'
+                     ),
+                     multiple=TRUE)#, selectize=FALSE)
+    })
+
+    output$selectPlotLine <- renderUI({
+
+      if(length(input$inPlotAgency) > 0){
+
+        selectizeInput('inPlotLinerefs', 'בחירת קווים',
+                       unique(data$buses$name[data$buses$agency_id %in% ids]),
                        size = 10,options = list(
                          placeholder = 'Please select an option below'
                        ),
-                       multiple=TRUE)#, selectize=FALSE)
-      })
+                       multiple=TRUE)
 
-      output$selectPlotLine <- renderUI({
-
-        if(length(input$inPlotAgency) > 0){
-
-          selectizeInput('inPlotLinerefs', 'בחירת קווים',
-                         unique(data$buses$name[data$buses$agency_id %in% ids]),
-                         size = 10,options = list(
-                           placeholder = 'Please select an option below'
-                         ),
-                         multiple=TRUE)
-
-        }else{
-          selectizeInput('inPlotLinerefs', 'בחירת קווים',
-                         unique(data$buses$name),
-                         size = 10,options = list(
-                           placeholder = 'Please select an option below'
-                         ),
-                         multiple=TRUE)
-        }
+      }else{
+        selectizeInput('inPlotLinerefs', 'בחירת קווים',
+                       unique(data$buses$name),
+                       size = 10,options = list(
+                         placeholder = 'Please select an option below'
+                       ),
+                       multiple=TRUE)
+      }
 
 
-      })
+    })
 
 
       # selection$plotLinerefs = unique(buses$lineref[buses$agency_id %in% ids])
 
-      t <- data$buses[data$buses$agency_id %in% ids,]
-      t <- t[order(t$RecordedAtTime,t$OriginAimedDepartureTime),]
-      t$hour <- as.numeric(strftime(t$arrival_time, format = "%H"))
-      t1 <- t %>%
-        group_by(hour) %>%
-        summarise_all(funs(mean(timediff, na.rm=TRUE)))
-      t1 <- t1[t1$timediff <200,]
+    t <- data$buses[data$buses$agency_id %in% ids,]
+    t <- t[order(t$RecordedAtTime,t$OriginAimedDepartureTime),]
+    t$hour <- as.numeric(strftime(t$arrival_time, format = "%H"))
+    t1 <- t %>%
+      group_by(hour) %>%
+      summarise_all(funs(mean(timediff, na.rm=TRUE)))
+    t1 <- t1[t1$timediff <200,]
 
-      t2 <- t %>%
-        group_by(hour) %>%
-        summarise_all(funs(max(timediff, na.rm=TRUE)))
+    t2 <- t %>%
+      group_by(hour) %>%
+      summarise_all(funs(max(timediff, na.rm=TRUE)))
 
-      t3 <- t %>%
-        group_by(hour) %>%
-        summarise_all(funs(min(timediff, na.rm=TRUE)))
+    t3 <- t %>%
+      group_by(hour) %>%
+      summarise_all(funs(min(timediff, na.rm=TRUE)))
 
-      t4 <- t %>%
-        group_by(hour) %>%
-        summarise_all(funs(median(timediff, na.rm=TRUE)))
+    t4 <- t %>%
+      group_by(hour) %>%
+      summarise_all(funs(median(timediff, na.rm=TRUE)))
 
-      cc <- colnames(t4)
-      cc[4] <- "Median"
-      colnames(t4) <- cc
-      tmed <- t4$Median
-      t1 <- cbind(t1,tmed)
+    cc <- colnames(t4)
+    cc[4] <- "Median"
+    colnames(t4) <- cc
+    tmed <- t4$Median
+    t1 <- cbind(t1,tmed)
 
-      t5 <- t %>%
-        group_by(hour) %>%
-        summarise_all(funs(IQR(timediff, na.rm=TRUE)))
+    t5 <- t %>%
+      group_by(hour) %>%
+      summarise_all(funs(IQR(timediff, na.rm=TRUE)))
 
-      t6 <- t %>%
-        group_by(lineref) %>%
-        summarise_all(funs(mean(timediff, na.rm=TRUE)))
+    t6 <- t %>%
+      group_by(lineref) %>%
+      summarise_all(funs(mean(timediff, na.rm=TRUE)))
 
-      st1 <- t %>%
-        group_by(stop_code) %>%
-        summarise_all(funs(median(timediff, na.rm=TRUE)))
-      st2 <- t %>%
-        group_by(stop_code) %>%
-        summarise_all(funs(max(timediff, na.rm=TRUE)))
-
-
-
-      st1 <- st1[,c(1,4)]
-      st1 <- left_join(st1, GTFSstops, by = c("stop_code" = "stop_code"))
-      st2 <- st2[,c(1,4)]
-      st2 <- left_join(st2, GTFSstops, by = c("stop_code" = "stop_code"))
-      stpos <- st1[st1$timediff > 0,]
-      stneg <- st1[st1$timediff < 0,]
-
-      matTA1 = st1[,c(1:5,8:10)]
-      matTA1 = matTA1 %>%
-        left_join(GTFSstops)
-
-      matTA2 = st2[,c(1:5,8:10)]
-      matTA2 = matTA2 %>%
-        left_join(GTFSstops)
-
-      p1 <- ggplot(data$buses[data$buses$timediff < 200,], aes(x = timediff, color = weekday, fill = weekday)) +
-        geom_density(alpha = 0.2) +
-        labs(title = paste("Density plot of",nrow(data$buses), "observations \n"),
-             x = "Time Variation in minutes",
-             y = "Density")+
-        theme(plot.title = element_text(hjust = 0.5,size=14),
-              panel.border = element_rect(linetype = "dashed", fill = NA),
-              plot.background = element_rect(fill = "azure1"),
-              legend.position="none"
-        )
-
-      data$t1 = t1
-      p3 <- ggplot(data = t1, aes(x=hour)) +
-        geom_ribbon(aes(ymin=timediff-2*sd(timediff), ymax=timediff+2*sd(timediff),fill = "orange"),alpha=0.15) +
-        geom_ribbon(aes(ymin=timediff-1*sd(timediff), ymax=timediff+1*sd(timediff),fill = "cyan"),alpha=0.2) +
-        geom_ribbon(aes(ymin=tmed-0.5*IQR(tmed), ymax=tmed+0.5*IQR(tmed),fill = "grey70"),alpha=0.5) +
-        scale_x_continuous(breaks=seq(1,24,1)) +
-        geom_line(aes(y=timediff,colour = "timediff")) +
-        geom_line(aes(y = tmed,colour = "tmed"))+
-        scale_colour_manual("",breaks = c("timediff", "tmed"),values = c("timediff"="Red", "tmed"="green"), labels = c("Mean", "Median"))+
-        scale_fill_manual("",values = hcl(c(15,195,100),100,65, alpha=c(0.5,0.2,0.15)),
-                          labels = c("SD","IQR","2SD"))+
-        labs(title = paste("Time Variation \n", nrow(data$buses), "observations\n"),
-             x = "Hour",
-             y = "Time difference")+
-        theme(plot.title = element_text(hjust = 0.5, size = 14),
-              panel.border = element_rect(linetype = "dashed", fill = NA),
-              plot.background = element_rect(fill = "azure1"),
-              legend.box.background = element_rect(),
-              legend.box.margin = margin(5, 5, 5, 5))
-
-      output$plot1 <-  renderPlot({
-        p1
-      })
-      output$plot2 <-  renderPlot({
-        p3
-      })
+    st1 <- t %>%
+      group_by(stop_code) %>%
+      summarise_all(funs(median(timediff, na.rm=TRUE)))
+    st2 <- t %>%
+      group_by(stop_code) %>%
+      summarise_all(funs(max(timediff, na.rm=TRUE)))
 
 
 
+    st1 <- st1[,c(1,4)]
+    st1 <- left_join(st1, GTFSstops, by = c("stop_code" = "stop_code"))
+    st2 <- st2[,c(1,4)]
+    st2 <- left_join(st2, GTFSstops, by = c("stop_code" = "stop_code"))
+    stpos <- st1[st1$timediff > 0,]
+    stneg <- st1[st1$timediff < 0,]
+
+    matTA1 = st1[,c(1:5,8:10)]
+    matTA1 = matTA1 %>%
+      left_join(GTFSstops)
+
+    matTA2 = st2[,c(1:5,8:10)]
+    matTA2 = matTA2 %>%
+      left_join(GTFSstops)
+
+    # Create Density Plot
+
+    p1 <- ggplot(data$buses[data$buses$timediff < 200,], aes(x = timediff, color = weekday, fill = weekday)) +
+      geom_density(alpha = 0.2) +
+      labs(title = paste("Density plot of",nrow(data$buses), "observations \n"),
+           x = "Time Variation in minutes",
+           y = "Density")+
+      theme(plot.title = element_text(hjust = 0.5,size=14),
+            panel.border = element_rect(linetype = "dashed", fill = NA),
+            plot.background = element_rect(fill = "azure1"),
+            legend.position="none"
+      )
+
+    data$t1 = t1
+
+    # Create Ribbon Plot
+
+    p3 <- ggplot(data = t1, aes(x=hour)) +
+      geom_ribbon(aes(ymin=timediff-2*sd(timediff), ymax=timediff+2*sd(timediff),fill = "orange"),alpha=0.15) +
+      geom_ribbon(aes(ymin=timediff-1*sd(timediff), ymax=timediff+1*sd(timediff),fill = "cyan"),alpha=0.2) +
+      geom_ribbon(aes(ymin=tmed-0.5*IQR(tmed), ymax=tmed+0.5*IQR(tmed),fill = "grey70"),alpha=0.5) +
+      scale_x_continuous(breaks=seq(1,24,1)) +
+      geom_line(aes(y=timediff,colour = "timediff")) +
+      geom_line(aes(y = tmed,colour = "tmed"))+
+      scale_colour_manual("",breaks = c("timediff", "tmed"),values = c("timediff"="Red", "tmed"="green"), labels = c("Mean", "Median"))+
+      scale_fill_manual("",values = hcl(c(15,195,100),100,65, alpha=c(0.5,0.2,0.15)),
+                        labels = c("SD","IQR","2SD"))+
+      labs(title = paste("Time Variation \n", nrow(data$buses), "observations\n"),
+           x = "Hour",
+           y = "Time difference")+
+      theme(plot.title = element_text(hjust = 0.5, size = 14),
+            panel.border = element_rect(linetype = "dashed", fill = NA),
+            plot.background = element_rect(fill = "azure1"),
+            legend.box.background = element_rect(),
+            legend.box.margin = margin(5, 5, 5, 5))
+
+    output$plot1 <-  renderPlot({
+      p1
+    })
+    output$plot2 <-  renderPlot({
+      p3
     })
 
-    observeEvent(input$inPlotLinerefs,{
-
-      selection$plotLinerefs = unique(data$buses$lineref[data$buses$name %in% input$inPlotLinerefs])
-
-      t <- data$buses[data$buses$lineref %in% selection$plotLinerefs,]
-      t <- t[order(t$RecordedAtTime,t$OriginAimedDepartureTime),]
-      t$hour <- as.numeric(strftime(t$arrival_time, format = "%H"))
-      t1 <- t %>%
-        group_by(hour) %>%
-        summarise_all(funs(mean(timediff, na.rm=TRUE)))
-      t1 <- t1[t1$timediff <200,]
-
-      t2 <- t %>%
-        group_by(hour) %>%
-        summarise_all(funs(max(timediff, na.rm=TRUE)))
-
-      t3 <- t %>%
-        group_by(hour) %>%
-        summarise_all(funs(min(timediff, na.rm=TRUE)))
-
-      t4 <- t %>%
-        group_by(hour) %>%
-        summarise_all(funs(median(timediff, na.rm=TRUE)))
-
-      cc <- colnames(t4)
-      cc[4] <- "Median"
-      colnames(t4) <- cc
-      tmed <- t4$Median
-      t1 <- cbind(t1,tmed)
-
-      t5 <- t %>%
-        group_by(hour) %>%
-        summarise_all(funs(IQR(timediff, na.rm=TRUE)))
-
-      t6 <- t %>%
-        group_by(lineref) %>%
-        summarise_all(funs(mean(timediff, na.rm=TRUE)))
-
-      st1 <- t %>%
-        group_by(stop_code) %>%
-        summarise_all(funs(median(timediff, na.rm=TRUE)))
-      st2 <- t %>%
-        group_by(stop_code) %>%
-        summarise_all(funs(max(timediff, na.rm=TRUE)))
 
 
+  })
 
-      st1 <- st1[,c(1,4)]
-      st1 <- left_join(st1, GTFSstops, by = c("stop_code" = "stop_code"))
-      st2 <- st2[,c(1,4)]
-      st2 <- left_join(st2, GTFSstops, by = c("stop_code" = "stop_code"))
-      stpos <- st1[st1$timediff > 0,]
-      stneg <- st1[st1$timediff < 0,]
+  #######################
+  # Observe Line selection and change interactive plots
+  #######################
 
-      matTA1 = st1[,c(1:5,8:10)]
-      matTA1 = matTA1 %>%
-        left_join(GTFSstops)
+  observeEvent(input$inPlotLinerefs,{
 
-      matTA2 = st2[,c(1:5,8:10)]
-      matTA2 = matTA2 %>%
-        left_join(GTFSstops)
+    selection$plotLinerefs = unique(data$buses$lineref[data$buses$name %in% input$inPlotLinerefs])
 
-      p1 <- ggplot(t[t$timediff < 200,], aes(x = timediff, color = weekday, fill = weekday)) +
-        geom_density(alpha = 0.2) +
-        labs(title = paste("Density plot of",nrow(t), "observations \n"),
-             x = "Time Variation in minutes",
-             y = "Density")+
-        theme(plot.title = element_text(hjust = 0.5,size=14),
-              panel.border = element_rect(linetype = "dashed", fill = NA),
-              plot.background = element_rect(fill = "azure1"),
-              legend.position="none"
-        )
+    t <- data$buses[data$buses$lineref %in% selection$plotLinerefs,]
+    t <- t[order(t$RecordedAtTime,t$OriginAimedDepartureTime),]
+    t$hour <- as.numeric(strftime(t$arrival_time, format = "%H"))
+    t1 <- t %>%
+      group_by(hour) %>%
+      summarise_all(funs(mean(timediff, na.rm=TRUE)))
+    t1 <- t1[t1$timediff <200,]
+
+    t2 <- t %>%
+      group_by(hour) %>%
+      summarise_all(funs(max(timediff, na.rm=TRUE)))
+
+    t3 <- t %>%
+      group_by(hour) %>%
+      summarise_all(funs(min(timediff, na.rm=TRUE)))
+
+    t4 <- t %>%
+      group_by(hour) %>%
+      summarise_all(funs(median(timediff, na.rm=TRUE)))
+
+    cc <- colnames(t4)
+    cc[4] <- "Median"
+    colnames(t4) <- cc
+    tmed <- t4$Median
+    t1 <- cbind(t1,tmed)
+
+    t5 <- t %>%
+      group_by(hour) %>%
+      summarise_all(funs(IQR(timediff, na.rm=TRUE)))
+
+    t6 <- t %>%
+      group_by(lineref) %>%
+      summarise_all(funs(mean(timediff, na.rm=TRUE)))
+
+    st1 <- t %>%
+      group_by(stop_code) %>%
+      summarise_all(funs(median(timediff, na.rm=TRUE)))
+    st2 <- t %>%
+      group_by(stop_code) %>%
+      summarise_all(funs(max(timediff, na.rm=TRUE)))
 
 
-      p3 <- ggplot(data = t1, aes(x=hour)) +
-        geom_ribbon(aes(ymin=timediff-2*sd(timediff), ymax=timediff+2*sd(timediff),fill = "orange"),alpha=0.15) +
-        geom_ribbon(aes(ymin=timediff-1*sd(timediff), ymax=timediff+1*sd(timediff),fill = "cyan"),alpha=0.2) +
-        geom_ribbon(aes(ymin=tmed-0.5*IQR(tmed), ymax=tmed+0.5*IQR(tmed),fill = "grey70"),alpha=0.5) +
-        scale_x_continuous(breaks=seq(1,24,1)) +
-        geom_line(aes(y=timediff,colour = "timediff")) +
-        geom_line(aes(y = tmed,colour = "tmed"))+
-        scale_colour_manual("",breaks = c("timediff", "tmed"),values = c("timediff"="Red", "tmed"="green"), labels = c("Mean", "Median"))+
-        scale_fill_manual("",values = hcl(c(15,195,100),100,65, alpha=c(0.5,0.2,0.15)),
-                          labels = c("SD","IQR","2SD"))+
-        labs(title = paste("Time Variation \n", nrow(t1), "observations\n"),
-             x = "Hour",
-             y = "Time difference")+
-        theme(plot.title = element_text(hjust = 0.5, size = 14),
-              panel.border = element_rect(linetype = "dashed", fill = NA),
-              plot.background = element_rect(fill = "azure1"),
-              legend.box.background = element_rect(),
-              legend.box.margin = margin(5, 5, 5, 5))
 
-      output$plot1 <-  renderPlot({
-        p1
-      })
-      output$plot2 <-  renderPlot({
-        p3
-      })
+    st1 <- st1[,c(1,4)]
+    st1 <- left_join(st1, GTFSstops, by = c("stop_code" = "stop_code"))
+    st2 <- st2[,c(1,4)]
+    st2 <- left_join(st2, GTFSstops, by = c("stop_code" = "stop_code"))
+    stpos <- st1[st1$timediff > 0,]
+    stneg <- st1[st1$timediff < 0,]
 
+    matTA1 = st1[,c(1:5,8:10)]
+    matTA1 = matTA1 %>%
+      left_join(GTFSstops)
+
+    matTA2 = st2[,c(1:5,8:10)]
+    matTA2 = matTA2 %>%
+      left_join(GTFSstops)
+
+    p1 <- ggplot(t[t$timediff < 200,], aes(x = timediff, color = weekday, fill = weekday)) +
+      geom_density(alpha = 0.2) +
+      labs(title = paste("Density plot of",nrow(t), "observations \n"),
+           x = "Time Variation in minutes",
+           y = "Density")+
+      theme(plot.title = element_text(hjust = 0.5,size=14),
+            panel.border = element_rect(linetype = "dashed", fill = NA),
+            plot.background = element_rect(fill = "azure1"),
+            legend.position="none"
+      )
+
+
+    p3 <- ggplot(data = t1, aes(x=hour)) +
+      geom_ribbon(aes(ymin=timediff-2*sd(timediff), ymax=timediff+2*sd(timediff),fill = "orange"),alpha=0.15) +
+      geom_ribbon(aes(ymin=timediff-1*sd(timediff), ymax=timediff+1*sd(timediff),fill = "cyan"),alpha=0.2) +
+      geom_ribbon(aes(ymin=tmed-0.5*IQR(tmed), ymax=tmed+0.5*IQR(tmed),fill = "grey70"),alpha=0.5) +
+      scale_x_continuous(breaks=seq(1,24,1)) +
+      geom_line(aes(y=timediff,colour = "timediff")) +
+      geom_line(aes(y = tmed,colour = "tmed"))+
+      scale_colour_manual("",breaks = c("timediff", "tmed"),values = c("timediff"="Red", "tmed"="green"), labels = c("Mean", "Median"))+
+      scale_fill_manual("",values = hcl(c(15,195,100),100,65, alpha=c(0.5,0.2,0.15)),
+                        labels = c("SD","IQR","2SD"))+
+      labs(title = paste("Time Variation \n", nrow(t1), "observations\n"),
+           x = "Hour",
+           y = "Time difference")+
+      theme(plot.title = element_text(hjust = 0.5, size = 14),
+            panel.border = element_rect(linetype = "dashed", fill = NA),
+            plot.background = element_rect(fill = "azure1"),
+            legend.box.background = element_rect(),
+            legend.box.margin = margin(5, 5, 5, 5))
+
+    output$plot1 <-  renderPlot({
+      p1
+    })
+    output$plot2 <-  renderPlot({
+      p3
     })
 
-    ################
-    # Placeholder for  SIRI File
-    ################
+  })
 
-    output$undecided <- renderUI({
+  ################
+  # Update the number of selected routes
+  ################
+
+  output$undecided <- renderUI({
       if(is.null(selection$linerefs)){
         HTML("")
       }else if(length(selection$linerefs) == length(unique(SIRIdf$LineRef)) ){
@@ -978,10 +983,11 @@ server <- function(input, output) {
       # child of the global environment (this isolates the code in the document
       # from the code in this app).
       assign(x = "params", value = params, envir = as.environment(1))
+
       rmarkdown::render(tempReport, output_file = file,
-                        params = params,
-                        envir = new.env(parent = globalenv())
-      )
+                          params = params,
+                          envir = new.env(parent = globalenv())
+                )
     }
   )
 

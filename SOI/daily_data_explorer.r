@@ -776,11 +776,158 @@ server <- function(input, output) {
             legend.box.background = element_rect(),
             legend.box.margin = margin(5, 5, 5, 5))
 
+    #############
+    # Create Line Segments Map
+    #############
+
+    output_map = t[complete.cases(t[ , c("stop_lat","stop_lon")]),]
+    # convert dataframe to simple features geographic table
+    sp_output = st_as_sf(output_map,coords = c(8,9))
+    st_crs(sp_output) <- 2039
+
+    # convert sf table to spatialPointsDataFrame
+    sp_output = as(sp_output, "Spatial")
+
+    # get all unique line ids
+    linerefs = unique(sp_output$lineref)
+
+    for (lineref in linerefs) {
+      # create a subset table for specific line id
+      sp_output2 = sp_output[sp_output$lineref == lineref,]
+      # get relevant shape_id for each route
+      sp_output2@data = dplyr::left_join(sp_output2@data,
+                                         GTFStrips[GTFStrips$route_id == lineref,c("route_id", "shape_id")],
+                                         by=c("lineref"="route_id"))
+      # get all the stops for the shape
+      line_stops = GTFSstops[GTFSstops$stop_code %in% unique(sp_output2$stop_code),]
+      # join a stop sequence (order on shape) column to the stops table and order
+      sequence = unique(sp_output2@data[,c("stop_code","stop_sequence")])
+      line_stops = dplyr::left_join(line_stops,sequence)
+      line_stops = line_stops[order(line_stops$stop_sequence),]
+
+      # create a spatial stops table
+      line_stops_sp = st_as_sf(line_stops,coords = c(6,5))
+      st_crs(line_stops_sp) <- 4326
+      line_stops_sp = st_transform(line_stops_sp,2039)
+
+      # get shape_id for the route, create a shape spatial table
+      shape_id = unique(GTFStrips$shape_id[GTFStrips$route_id == lineref])
+      shape = GTFSshapes[GTFSshapes$shape_id == shape_id,]
+      shape = st_as_sf(shape,coords = c(3,2),agr="aggregate")
+      st_crs(shape) <- 4326
+      shape = st_transform(shape,2039)
+      shape = st_as_sf(shape)
+
+      # create a distance matrix between all shape points and all line stops
+      dd =  sp::spDists( as(line_stops_sp, "Spatial"),as(shape, "Spatial"))
+      colnames(dd) = row.names(shape)
+      row.names(dd) = line_stops_sp$stop_code
+
+      # set distance between first stop and start of line to 0, do same for last point and stop
+      dd[1,1] = 0.0
+      dd[nrow(dd),ncol(dd)] = 0.0
+
+      # What point is closest to each line
+      last_index = 1
+      idxs = c(last_index)
+      for(row in 1:nrow(dd)){
+        stop = FALSE
+        if( row > 1 & row != nrow(dd)){
+          distances = as.vector(dd[row,])
+          names(distances) = colnames(dd)
+          distances = sort(distances)
+          for(dist in 1:length(distances)){
+            if(as.numeric(last_index) < as.numeric(names(distances)[dist])){
+              last_index = as.numeric(names(distances)[dist])
+              idxs = c(idxs,last_index)
+              stop = TRUE
+              break
+            }
+            next
+          }
+        }
+        if (stop){next}
+      }
+      idxs = c(idxs,colnames(dd)[ncol(dd)])
+      idxs = sapply(idxs, as.numeric)
+
+      # create all line segments (should have n(stops)-1)
+      segments = list()
+      for(i in 1:(length(idxs)-1)){
+        temp_pts = shape[idxs[i]:idxs[i+1],]
+        temp_pts_sf = sf::st_as_sf(temp_pts) %>%
+          dplyr::group_by(shape_id) %>%
+          dplyr::summarize(m = mean(shape_id), id = i, stop_code = as.numeric(row.names(dd)[i+1]),do_union=FALSE) %>%
+          sf::st_cast("LINESTRING")
+        segments[[i]] = temp_pts_sf
+      }
+      shapes2 = segments[[1]]
+      for(s in 2:length(segments)){
+        shapes2 = rbind(shapes2, segments[[s]])
+      }
+
+      # summary for each segment
+      shapes3 =  sp_output2@data %>%
+        dplyr::group_by(stop_code) %>%
+        dplyr::summarize(mean_timediff = mean(timediff),
+                         median_timediff = median(timediff),
+                         agency_id = min(agency_id),
+                         agency_name = min(agency_name),
+                         route_short_name = min(route_short_name),
+                         stop_sequence=min(stop_sequence)) %>%
+        dplyr::left_join( shapes2)
+
+      shapes3 = sf::st_as_sf(as.data.frame(shapes3))
+      sf::st_crs(shapes3) = 2039
+      shapes3 = st_transform(shapes3,4326)
+      qpal <- colorQuantile("YlGnBu", shapes3$median_timediff, n=5)
+      if(!exists("map")){
+        map = leaflet(shapes3) %>%
+          addTiles(urlTemplate ="//{s}.basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}{r}.png") %>%
+          leaflet::addPolylines(weight = 3, smoothFactor = 0.5,
+                                opacity = 1.0, color = ~qpal(median_timediff),
+                                highlightOptions = highlightOptions(color = "cyan", weight = 4,
+                                                                    bringToFront = TRUE),
+                                popup = ~paste(sep = "<br/>",
+                                               paste0('<center><h3>מקטע מס: ', stop_sequence-1, '</h3></center>'),
+                                               paste0('הפרש זמן חציוני: ', round(median_timediff,3), ' דקות '),
+                                               paste0('הפרש זמן ממוצע: ', round(mean_timediff,3), ' דקות ')
+                                )) %>%
+          addLegend("bottomright",pal = qpal,
+                    labFormat = function(type, cuts, p) {
+                      n = length(cuts)
+                      paste0('<span style="direction:rtl">',round(cuts[-n],1), " &ndash; ", round(cuts[-1],1)," דקות </span>")
+                    },
+                    values = shapes3$median_timediff, opacity = 1)
+
+      }else{
+        map = leaflet::addPolylines(map,data=shapes3,weight = 3, smoothFactor = 0.5,
+                              opacity = 1.0, color = ~qpal(median_timediff),
+                              highlightOptions = highlightOptions(color = "cyan", weight = 4,
+                                                                  bringToFront = TRUE),
+                              popup = ~paste(sep = "<br/>",
+                                             paste0('<center><h3>מקטע מס: ', stop_sequence-1, '</h3></center>'),
+                                             paste0('הפרש זמן חציוני: ', round(median_timediff,3), ' דקות '),
+                                             paste0('הפרש זמן ממוצע: ', round(mean_timediff,3), ' דקות ')
+                              ))
+
+      }
+
+
+    }
+
+
+
+
+
     output$plot1 <-  renderPlot({
       p1
     })
     output$plot2 <-  renderPlot({
       p3
+    })
+    output$plot3 <-  renderLeaflet({
+      map
     })
 
 
@@ -884,11 +1031,154 @@ server <- function(input, output) {
             legend.box.background = element_rect(),
             legend.box.margin = margin(5, 5, 5, 5))
 
+    #############
+    # Create Line Segments Map
+    #############
+
+    output_map = t[complete.cases(t[ , c("stop_lat","stop_lon")]),]
+    # convert dataframe to simple features geographic table
+    sp_output = st_as_sf(output_map,coords = c(8,9))
+    st_crs(sp_output) <- 2039
+
+    # convert sf table to spatialPointsDataFrame
+    sp_output = as(sp_output, "Spatial")
+
+    # get all unique line ids
+    linerefs = unique(sp_output$lineref)
+
+    for (lineref in linerefs) {
+      # create a subset table for specific line id
+      sp_output2 = sp_output[sp_output$lineref == lineref,]
+      # get relevant shape_id for each route
+      sp_output2@data = dplyr::left_join(sp_output2@data,
+                                         GTFStrips[GTFStrips$route_id == lineref,c("route_id", "shape_id")],
+                                         by=c("lineref"="route_id"))
+      # get all the stops for the shape
+      line_stops = GTFSstops[GTFSstops$stop_code %in% unique(sp_output2$stop_code),]
+      # join a stop sequence (order on shape) column to the stops table and order
+      sequence = unique(sp_output2@data[,c("stop_code","stop_sequence")])
+      line_stops = dplyr::left_join(line_stops,sequence)
+      line_stops = line_stops[order(line_stops$stop_sequence),]
+
+      # create a spatial stops table
+      line_stops_sp = st_as_sf(line_stops,coords = c(6,5))
+      st_crs(line_stops_sp) <- 4326
+      line_stops_sp = st_transform(line_stops_sp,2039)
+
+      # get shape_id for the route, create a shape spatial table
+      shape_id = unique(GTFStrips$shape_id[GTFStrips$route_id == lineref])
+      shape = GTFSshapes[GTFSshapes$shape_id == shape_id,]
+      shape = st_as_sf(shape,coords = c(3,2),agr="aggregate")
+      st_crs(shape) <- 4326
+      shape = st_transform(shape,2039)
+      shape = st_as_sf(shape)
+
+      # create a distance matrix between all shape points and all line stops
+      dd =  sp::spDists( as(line_stops_sp, "Spatial"),as(shape, "Spatial"))
+      colnames(dd) = row.names(shape)
+      row.names(dd) = line_stops_sp$stop_code
+
+      # set distance between first stop and start of line to 0, do same for last point and stop
+      dd[1,1] = 0.0
+      dd[nrow(dd),ncol(dd)] = 0.0
+
+      # What point is closest to each line
+      last_index = 1
+      idxs = c(last_index)
+      for(row in 1:nrow(dd)){
+        stop = FALSE
+        if( row > 1 & row != nrow(dd)){
+          distances = as.vector(dd[row,])
+          names(distances) = colnames(dd)
+          distances = sort(distances)
+          for(dist in 1:length(distances)){
+            if(as.numeric(last_index) < as.numeric(names(distances)[dist])){
+              last_index = as.numeric(names(distances)[dist])
+              idxs = c(idxs,last_index)
+              stop = TRUE
+              break
+            }
+            next
+          }
+        }
+        if (stop){next}
+      }
+      idxs = c(idxs,colnames(dd)[ncol(dd)])
+      idxs = sapply(idxs, as.numeric)
+
+      # create all line segments (should have n(stops)-1)
+      segments = list()
+      for(i in 1:(length(idxs)-1)){
+        temp_pts = shape[idxs[i]:idxs[i+1],]
+        temp_pts_sf = sf::st_as_sf(temp_pts) %>%
+          dplyr::group_by(shape_id) %>%
+          dplyr::summarize(m = mean(shape_id), id = i, stop_code = as.numeric(row.names(dd)[i+1]),do_union=FALSE) %>%
+          sf::st_cast("LINESTRING")
+        segments[[i]] = temp_pts_sf
+      }
+      shapes2 = segments[[1]]
+      for(s in 2:length(segments)){
+        shapes2 = rbind(shapes2, segments[[s]])
+      }
+
+      # summary for each segment
+      shapes3 =  sp_output2@data %>%
+        dplyr::group_by(stop_code) %>%
+        dplyr::summarize(mean_timediff = mean(timediff),
+                         median_timediff = median(timediff),
+                         agency_id = min(agency_id),
+                         agency_name = min(agency_name),
+                         route_short_name = min(route_short_name),
+                         stop_sequence=min(stop_sequence)) %>%
+        dplyr::left_join( shapes2)
+
+      shapes3 = sf::st_as_sf(as.data.frame(shapes3))
+      sf::st_crs(shapes3) = 2039
+      shapes3 = st_transform(shapes3,4326)
+      qpal <- colorQuantile("YlGnBu", shapes3$median_timediff, n=5)
+      if(!exists("map")){
+        map = leaflet(shapes3) %>%
+          addTiles(urlTemplate ="//{s}.basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}{r}.png") %>%
+          leaflet::addPolylines(weight = 3, smoothFactor = 0.5,
+                                opacity = 1.0, color = ~qpal(median_timediff),
+                                highlightOptions = highlightOptions(color = "cyan", weight = 4,
+                                                                    bringToFront = TRUE),
+                                popup = ~paste(sep = "<br/>",
+                                               paste0('<center><h3>מקטע מס: ', stop_sequence-1, '</h3></center>'),
+                                               paste0('הפרש זמן חציוני: ', round(median_timediff,3), ' דקות '),
+                                               paste0('הפרש זמן ממוצע: ', round(mean_timediff,3), ' דקות ')
+                                )) %>%
+          addLegend("bottomright",pal = qpal,
+                    labFormat = function(type, cuts, p) {
+                      n = length(cuts)
+                      paste0('<span style="direction:rtl">',round(cuts[-n],1), " &ndash; ", round(cuts[-1],1)," דקות </span>")
+                    },
+                    values = shapes3$median_timediff, opacity = 1)
+
+      }else{
+        map = leaflet::addPolylines(map,data=shapes3,weight = 3, smoothFactor = 0.5,
+                              opacity = 1.0, color = ~qpal(median_timediff),
+                              highlightOptions = highlightOptions(color = "cyan", weight = 4,
+                                                                  bringToFront = TRUE),
+                              popup = ~paste(sep = "<br/>",
+                                             paste0('<center><h3>מקטע מס: ', stop_sequence-1, '</h3></center>'),
+                                             paste0('הפרש זמן חציוני: ', round(median_timediff,3), ' דקות '),
+                                             paste0('הפרש זמן ממוצע: ', round(mean_timediff,3), ' דקות ')
+                              ))
+
+      }
+
+
+    }
+
     output$plot1 <-  renderPlot({
       p1
     })
     output$plot2 <-  renderPlot({
       p3
+    })
+    output$plot3 <-  renderLeaflet({
+      map
     })
 
   })

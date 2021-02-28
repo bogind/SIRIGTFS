@@ -520,6 +520,7 @@ server <- function(input, output) {
         appendTab(inputId = "tabs",
                   tabPanel("Summary",
                            textOutput("summary"),
+                           busyIndicator(),
                            sidebarLayout(
                              sidebarPanel(
                                htmlOutput("selectPlotAgency"),
@@ -530,13 +531,16 @@ server <- function(input, output) {
                              ),
                              mainPanel(plotOutput("plot1", height = 300),
                                        plotOutput("plot2", height = 300),
+                                       leafletOutput("plot3", height = 300),
                                        width = 6)
                            )
                        )
                   )
 
         appendTab(inputId = "tabs",
-          tabPanel("Table", DT::dataTableOutput("table"))
+          tabPanel("Table",
+                   busyIndicator(),
+                   DT::dataTableOutput("table"))
         )
 
         assign(x = "linerefs", value = selection$linerefs, envir = as.environment(1))
@@ -680,7 +684,7 @@ server <- function(input, output) {
     })
 
 
-      # selection$plotLinerefs = unique(buses$lineref[buses$agency_id %in% ids])
+    # selection$plotLinerefs = unique(buses$lineref[buses$agency_id %in% ids])
 
     t <- data$buses[data$buses$agency_id %in% ids,]
     t <- t[order(t$RecordedAtTime,t$OriginAimedDepartureTime),]

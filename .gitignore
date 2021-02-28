@@ -10,3 +10,5 @@ rosm.cache/*
 *.prj
 *.shx
 *.dbf
+output2.txt
+line_stops.txt

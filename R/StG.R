@@ -11,6 +11,7 @@
 #' @param GTFSroutes. A GTFS routes table, best load into environment with \code{\link{readGTFS}}
 #' @param GTFSstop_times. A GTFS stop_times table, best load into environment with \code{\link{readGTFS}}
 #' @param GTFStrips. A GTFS trips table, best load into environment with \code{\link{readGTFS}}
+#' @param GTFSshapes. A GTFS shapes table, best load into environment with \code{\link{readGTFS}}
 #' @param linerefs Optional, a numeric vector of GTFS route_id numbers to process. if not used all route_id's in the SIRIDF provided will be used.
 #' @param epsg The EPSG code for the projection to be used.
 #' @details
@@ -47,6 +48,7 @@
 #'              GTFSroutes. = GTFSroutes,
 #'              GTFSstop_times. = GTFSstop_times,
 #'              GTFStrips. = GTFStrips,
+#'              GTFSshapes. = GTFSshapes,
 #'              linerefs = unique(SIRIsample$LineRef[1]))
 #'
 #'

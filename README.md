@@ -2,6 +2,7 @@
 SIRItoGTFS r package
 
 [![Travis-CI Build Status](https://travis-ci.org/bogind/SIRItoGTFS.svg?branch=master)](https://travis-ci.org/bogind/SIRItoGTFS)
+[![R-CMD-check](https://github.com/bogind/SIRItoGTFS/workflows/R-CMD-check/badge.svg)](https://github.com/bogind/SIRItoGTFS/actions)
 
 
 For users unfamiliar with writing code, the only functions you will need are:   
